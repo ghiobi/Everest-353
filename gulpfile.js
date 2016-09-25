@@ -1,6 +1,5 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue');
 
 /*
  |--------------------------------------------------------------------------
@@ -15,5 +14,22 @@ require('laravel-elixir-vue');
 
 elixir(mix => {
     mix.sass('app.scss')
-       .webpack('app.js');
+    .styles([
+        './bower_components/material-design-icons-iconfont/dist/material-design-icons.css',
+        './bower_components/material-design-lite/material.css'
+    ],'public/css/vendor.css')
+    .copy([
+        './bower_components/material-design-icons-iconfont/dist/fonts'
+    ], 'public/build/css/fonts')
+    .scripts([
+        './bower_components/jquery/dist/jquery.js',
+        './bower_components/material-design-lite/material.js'
+    ], 'public/js/vendor.js')
+    .scripts([
+        'app.js'
+    ], 'public/js/app.js')
+    .version([
+        'public/css/vendor.css', 'public/js/vendor.js',
+        'public/css/app.css', 'public/js/app.js'
+    ]);
 });

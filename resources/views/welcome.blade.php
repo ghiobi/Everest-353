@@ -1,91 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    <a href="{{ url('/login') }}">Login</a>
-                    <a href="{{ url('/register') }}">Register</a>
+@section('content')
+    <div class="page-title mdl-color--grey-200">
+        <div class="mdl-typography--text-center">
+            <h1 class="mdl-typography--display-3">drive more. together.</h1>
+            <a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                FIND A RIDE
+            </a>
+        </div>
+    </div>
+    <div class="section">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                <div class="mdl-card__media">
+                    <img src="">
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="mdl-card__title">
+                    <h4 class="mdl-card__title-text">Get going on Super</h4>
                 </div>
+                <div class="mdl-card__supporting-text">
+                    <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Super quick and easy</span>
+                </div>
+                <div class="mdl-card__actions">
+                    <a class="mdl-button mdl-js-button mdl-typography--text-uppercase" href="" data-upgraded=",MaterialButton">
+                        Make the switch
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                <div class="mdl-card__media">
+                    <img src="">
+                </div>
+                <div class="mdl-card__title">
+                    <h4 class="mdl-card__title-text">Create your own Super character</h4>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <span class="mdl-typography--font-light mdl-typography--subhead">Turn the little green Super mascot into you, your friends, anyone!</span>
+                </div>
+                <div class="mdl-card__actions">
+                    <a class="mdl-button mdl-js-button mdl-typography--text-uppercase" href="" data-upgraded=",MaterialButton">
+                        super.com
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                <div class="mdl-card__media">
+                    <img src="">
+                </div>
+                <div class="mdl-card__title">
+                    <h4 class="mdl-card__title-text">Get a clean customisable home screen</h4>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <span class="mdl-typography--font-light mdl-typography--subhead">A clean, simple, customisable home screen that comes with the power of Google Now: Traffic alerts, weather and much more, just a swipe away.</span>
+                </div>
+                <div class="mdl-card__actions">
+                    <a class="mdl-button mdl-js-button mdl-typography--text-uppercase" href="" data-upgraded=",MaterialButton">
+                        Download now
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                <div class="mdl-card__media">
+                    <img src="">
+                </div>
+                <div class="mdl-card__title">
+                    <h4 class="mdl-card__title-text">Millions to choose from</h4>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <span class="mdl-typography--font-light mdl-typography--subhead">Hail a taxi, find a recipe, run through a temple – Google Play has all the apps and games that let you make your Super device uniquely yours.</span>
+                </div>
+                <div class="mdl-card__actions">
+                    <a class="mdl-button mdl-js-button mdl-typography--text-uppercase" href="" data-upgraded=",MaterialButton">
+                        Find apps
+                        <i class="material-icons">chevron_right</i>
+                    </a>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection
