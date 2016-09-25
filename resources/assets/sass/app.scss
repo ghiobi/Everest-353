@@ -1,9 +1,16 @@
-
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
-// Variables
-@import "variables";
-
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+.page-title{
+  padding: 60px 0;
+}
+.section{
+  padding: 45px 0;
+}
+.mbottom-10{
+  margin-bottom: 10px;
+}
+.full-width{
+  display: block;
+  width: auto;
+}
+.mdl-grid{
+  max-width: 1140px;
+}
