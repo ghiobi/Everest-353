@@ -1,1 +1,0 @@
-$(function(){$.ajaxSetup({headers:{"X-CSRF-TOKEN":Everest.csrfToken}})});
