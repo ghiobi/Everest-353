@@ -27,9 +27,9 @@
                     </div>
                 </div>
                 <div class="mdl-card__menu">
-                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                         <i class="material-icons">more_vert</i>
-                        <span class="mdl-button__ripple-container"><span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(13px, 11px);"></span></span></button>
+                    </button>
                 </div>
             </div>
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-card mdl-shadow--3dp mdl-cell--12-col-tablet">
@@ -38,58 +38,58 @@
                 </div>
                 <ul class="mdl-list profile-data">
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_status" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_status">
                             <i class="material-icons mdl-list__item-icon">check_circle</i>
                             Active
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_status" data-upgraded=",MaterialTooltip">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_status">
                             Status
                         </div>
                     </li>
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_external_email" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_external_email">
                             <i class="material-icons mdl-list__item-icon">question_answer</i>
                             example@example.com
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_external_email" data-upgraded=",MaterialTooltip">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_external_email">
                             Email
                         </div>
                     </li>
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_address" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_address">
                             <i class="material-icons mdl-list__item-icon">location_city</i>
                             7141 Rue Sherbrooke O, Montréal, QC H4B 1R6
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_address" data-upgraded=",MaterialTooltip">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_address">
                             Address
                         </div>
                     </li>
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_birthday" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_birthday">
                             <i class="material-icons mdl-list__item-icon">cake</i>
                             August 19, 1995
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_birthday" data-upgraded=",MaterialTooltip">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_birthday">
                             Birthday
                         </div>
                     </li>
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_licence" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_licence">
                             <i class="material-icons mdl-list__item-icon">card_membership</i>
                             KOGP 1324 1490
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_licence" data-upgraded=",MaterialTooltip" style="top: 515px; margin-top: -15px; left: 520.484px;">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_licence">
                             License
                         </div>
                     </li>
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content" id="tt_policies" tabindex="0">
+                        <span class="mdl-list__item-primary-content" id="tt_policies">
                             <i class="material-icons mdl-list__item-icon">warning</i>
                             <span class="mdl-chip">
                                 <span class="mdl-chip__text">No eating in my car.</span>
                             </span>
                         </span>
-                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_policies" data-upgraded=",MaterialTooltip">
+                        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_policies">
                             Policies
                         </div>
                     </li>
