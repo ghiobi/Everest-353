@@ -1,3 +1,7 @@
+/*  HELPERS */
+img{
+  max-width: 100%;
+}
 .page-title{
   padding: 60px 0;
 }
@@ -11,6 +15,48 @@
   display: block;
   width: auto;
 }
+/*  MDL OVERRIDES */
 .mdl-grid{
   max-width: 1140px;
+}
+/*  PROFILE PAGE  */
+.profile-banner{
+  min-height: 300px;
+}
+.profile-info{
+  margin-top: -200px;
+}
+.profile-image {
+  padding: {
+    top: 40px;
+    left: 65px;
+    right: 65px;
+  }
+  > img {
+    border-radius: 50%;
+    width: 100%;
+    max-width: 340px;
+  }
+}
+.profile-name > h4{
+  font-weight: 300;
+}
+.profile-stats{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.profile-stat-item {
+  padding: 5px 25px;
+}
+.profile-stat-value {
+  font-size: 24px;
+}
+.profile-stat-name {
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.profile-data .mdl-list__item .mdl-list__item-primary-content .mdl-list__item-icon{
+  margin-left: 22px;
 }
