@@ -25,15 +25,20 @@ img{
 }
 .profile-info{
   margin-top: -200px;
+  @media (max-width: 480px){
+    margin-top: -270px;
+  }
 }
 .profile-image {
   padding: {
     top: 40px;
-    left: 65px;
-    right: 65px;
+    left: 25px;
+    right: 25px;
   }
   > div{
     position: relative;
+    max-width: 340px;
+    margin: 0 auto;
     img {
       border-radius: 50%;
       width: 100%;
