@@ -26,4 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Returns all messages send to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function messages()
+    {
+        return $this->morphToMany(Message::class, 'messageable');
+    }
+
 }
