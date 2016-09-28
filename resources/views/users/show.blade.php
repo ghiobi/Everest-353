@@ -4,9 +4,14 @@
     <div class="profile-banner mdl-color--blue-grey-300"></div>
     <div class="profile-info">
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-card mdl-cell--12-col-tablet mdl-shadow--3dp mdl-typography--text-center">
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-card mdl-cell--12-col-tablet mdl-shadow--2dp mdl-typography--text-center">
                 <div class="profile-image">
-                    <img src="http://static1.squarespace.com/static/50de3e1fe4b0a05702aa9cda/t/50eb2245e4b0404f3771bbcb/1357589992287/ss_profile.jpg" alt="">
+                    <div>
+                        <img src="http://static1.squarespace.com/static/50de3e1fe4b0a05702aa9cda/t/50eb2245e4b0404f3771bbcb/1357589992287/ss_profile.jpg" alt="">
+                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="material-icons">email</i>
+                        </a>
+                    </div>
                 </div>
                 <div class="profile-name">
                     <h4>Sandro Ferror</h4>
@@ -27,13 +32,21 @@
                     </div>
                 </div>
                 <div class="mdl-card__menu">
-                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                    <button id="profile-more-button"
+                            class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="profile-more-button">
+                        <li class="mdl-menu__item">Some Action</li>
+                        <li class="mdl-menu__item">Another Action</li>
+                        <li disabled class="mdl-menu__item">Disabled Action</li>
+                        <li class="mdl-menu__item">Yet Another Action</li>
+                    </ul>
                 </div>
             </div>
-            <div class="mdl-cell mdl-cell--8-col-desktop mdl-card mdl-shadow--3dp mdl-cell--12-col-tablet">
-                <div class="mdl-card__title mdl-color--blue-grey-100">
+            <div class="mdl-cell mdl-cell--8-col-desktop mdl-card mdl-shadow--2dp mdl-cell--12-col-tablet">
+                <div class="mdl-card__title" style="background-color: #3f51b5; color: #fff">
                     <h2 class="mdl-card__title-text">Information</h2>
                 </div>
                 <ul class="mdl-list profile-data">
@@ -94,6 +107,135 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+    <div class="profile-posts">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-card mdl-cell--12-col mdl-shadow--3dp" style="min-height: auto;">
+                <div class="mdl-card__title" style="background-color: #3f51b5; color: #fff">
+                    <h2 class="mdl-card__title-text">Trips and Services</h2>
+                </div>
+                <ul class="filter">
+                    <li>
+                        <button type="button" class="mdl-chip filter-chip active">
+                            <span class="mdl-chip__text">All</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="mdl-chip filter-chip">
+                            <span class="mdl-chip__text">Long</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="mdl-chip filter-chip">
+                            <span class="mdl-chip__text">Local</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="mdl-chip filter-chip">
+                            <span class="mdl-chip__text">Services</span>
+                        </button>
+                    </li>
+                </ul>
+                <div class="post-listing">
+                    <div class="post">
+                        <div class="post-price">
+                            $12.30
+                        </div>
+                        <div class="post-title">
+                            MONTREAL TO TORONTO
+                        </div>
+                        <div class="post-info">
+                            <div class="post-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Mauris sagittis pellentesque lacus eleifend lacinia...
+                            </div>
+                            <div class="post-stats">
+                            <span>
+                                <i class="material-icons">date_range</i>
+                                21/10/2016
+                            </span>
+                                <span>
+                                <i class="material-icons">forum</i>
+                                11
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-price">
+                            $12.30
+                        </div>
+                        <div class="post-title">
+                            MONTREAL TO TORONTO
+                        </div>
+                        <div class="post-info">
+                            <div class="post-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Mauris sagittis pellentesque lacus eleifend lacinia...
+                            </div>
+                            <div class="post-stats">
+                            <span>
+                                <i class="material-icons">date_range</i>
+                                21/10/2016
+                            </span>
+                                <span>
+                                <i class="material-icons">forum</i>
+                                11
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-price">
+                            $12.30
+                        </div>
+                        <div class="post-title">
+                            MONTREAL TO TORONTO
+                        </div>
+                        <div class="post-info">
+                            <div class="post-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Mauris sagittis pellentesque lacus eleifend lacinia...
+                            </div>
+                            <div class="post-stats">
+                            <span>
+                                <i class="material-icons">date_range</i>
+                                21/10/2016
+                            </span>
+                                <span>
+                                <i class="material-icons">forum</i>
+                                11
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-price">
+                            $12.30
+                        </div>
+                        <div class="post-title">
+                            MONTREAL TO TORONTO
+                        </div>
+                        <div class="post-info">
+                            <div class="post-description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Mauris sagittis pellentesque lacus eleifend lacinia...
+                            </div>
+                            <div class="post-stats">
+                            <span>
+                                <i class="material-icons">date_range</i>
+                                21/10/2016
+                            </span>
+                                <span>
+                                <i class="material-icons">forum</i>
+                                11
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
