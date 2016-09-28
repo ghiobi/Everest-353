@@ -1,3 +1,7 @@
+/*  HELPERS */
+img{
+  max-width: 100%;
+}
 .page-title{
   padding: 60px 0;
 }
@@ -11,6 +15,110 @@
   display: block;
   width: auto;
 }
+/*  MDL OVERRIDES */
 .mdl-grid{
   max-width: 1140px;
+}
+/*  PROFILE PAGE  */
+.profile-banner{
+  min-height: 300px;
+}
+.profile-info{
+  margin-top: -200px;
+}
+.profile-image {
+  padding: {
+    top: 40px;
+    left: 65px;
+    right: 65px;
+  }
+  > div{
+    position: relative;
+    img {
+      border-radius: 50%;
+      width: 100%;
+    }
+    .mdl-button{
+      position: absolute;
+      bottom: 10%;
+      right: 5%;
+    }
+  }
+}
+.profile-name > h4{
+  font-weight: 300;
+}
+.profile-stats{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.profile-stat-item {
+  padding: 5px 25px;
+}
+.profile-stat-value {
+  font-size: 24px;
+}
+.profile-stat-name {
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.profile-data.mdl-list .mdl-list__item-icon {
+  margin-left: 22px;
+  @media (max-width: 480px) {
+    margin-left: 0;
+    margin-right: 15px;
+  }
+}
+.filter{
+  padding: 0;
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+  > li{
+    margin: 0 3px;
+  }
+}
+.mdl-chip.filter-chip{
+  background-color: transparent;
+}
+.mdl-chip.filter-chip.active{
+  background-color: #dedede;
+}
+.profile-posts{
+  margin-bottom: 100px;
+}
+.post{
+  position: relative;
+  padding: 15px;
+  border-top: #dedede 1px solid;
+  > {
+    .post-price {
+      position: absolute;
+      right: 15px;
+      font-weight: 600;
+    }
+    .post-title{
+      font-size: 24px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      padding-right: 55px;
+      @media (max-width: 480px){
+        font-size: 18px;
+      }
+    }
+  }
+}
+.post-info{
+  > {
+    .post-description{
+      margin-bottom: 10px;
+    }
+    .post-stats{
+      .material-icons{
+        font-size: 14px;
+      }
+    }
+  }
 }
