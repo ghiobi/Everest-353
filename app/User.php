@@ -33,11 +33,6 @@ class User extends Authenticatable
         'is_visible_external_email'
     ];
 
-    protected $guarded = [
-        'is_suspended',
-        'balance'
-    ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
