@@ -10,6 +10,21 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_suspended' => 'boolean',
+        'is_visible_address' => 'boolean',
+        'is_visible_birth_date' => 'boolean',
+        'is_visible_license_num' => 'boolean',
+        'is_visible_policies' => 'boolean',
+        'is_visible_external_email' => 'boolean',
+        'policies' => 'array'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
