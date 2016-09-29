@@ -1,47 +1,28 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 <!-- Main Content -->
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    <div class="mdl-card mdl-shadow--3dp fwidth" style="min-height: auto">
+        <div class="mdl-card__title padding-bottom--0">
+            <h2 class="mdl-card__title-text">Reset Password</h2>
+        </div>
+        <div class="mdl-card__supporting-text padding-top--0">
+            <form role="form" method="POST" action="{{ url('/password/email') }}">
+                {{ csrf_field() }}
+                @include('components.input-text', [
+                    'name' => 'email',
+                    'label' => 'Email',
+                    'errors' => $errors
+                ])
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
+                    Send Password Reset Link
+                </button>
+            </form>
         </div>
     </div>
-</div>
 @endsection
