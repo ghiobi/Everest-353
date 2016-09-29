@@ -55,7 +55,8 @@ class HasNewMessage extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            //
+            'sender_id' => $this->message->sender_id,
+            'body' => $this->message->body
         ];
     }
 }
