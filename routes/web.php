@@ -52,3 +52,8 @@ Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) 
 
     return $response;
 });
+
+Route::resource('setting', 'SettingController', ['only' => [
+    'index', 'update'
+]]);
+
