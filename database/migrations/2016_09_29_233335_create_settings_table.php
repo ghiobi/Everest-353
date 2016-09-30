@@ -18,6 +18,7 @@ class CreateSettingsTable extends Migration
             $table->string('display_name');
             $table->string('description');
             $table->string('value');
+            $table->timestamps();
 
             $table->primary('key');
         });
