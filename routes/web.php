@@ -24,3 +24,4 @@ Route::get('/home', 'HomeController@index');
 // ------------------------------------------------------------------------
 
 Route::resource('user', 'UserController');
+Route::resource('setting', 'SettingController');
