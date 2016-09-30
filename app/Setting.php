@@ -13,5 +13,10 @@ class Setting extends Model
      */
     protected $table = 'settings';
 
-
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }
