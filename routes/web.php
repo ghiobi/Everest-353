@@ -24,4 +24,6 @@ Route::get('/home', 'HomeController@index');
 // ------------------------------------------------------------------------
 
 Route::resource('user', 'UserController');
-Route::resource('setting', 'SettingController');
+Route::resource('setting', 'SettingController', ['only' => [
+    'index', 'update'
+]]);
