@@ -13,5 +13,18 @@ class Setting extends Model
      */
     protected $table = 'settings';
 
+    /**
+     * Disable unnecessity of timestamps
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * Setting primary key as key column
+     *
+     * @var string
+     */
+    public $primaryKey = 'key';
 
 }
