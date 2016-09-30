@@ -6,7 +6,7 @@
             <h2 class="mdl-card__title-text">Register</h2>
         </div>
         <div class="mdl-card__supporting-text padding-top--0">
-            <form role="form" method="POST" action="{{ url('/register') }}">
+            <form role="form" method="POST" action="{{ url('/register') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 @include('components.input-text', [
                     'name' => 'first_name',
@@ -30,11 +30,18 @@
                         <span class="mdl-textfield__error">{{ $errors->first('password') }}</span>
                     @endif
                 </div>
-                <div class="mdl-textfield mdl-js-textfield{{ ($errors->has('password'))? ' is-invalid' : '' }} mdl-textfield--floating-label fwidth">
+                <div class="mdl-textfield mdl-js-textfield{{ ($errors->has('password_confirmation'))? ' is-invalid' : '' }} mdl-textfield--floating-label fwidth">
                     <input type="password" class="mdl-textfield__input " id="form__password_confirmation" name="password_confirmation">
                     <label class="mdl-textfield__label " for="form__password_confirmation" >Confirm Password</label>
                     @if($errors->has('password_confirmation'))
                         <span class="mdl-textfield__error">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+                </div>
+                <div class="mdl-textfield mdl-js-textfield{{ ($errors->has('avatar'))? ' is-invalid' : '' }} mdl-textfield--floating-label fwidth">
+                    <input type="file" class="mdl-textfield__input " id="form__avatar" name="avatar" accept="image/*">
+                    <label class="mdl-textfield__label label-input--file" for="form__avatar" >Avatar (optional, 300 by 300 minimum, 5MB max)</label>
+                    @if($errors->has('avatar'))
+                        <span class="mdl-textfield__error">{{ $errors->first('avatar') }}</span>
                     @endif
                 </div>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">

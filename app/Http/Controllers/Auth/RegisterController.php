@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Intervention\Image\Facades\Image;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -52,6 +53,7 @@ class RegisterController extends Controller
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'avatar' => 'dimensions:min_width=300,min_height=300|image|max:5000' //is image type and max file size
         ]);
     }
 
@@ -63,11 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $image_name = null;
+
+        if (request()->hasFile('avatar')) {
+            //Generating unique file name.
+            $image_name = spl_object_hash(request()->file('avatar')) . '_' . time() . '.jpg';
+
+            //Storing image
+            Image::make(request()
+                ->file('avatar'))
+                ->encode('jpg')
+                ->save(config('image.storage_path').'\\'.$image_name);
+        }
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'avatar' => $image_name
         ]);
     }
 }

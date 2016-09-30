@@ -7,7 +7,7 @@
             <div class="mdl-cell mdl-cell--4-col-desktop mdl-card mdl-cell--12-col-tablet mdl-shadow--2dp mdl-typography--text-center">
                 <div class="profile-image">
                     <div>
-                        <img src="http://static1.squarespace.com/static/50de3e1fe4b0a05702aa9cda/t/50eb2245e4b0404f3771bbcb/1357589992287/ss_profile.jpg" alt="">
+                        <img src="{{ url( 'images/' . (($user->avatar) ? $user->avatar . '?w=340' : 'dummy_avatar.jpg')) }}" alt="">
                         <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                             <i class="material-icons">email</i>
                         </a>

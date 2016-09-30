@@ -28,14 +28,14 @@ Route::resource('user', 'UserController');
 Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) {
 
     //Image path
-    $path = storage_path('app\public') . '\\' . $path;
+    $path = config('image.storage_path') . '\\' . $path;
 
     //Fetch image object
     $img = null;
     try{
         if ($request->has('w') || $request->has('h')){
             $img = Image::cache(function($image) use($path, $request) {
-                $image->make($path)->resize($request->w, $request->h, function($constraint){
+                $image->make($path)->fit($request->w, $request->h, function($constraint){
                     $constraint->aspectRatio();
                 });
             }, 5, true);
@@ -43,7 +43,7 @@ Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) 
             $img = Image::make($path);
         }
     } catch (\Intervention\Image\Exception\NotReadableException $e){
-        abort(404);
+        return abort(404);
     }
 
     //Encode and return response
