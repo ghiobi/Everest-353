@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     /**
+     * Fillable attributes
+     */
+    protected $fillable = [
+        'sender_id',
+        'body'
+    ];
+
+    /**
      * Returns the user model of the message by doing $message->user.
      * Doing $message->user() returns the relation.
      *

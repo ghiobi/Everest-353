@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function messages()
     {
-        return $this->morphToMany(Message::class, 'messageable');
+        return $this->morphMany(Message::class, 'messageable');
     }
 
 }

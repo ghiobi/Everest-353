@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,14 +12,16 @@ class HasNewMessage extends Notification
 {
     use Queueable;
 
+    private $message;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Message $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -29,23 +32,8 @@ class HasNewMessage extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', 'https://laravel.com')
-                    ->line('Thank you for using our application!');
-    }
-
     /**
      * Get the representation of the notification.
      *
@@ -56,7 +44,7 @@ class HasNewMessage extends Notification
     {
         return [
             'sender_id' => $this->message->sender_id,
-            'body' => $this->message->body
+            'message_id' => $this->message->id
         ];
     }
 }
