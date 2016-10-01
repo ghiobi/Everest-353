@@ -97,6 +97,7 @@ class UserController extends Controller
             'last_name' => 'sometimes|required|max:255',
             'email' => 'sometimes|required|email|max:255|unique:users',
             'password' => 'sometimes|required|min:6|confirmed',
+            'timezone' => 'required|timezone',
             'is_suspended' => 'sometimes|required|boolean',
             'address' => 'max:255',
             'is_visible_address' => 'sometimes|required|boolean',
