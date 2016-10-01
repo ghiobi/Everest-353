@@ -149,11 +149,18 @@ class UserController extends Controller
                     $user->avatar = $image_name;
                 }
 
+                if (empty($request->birth_date)){
+                    $user->birth_date = null;
+                } else {
+                    $user->birth_date = $request->birth_date;
+                }
+
                 $user->update($request->except([
                     'password',
                     'is_suspended',
                     'avatar',
-                    'policies'
+                    'policies',
+                    'birth_date'
                 ]));
 
                 $user->save();
