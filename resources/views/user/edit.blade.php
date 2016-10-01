@@ -51,7 +51,7 @@
                 @include('components.input-text', [
                     'name' => 'policies',
                     'label' => 'Policies',
-                    'value' => implode(';', $user->policies),
+                    'value' => (empty($user->policies))? '' : implode(';', $user->policies),
                     'errors' => $errors
                 ])
                 @include('components.input-text', [
