@@ -191,3 +191,12 @@ img{
     }
   }
 }
+
+.notification{
+  width: 100%;
+  min-height: 0;
+  .notification-title{
+    bottom: 5px;
+    position: relative;
+  }
+}

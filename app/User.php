@@ -25,6 +25,15 @@ class User extends Authenticatable
         'policies' => 'array'
     ];
 
+
+    /**
+     * Attributes that are dates
+     * @var array
+     */
+    public $dates = [
+        'birth_date'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -65,7 +74,7 @@ class User extends Authenticatable
      */
     public function messages()
     {
-        return $this->morphToMany(Message::class, 'messageable');
+        return $this->morphMany(Message::class, 'messageable');
     }
 
 }
