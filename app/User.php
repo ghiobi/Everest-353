@@ -25,6 +25,15 @@ class User extends Authenticatable
         'policies' => 'array'
     ];
 
+
+    /**
+     * Attributes that are dates
+     * @var array
+     */
+    public $dates = [
+        'birth_date'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

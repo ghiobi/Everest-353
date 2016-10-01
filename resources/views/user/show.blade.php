@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="profile-name">
-                    <h4>Sandro Ferror</h4>
+                    <h4>{{ $user->first_name . ' ' . $user->last_name }}</h4>
                 </div>
                 <div class="profile-stats">
                     <div class="profile-stat-item">
@@ -38,10 +38,10 @@
                     </button>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="profile-more-button">
-                        <li class="mdl-menu__item">Some Action</li>
-                        <li class="mdl-menu__item">Another Action</li>
-                        <li disabled class="mdl-menu__item">Disabled Action</li>
-                        <li class="mdl-menu__item">Yet Another Action</li>
+                        @if(Auth::user()->id == $user->id || Auth::user()->hasRole('admin'))
+                            <li class="mdl-menu__item"><a href="{{ route('user.edit', ['user' => $user->id]) }}">Update Profile</a></li>
+                        @endif
+                        <li class="mdl-menu__item"><a href="">Send Message</a></li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +62,11 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_external_email">
                             <i class="material-icons mdl-list__item-icon">question_answer</i>
-                            example@example.com
+                            @if($user->external_email)
+                                {{ $user->external_email }}
+                            @else
+                                <span class="mdl-color-text--grey-300">Unavailable</span>
+                            @endif
                         </span>
                         <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_external_email">
                             Email
@@ -71,7 +75,11 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_address">
                             <i class="material-icons mdl-list__item-icon">location_city</i>
-                            7141 Rue Sherbrooke O, Montréal, QC H4B 1R6
+                            @if($user->address)
+                                {{ $user->address }}
+                            @else
+                                <span class="mdl-color-text--grey-300">Unavailable</span>
+                            @endif
                         </span>
                         <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_address">
                             Address
@@ -80,7 +88,11 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_birthday">
                             <i class="material-icons mdl-list__item-icon">cake</i>
-                            August 19, 1995
+                            @if($user->birth_date)
+                                {{ $user->birth_date->toFormattedDateString() }}
+                            @else
+                                <span class="mdl-color-text--grey-300">Unavailable</span>
+                            @endif
                         </span>
                         <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_birthday">
                             Birthday
@@ -89,7 +101,11 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_licence">
                             <i class="material-icons mdl-list__item-icon">card_membership</i>
-                            KOGP 1324 1490
+                            @if($user->license_num)
+                                {{ $user->license_num }}
+                            @else
+                                <span class="mdl-color-text--grey-300">Unavailable</span>
+                            @endif
                         </span>
                         <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_licence">
                             License
@@ -98,9 +114,15 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_policies">
                             <i class="material-icons mdl-list__item-icon">warning</i>
-                            <span class="mdl-chip">
-                                <span class="mdl-chip__text">No eating in my car.</span>
-                            </span>
+                            @if($user->policies)
+                                @foreach($user->policies as $policy)
+                                    <span class="mdl-chip">
+                                    <span class="mdl-chip__text">{{ $policy }}</span>
+                                </span>
+                                @endforeach
+                            @else
+                                <span class="mdl-color-text--grey-300">Unavailable</span>
+                            @endif
                         </span>
                         <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="tt_policies">
                             Policies
