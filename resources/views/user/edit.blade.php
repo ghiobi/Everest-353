@@ -11,55 +11,142 @@
             <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
+                <table class="profile-edit-table">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'first_name',
+                                    'label' => 'First Name',
+                                    'value' => $user->first_name,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+
+                                @include('components.input-text', [
+                                    'name' => 'last_name',
+                                    'label' => 'Last Name',
+                                    'value' => $user->last_name,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'timezone',
+                                    'label' => 'Time Zone',
+                                    'value' => $user->timezone,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                                    <input type="hidden" name="is_visible_birth_date" value="0">
+                                    <input type="checkbox" id="switch-1" class="mdl-switch__input"
+                                           {{ ($user->is_visible_birth_date)? 'checked ' : '' }}name="is_visible_birth_date" value="1">
+                                    <span class="mdl-switch__label"></span>
+                                </label>
+                            </td>
+                            <td>
+
+                                @include('components.input-text', [
+                                    'name' => 'birth_date',
+                                    'label' => 'Birth Date (YYYY-MM-DD)',
+                                    'value' => $user->birth_date,
+                                    'errors' => $errors
+                                ])
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+                                    <input type="hidden" name="is_visible_address" value="0">
+                                    <input type="checkbox" id="switch-2" class="mdl-switch__input"
+                                           {{ ($user->is_visible_address)? 'checked ' : '' }}name="is_visible_address"
+                                           value="1">
+                                    <span class="mdl-switch__label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'address',
+                                    'label' => 'Address',
+                                    'value' => $user->address,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-3">
+                                    <input type="hidden" name="is_visible_license_num" value="0">
+                                    <input type="checkbox" id="switch-3" class="mdl-switch__input"
+                                           {{ ($user->is_visible_license_num)? 'checked ' : '' }}name="is_visible_license_num"
+                                           value="1">
+                                    <span class="mdl-switch__label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'license_num',
+                                    'label' => 'License Number',
+                                    'value' => $user->license_num,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-4">
+                                    <input type="hidden" name="is_visible_policies" value="0">
+                                    <input type="checkbox" id="switch-4" class="mdl-switch__input"
+                                           {{ ($user->is_visible_policies)? 'checked ' : '' }}name="is_visible_policies"
+                                           value="1">
+                                    <span class="mdl-switch__label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'policies',
+                                    'label' => 'Policies (Separate policies with a semicolon)',
+                                    'value' => (empty($user->policies))? '' : implode(';', $user->policies),
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-5">
+                                    <input type="hidden" name="is_visible_external_email" value="0">
+                                    <input type="checkbox" id="switch-5" class="mdl-switch__input"
+                                           {{ ($user->is_visible_external_email)? 'checked ' : '' }}name="is_visible_external_email"
+                                           value="1">
+                                    <span class="mdl-switch__label"></span>
+                                </label>
+                            </td>
+                            <td>
+                                @include('components.input-text', [
+                                    'name' => 'external_email',
+                                    'label' => 'External Email',
+                                    'value' => $user->external_email,
+                                    'errors' => $errors
+                                ])
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <input type="hidden" name="_request" value="profile">
-                @include('components.input-text', [
-                    'name' => 'first_name',
-                    'label' => 'First Name',
-                    'value' => $user->first_name,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'last_name',
-                    'label' => 'Last Name',
-                    'value' => $user->last_name,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'timezone',
-                    'label' => 'Time Zone',
-                    'value' => $user->timezone,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'birth_date',
-                    'label' => 'Birth Date',
-                    'value' => $user->birth_date,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'address',
-                    'label' => 'Address',
-                    'value' => $user->address,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'license_num',
-                    'label' => 'License Number',
-                    'value' => $user->license_num,
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'policies',
-                    'label' => 'Policies',
-                    'value' => (empty($user->policies))? '' : implode(';', $user->policies),
-                    'errors' => $errors
-                ])
-                @include('components.input-text', [
-                    'name' => 'external_email',
-                    'label' => 'External Email',
-                    'value' => $user->external_email,
-                    'errors' => $errors
-                ])
+
                 @if($user->avatar)
                     <img src="{{ url('images/' . $user->avatar . '?w=90') }}" alt="">
                 @endif
