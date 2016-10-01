@@ -62,7 +62,7 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_external_email">
                             <i class="material-icons mdl-list__item-icon">question_answer</i>
-                            @if($user->external_email)
+                            @if($user->external_email && $user->is_visible_external_email)
                                 {{ $user->external_email }}
                             @else
                                 <span class="mdl-color-text--grey-300">Unavailable</span>
@@ -75,7 +75,7 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_address">
                             <i class="material-icons mdl-list__item-icon">location_city</i>
-                            @if($user->address)
+                            @if($user->address && $user->is_visible_address)
                                 {{ $user->address }}
                             @else
                                 <span class="mdl-color-text--grey-300">Unavailable</span>
@@ -88,7 +88,7 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_birthday">
                             <i class="material-icons mdl-list__item-icon">cake</i>
-                            @if($user->birth_date)
+                            @if($user->birth_date && $user->is_visible_birth_date)
                                 {{ $user->birth_date->toFormattedDateString() }}
                             @else
                                 <span class="mdl-color-text--grey-300">Unavailable</span>
@@ -101,7 +101,7 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_licence">
                             <i class="material-icons mdl-list__item-icon">card_membership</i>
-                            @if($user->license_num)
+                            @if($user->license_num && $user->is_visible_license_num)
                                 {{ $user->license_num }}
                             @else
                                 <span class="mdl-color-text--grey-300">Unavailable</span>
@@ -114,7 +114,7 @@
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content" id="tt_policies">
                             <i class="material-icons mdl-list__item-icon">warning</i>
-                            @if($user->policies)
+                            @if($user->policies && $user->is_visible_policies)
                                 @foreach($user->policies as $policy)
                                     <span class="mdl-chip">
                                     <span class="mdl-chip__text">{{ $policy }}</span>
