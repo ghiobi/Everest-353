@@ -8,23 +8,19 @@
                     <div class="panel-heading">Compose Message</div>
 
                     <div class="panel-body">
-                        <form role="form" method="POST" action="{{ url('/messages/send') }}">
+                        <form role="form" method="POST" action="{{ url('/mail') }}">
                             {{ csrf_field() }}
-                            @include('components.input-text', [
-                                    'name' => 'sender_id',
-                                    'label' => 'Sender ID',
-                                    'errors' => $errors
-                            ]) <br>
                             @include('components.input-text', [
                                     'name' => 'recipient_id',
                                     'label' => 'Recipient ID',
-                                    'errors' => $errors
-                            ])<br>
+                                    'errors' => $errors,
+                                    'value' => $recipient_id
+                            ])
                             @include('components.input-text', [
                                     'name' => 'body',
                                     'label' => 'Body',
                                     'errors' => $errors
-                            ])<br>
+                            ])
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
                                 Send
                             </button>

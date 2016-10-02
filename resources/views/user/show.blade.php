@@ -8,7 +8,8 @@
                 <div class="profile-image">
                     <div>
                         <img src="{{ url( 'images/' . (($user->avatar) ? $user->avatar . '?w=340' : 'dummy_avatar.jpg')) }}" alt="">
-                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+                            href="{{ url('mail/compose?recipient_id=' . $user->id) }}">
                             <i class="material-icons">email</i>
                         </a>
                     </div>
@@ -41,7 +42,7 @@
                         @if(Auth::user()->id == $user->id || Auth::user()->hasRole('admin'))
                             <li class="mdl-menu__item"><a href="{{ route('user.edit', ['user' => $user->id]) }}">Update Profile</a></li>
                         @endif
-                        <li class="mdl-menu__item"><a href="">Send Message</a></li>
+                        <li class="mdl-menu__item"><a href="{{ url('mail/compose?recipient_id=' . $user->id) }}">Send Message</a></li>
                     </ul>
                 </div>
             </div>
