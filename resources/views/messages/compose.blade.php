@@ -8,7 +8,7 @@
                     <div class="panel-heading">Compose Message</div>
 
                     <div class="panel-body">
-                        <form role="form" method="POST" action="{{ url('/messages/send') }}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{ url('/messages/send') }}">
                             {{ csrf_field() }}
                             @include('components.input-text', [
                                     'name' => 'sender_id',
@@ -30,6 +30,8 @@
                             </button>
                         </form>
                     </div>
+
+                    @include('components.success-notification')
                 </div>
             </div>
         </div>

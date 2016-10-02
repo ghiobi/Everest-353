@@ -22,9 +22,9 @@ class MessageController extends Controller
 
         // Validate request
         $this->validate($request, [
-            'sender_id' => 'sometimes|required|numeric',
-            'recipient_id' => 'sometimes|required|numeric',
-            'body' => 'sometimes|required'
+            'sender_id' => 'required|numeric',
+            'recipient_id' => 'required|numeric',
+            'body' => 'required'
         ]);
 
         // Get all parameters from the request
@@ -34,6 +34,9 @@ class MessageController extends Controller
 
         // From the recipient id, get the user associated with it
         $user = User::find($recipient_id);
+        if($user == null) {
+            return back()->withErrors(['recipient_id'=>'Recipient does not exist.']);
+        }
 
         // Create a message
         $message = new Message(['sender_id'=>$sender_id, 'body'=>$body]);
@@ -44,7 +47,8 @@ class MessageController extends Controller
         // Notify the recipient user that a new message has arrived
         $user->notify(new HasNewMessage($message));
 
-        // TODO: E-mail sent confirmation view
+        // Confirm that the message has been sent successfully
+        return back()->with('success', 'Message has been sent.');
 
     }
 
