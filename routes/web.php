@@ -17,15 +17,26 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
-
 // ------------------------------------------------------------------------
 // Resource routes
 // ------------------------------------------------------------------------
 
 Route::group(['middleware'=>'auth'], function () {
 
-    Route::resource('user', 'User\UserController');
+    Route::get('/home', 'HomeController@index');
+
+    Route::group(['namespace' => 'User'], function(){
+
+        Route::resource('user', 'UserController');
+
+        Route::group(['prefix' => 'mail'], function(){
+            Route::get('/', 'MessageController@mailInbox');
+            Route::get('/sent', 'MessageController@mailSent');
+            Route::get('/compose', 'MessageController@compose');
+            Route::post('/', 'MessageController@sendMessage');
+        });
+    });
+
 
     Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) {
 
@@ -58,10 +69,5 @@ Route::group(['middleware'=>'auth'], function () {
     Route::resource('setting', 'SettingController', ['only' => [
         'index', 'update'
     ]]);
-
-    Route::get('messages/index', 'User\MessageController@index');
-    Route::get('messages/sent', 'User\MessageController@sent');
-    Route::get('messages/compose', 'User\MessageController@compose');
-    Route::post('messages/send', 'User\MessageController@send');
 
 });
