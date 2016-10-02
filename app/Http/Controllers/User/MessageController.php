@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Message;
-use App\Notifications\HasNewMessage;
 use App\User;
+use App\Notifications\HasNewMessage;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
