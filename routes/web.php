@@ -57,3 +57,7 @@ Route::resource('setting', 'SettingController', ['only' => [
     'index', 'update'
 ]]);
 
+Route::get('messages/index', 'User\MessageController@index');
+Route::get('messages/sent', 'User\MessageController@sent');
+Route::get('messages/compose', 'User\MessageController@compose');
+Route::post('messages/send', 'User\MessageController@send');
