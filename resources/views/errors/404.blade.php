@@ -3,7 +3,7 @@
 @section('content')
     <div class="mdl-grid">
         <div class="mdl-card__title padding-bottom--0">
-            <h2 class="mdl-card__title-text">Page Not Found</h2>
+            <h1 class="mdl-card__title-text">Page Not Found</h1>
         </div>
         <div class="mdl-card__supporting-text padding-top--0">
             <p>
