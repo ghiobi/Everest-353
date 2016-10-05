@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Message;
@@ -75,7 +75,9 @@ class MessageController extends Controller
      */
     public function mailSent()
     {
-        //
+        $messages = Message::with('messageable')
+            ->where('sender_id', Auth::user()->id)
+            ->get();
 
         return view('user.message.mail-sent', compact('messages'));
     }
@@ -87,12 +89,13 @@ class MessageController extends Controller
      */
     public function compose(Request $request)
     {
-        $recipient_id = null;
+        $recipient = null;
+        $all_users = User::all();
 
         if ($request->has('recipient_id')) {
-            $recipient_id = $request->recipient_id;
+            $recipient = User::find($request->recipient_id);
         }
 
-        return view('user.message.compose', compact('recipient_id'));
+        return view('user.message.compose', compact('recipient', 'all_users'));
     }
 }
