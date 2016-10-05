@@ -12,7 +12,7 @@
                         <img src="{{ url( 'images/' . (($message->sender->avatar) ? $message->sender->avatar . '?w=50' : 'dummy_avatar.jpg')) }}" alt="" style="max-width: 50px">
                         {{ $message->sender->first_name . ' ' . $message->sender->last_name }}
                     </p>
-                    <p>Said: {{ $message->body }}</p>
+                    <p>{{$message->created_at}} - Said: {{ $message->body }}</p>
                     <p>
                         <form role="form" method="GET" action="{{ url('/mail/compose') }}">
                             <input type="hidden" name="recipient_id" value="{{$message->sender->id}}"/>
@@ -24,7 +24,7 @@
                 @endforeach
             @else
                 <p>
-                    You inbox is empty.
+                    Your inbox is empty.
                 </p>
             @endif
         </div>

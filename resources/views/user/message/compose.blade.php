@@ -6,14 +6,30 @@
             <h1 class="mdl-card__title-text">Compose Message</h1>
         </div>
         <div class="mdl-card__supporting-text padding-top--0">
+            <p>
+                @include('components.success-notification')
+            </p>
             <form role="form" method="POST" action="{{ url('/mail') }}">
                 {{ csrf_field() }}
-                @include('components.input-text', [
-                        'name' => 'recipient_id',
-                        'label' => 'Recipient ID',
-                        'errors' => $errors,
-                        'value' => $recipient_id
-                ])
+
+                {{-- Drop down list of all users except ourself, if recipient is set, select it by default --}}
+                <select name="recipient_id">
+                    @foreach ($all_users as $user)
+
+                        @if ($user->id == Auth::user()->id)
+                            @continue
+                        @endif
+                        <option value="{{$user->id}}"
+                                @if ($recipient != null && $user->id == $recipient->id)
+                                    selected
+                                @endif
+                        >
+                            {{$user->first_name}} {{$user->last_name}}
+                        </option>
+                    @endforeach
+                </select>
+
+
                 @include('components.input-textarea', [
                         'name' => 'body',
                         'label' => 'Body',
