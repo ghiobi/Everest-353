@@ -13,7 +13,7 @@
                         {{ $message->messageable->first_name . ' ' . $message->messageable->last_name }}
                     </p>
                     <p>
-                        {{$message->created_at}} - You sent: {{ $message->body }}
+                        {{$message->created_at->diffForHumans()}} - You sent: {{ $message->body }}
                     </p>
                 @endforeach
             @else

@@ -96,6 +96,6 @@ class MessageController extends Controller
             $recipient = User::find($request->recipient_id);
         }
 
-        return view('user.message.compose', compact('recipient'), compact('all_users'));
+        return view('user.message.compose', compact('recipient', 'all_users'));
     }
 }
