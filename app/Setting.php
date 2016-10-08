@@ -19,4 +19,11 @@ class Setting extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * Primary key is 'key'
+     *
+     * @var string
+     */
+    public $primaryKey = 'key';
 }
