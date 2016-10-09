@@ -77,4 +77,14 @@ class User extends Authenticatable
         return $this->morphMany(Message::class, 'messageable');
     }
 
+    public function rides()
+    {
+        return $this->belongsToMany(Trip::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

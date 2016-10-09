@@ -4,7 +4,7 @@
     <div class="page-title mdl-color--grey-200">
         <div class="mdl-typography--text-center">
             <h1 class="mdl-typography--display-3">drive more. together.</h1>
-            <a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <a href="{{ url('home') }}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                 FIND A RIDE
             </a>
         </div>

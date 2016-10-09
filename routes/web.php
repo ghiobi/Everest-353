@@ -17,9 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// ------------------------------------------------------------------------
-// Resource routes
-// ------------------------------------------------------------------------
 
 Route::group(['middleware'=>'auth'], function () {
 
@@ -42,6 +39,12 @@ Route::group(['middleware'=>'auth'], function () {
                 Route::post('/', 'MessageController@sendMessage');
             });
         });
+
+        // ------------------------------------------------------------------------
+        // Resource routes
+        // ------------------------------------------------------------------------
+
+        Route::resource('post', 'Post\PostController');
 
         Route::resource('setting', 'SettingController', ['only' => [
             'index', 'update'

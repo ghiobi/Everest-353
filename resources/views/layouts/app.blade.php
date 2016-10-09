@@ -23,7 +23,7 @@
     </script>
 
 </head>
-<body>
+<body ng-app="everest">
 <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -38,28 +38,31 @@
                         <a class="mdl-navigation__link" href="/login">Login</a>
                         <a class="mdl-navigation__link" href="/register">Register</a>
                     @else
-                        <a class="mdl-navigation__link" href="{{ url('/logout') }}"
-                            onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                            Logout
+                        <a class="mdl-navigation__link navbar-user" href="{{ route('user.show', ['user' => Auth::user()->id]) }}">
+                            <img src="{{ url( 'images/' . ((Auth::user()->avatar) ? Auth::user()->avatar . '?w=40' : 'dummy_avatar.jpg')) }}" alt="">
+                            <span>{{ Auth::user()->first_name }}</span>
                         </a>
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    @endif
-                    <!-- Right aligned menu below button -->
-                    <button id="demo-menu-lower-right"
-                            class="mdl-button mdl-js-button mdl-button--icon">
-                        <i class="material-icons">more_vert</i>
-                    </button>
+                        <a class="mdl-navigation__link" href="/home">
+                            Find a Ride
+                        </a>
+                        <!-- Right aligned menu below button -->
+                        <button id="demo-menu-lower-right"
+                                class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">expand_more</i>
+                        </button>
 
-                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                        for="demo-menu-lower-right">
-                        <li class="mdl-menu__item">Some Action</li>
-                        <li class="mdl-menu__item">Another Action</li>
-                        <li disabled class="mdl-menu__item">Disabled Action</li>
-                        <li class="mdl-menu__item">Yet Another Action</li>
-                    </ul>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                            for="demo-menu-lower-right">
+                            <li class="mdl-menu__item"><a href="{{ url('mail') }}">Mail</a></li>
+                            <li class="mdl-menu__item">Trips</li>
+                            <li class="mdl-menu__item">
+                                <a onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">Logout</a></li>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </ul>
+                    @endif
                 </nav>
             </div>
         </header>

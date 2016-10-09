@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Local extends Model
+class Trip extends Model
 {
     //
 }
