@@ -24,8 +24,9 @@ Auth::routes();
 Route::group(['middleware'=>'auth'], function () {
 
     Route::get('funds', function(){
-        return 'Add funds please.';
+        return view('user/funds/add');
     });
+    Route::post('funds/add', 'User\FundsController@addFunds');
 
     Route::group(['middleware' => 'has-funds'], function(){
 
@@ -40,6 +41,10 @@ Route::group(['middleware'=>'auth'], function () {
                 Route::get('/sent', 'MessageController@mailSent');
                 Route::get('/compose', 'MessageController@compose');
                 Route::post('/', 'MessageController@sendMessage');
+            });
+
+            Route::group(['prefix' => 'funds'], function() {
+                Route::post('/withdraw', 'FundsController@withdrawFunds');
             });
         });
 

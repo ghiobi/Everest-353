@@ -27,6 +27,14 @@ class SettingSeeder extends Seeder
             'value' => '20'
         ]);
 
+        // Amount at which the user can withdraw the excess of money
+        Setting::insert([
+            'key' => 'user_balance_withdraw',
+            'display_name' => 'Minimum Balance Statement For Withdrawal',
+            'description' => 'Minimum balance that the user must hold in order to perform a withdraw operation.',
+            'value' => '30'
+        ]);
+
         // Income percentage for the company per ride
         Setting::insert([
             'key' => 'company_income_percentage',
