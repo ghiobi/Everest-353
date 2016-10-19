@@ -22,12 +22,6 @@ img{
 .section{
   padding: 45px 0;
 }
-@for $i from 0 through 10 {
-  $multiple : $i * 5;
-  .mbottom-#{$multiple} {
-    margin-bottom: #{$multiple}px;
-  }
-}
 @each $type in margin, padding {
   @each $position in bottom, top, left, right{
     @for $i from 0 through 10 {
@@ -53,7 +47,7 @@ img{
     vertical-align: middle;
   }
 }
-.label-input--file{
+.label-input--fixed {
   top: 0 !important;
   font-size: 12px;
 }
@@ -61,7 +55,6 @@ img{
 .mdl-grid{
   max-width: 1140px;
 }
-
 .auth-logo{
   text-align: center;
   > img{
@@ -69,6 +62,40 @@ img{
     max-width: 240px;
   }
 }
+.mdl-layout:not(.is-small-screen) .mdl-layout__header-row{
+  padding: 0 40px;
+}
+/*Navigation*/
+.mdl-menu__item > a{
+  display: block;
+  margin: 0 -15px;
+  padding: 0 15px;
+  color: rgba(0,0,0, 0.87);
+  text-decoration: none;
+  &:hover{
+    color: rgb(255,64,129);
+  }
+}
+.mdl-layout__header-row .mdl-navigation__link{
+  padding-left: 0 !important;
+}
+.navbar-user{
+  > img{
+    max-width: 40px;
+    border-radius: 50%;
+  }
+  > span {
+    display: inline-block;
+    margin-left: 12px;
+  }
+}
+.mdl-layout__drawer-button{
+  display: none;
+}
+.is-small-screen .mdl-layout__drawer-button{
+  display: block;
+}
+/*Auth pages*/
 .auth-box{
   width: calc(100% - 16px);
   max-width: 380px;

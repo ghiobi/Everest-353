@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocalsTable extends Migration
+class CreateLongDistanceTripsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateLocalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locals', function (Blueprint $table) {
+        Schema::create('long_distance_trips', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('departure_city');
+            $table->string('departure_province');
+            $table->string('destination_city');
+            $table->string('departure_province');
+            $table->text('frequency');
+
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateLocalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locals');
+        Schema::dropIfExists('long_distance_trips');
     }
 }

@@ -19,9 +19,13 @@ elixir(mix => {
         './bower_components/material-design-lite/material.css'
     ],'public/css/vendor.css')
     .copy([
+        './resources/assets/js/templates'
+    ], 'public/templates')
+    .copy([
         './bower_components/material-design-icons-iconfont/dist/fonts'
     ], 'public/build/css/fonts')
     .scripts([
+        './bower_components/angular/angular.js',
         './bower_components/jquery/dist/jquery.js',
         './bower_components/material-design-lite/material.js'
     ], 'public/js/vendor.js')

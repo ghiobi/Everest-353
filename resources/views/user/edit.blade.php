@@ -152,7 +152,7 @@
                 @endif
                 <div class="mdl-textfield mdl-js-textfield{{ ($errors->has('avatar'))? ' is-invalid' : '' }} mdl-textfield--floating-label fwidth">
                     <input type="file" class="mdl-textfield__input " id="form__avatar" name="avatar" accept="image/*">
-                    <label class="mdl-textfield__label label-input--file" for="form__avatar" >Avatar (optional, 300 by 300 minimum, 5MB max)</label>
+                    <label class="mdl-textfield__label label-input--fixed" for="form__avatar" >Avatar (optional, 300 by 300 minimum, 5MB max)</label>
                     @if($errors->has('avatar'))
                         <span class="mdl-textfield__error">{{ $errors->first('avatar') }}</span>
                     @endif

@@ -17,9 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// ------------------------------------------------------------------------
-// Resource routes
-// ------------------------------------------------------------------------
 
 Route::group(['middleware'=>'auth'], function () {
 
@@ -47,6 +44,12 @@ Route::group(['middleware'=>'auth'], function () {
                 Route::post('/withdraw', 'FundsController@withdrawFunds');
             });
         });
+
+        // ------------------------------------------------------------------------
+        // Resource routes
+        // ------------------------------------------------------------------------
+
+        Route::resource('post', 'Post\PostController');
 
         Route::resource('setting', 'SettingController', ['only' => [
             'index', 'update'
