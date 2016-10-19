@@ -21,9 +21,11 @@ class CreatePostsTable extends Migration
             $table->text('description');
             $table->boolean('is_request');
             $table->string('departure_pcode');
-            $table->string('departure_date');
+            $table->string('destination_pcode');
             $table->integer('num_riders')->unsigned();
             $table->float('cost', 0, 2);
+            $table->string('departure_date');
+
             $table->softDeletes();
             $table->timestamps();
 

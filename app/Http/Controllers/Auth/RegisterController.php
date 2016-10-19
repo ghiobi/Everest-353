@@ -65,8 +65,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $image_name = null;
+        $timezone = 'US/EASTERN';
+        try{
+            //Find user timezone by ip address
+            $data = app('geocoder')->using('free_geo_ip')->geocode(request()->ip())
+                ->first()
+                ->getTimezone();
 
+            //If timezone is not null then overwrite the default timezone
+            if(! empty($data))
+                $timezone = $data;
+
+        } catch (\Geocoder\Exception\UnsupportedOperation $e){
+            //Nothing to do.
+        }
+
+        $image_name = null;
         if (request()->hasFile('avatar')) {
             //Generating unique file name.
             $image_name = spl_object_hash(request()->file('avatar')) . '_' . time() . '.jpg';
@@ -78,12 +92,14 @@ class RegisterController extends Controller
                 ->save(config('image.storage_path').'\\'.$image_name);
         }
 
+        //Creating user.
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'avatar' => $image_name
+            'avatar' => $image_name,
+            'timezone' => $timezone
         ]);
     }
 }

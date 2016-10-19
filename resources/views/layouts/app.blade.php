@@ -23,7 +23,7 @@
     </script>
 
 </head>
-<body ng-app="everest">
+<body>
 <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -115,6 +115,8 @@
 
     <script src="{{ elixir('js/vendor.js') }}"></script>
     <script src="{{ elixir('js/app.js') }}"></script>
+
+    @yield('scripts')
 
 </body>
 </html>

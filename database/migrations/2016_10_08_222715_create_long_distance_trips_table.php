@@ -15,6 +15,12 @@ class CreateLongDistanceTripsTable extends Migration
     {
         Schema::create('long_distance_trips', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('departure_city');
+            $table->string('departure_province');
+            $table->string('destination_city');
+            $table->string('departure_province');
+            $table->text('frequency');
+
             $table->timestamps();
         });
     }

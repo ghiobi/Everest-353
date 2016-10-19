@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LongDistance extends Model
+class LongDistanceTrip extends Model
 {
     /**
      * Fillable attributes
