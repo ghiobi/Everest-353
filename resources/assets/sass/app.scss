@@ -51,6 +51,12 @@ img{
   top: 0 !important;
   font-size: 12px;
 }
+.push-bottom{
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
 /*  MDL OVERRIDES */
 .mdl-grid{
   max-width: 1140px;

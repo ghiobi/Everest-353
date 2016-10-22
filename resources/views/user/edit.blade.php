@@ -60,9 +60,10 @@
 
                                 @include('components.input-text', [
                                     'name' => 'birth_date',
-                                    'label' => 'Birth Date (YYYY-MM-DD)',
-                                    'value' => $user->birth_date,
-                                    'errors' => $errors
+                                    'label' => 'Birth Date',
+                                    'value' => $user->birth_date->toDateString(),
+                                    'errors' => $errors,
+                                    'class' => 'datepicker'
                                 ])
 
                             </td>
