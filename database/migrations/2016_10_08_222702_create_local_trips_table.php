@@ -15,8 +15,8 @@ class CreateLocalTripsTable extends Migration
     {
         Schema::create('local_trips', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('frequency');
-            $table->time('')
+            $table->string('frequency')->default(json_encode([]));
+            $table->time('departure_time');
             $table->timestamps();
         });
     }

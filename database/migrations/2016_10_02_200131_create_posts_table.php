@@ -19,12 +19,13 @@ class CreatePostsTable extends Migration
             $table->morphs('postable');
             $table->string('name');
             $table->text('description');
+            $table->boolean('one_time');
             $table->boolean('is_request');
+            $table->dateTime('departure_date');
             $table->string('departure_pcode');
             $table->string('destination_pcode');
             $table->integer('num_riders')->unsigned();
-            $table->float('cost', 0, 2);
-            $table->string('departure_date');
+            $table->float('cost', 8, 2);
 
             $table->softDeletes();
             $table->timestamps();
