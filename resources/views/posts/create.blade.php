@@ -47,7 +47,7 @@
                     </label>
                 </fieldset>
                 <fieldset class="selector-wrapper">
-                    <label>Frenquency:</label>
+                    <label>Frequency:</label>
                     <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="form__one_time_1">
                         <input type="radio" id="form__one_time_1" class="mdl-radio__button" name="one_time" value="1" checked>
                         <span class="mdl-radio__label">One Time</span>

@@ -55,6 +55,7 @@
                             for="demo-menu-lower-right">
                             <li class="mdl-menu__item"><a href="{{ url('mail') }}">Mail</a></li>
                             <li class="mdl-menu__item">Trips</li>
+                            <li class="mdl-menu__item"><a href="{{ route('post.create') }}">Create a Post</a></li>
                             <li class="mdl-menu__item">
                                 <a onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">Logout</a></li>

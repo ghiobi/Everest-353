@@ -49,6 +49,9 @@
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-card mdl-shadow--2dp mdl-cell--12-col-tablet">
                 <div class="mdl-card__title" style="background-color: #3f51b5; color: #fff">
                     <h2 class="mdl-card__title-text">Information</h2>
+                    @if(Auth::user()->id == $user->id || Auth::user()->hasRole('admin'))
+                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="profile-edit-link"><span class="material-icons">mode_edit</span></a>
+                    @endif
                 </div>
                 <ul class="mdl-list profile-data">
                     <li class="mdl-list__item">
