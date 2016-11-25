@@ -61,7 +61,7 @@
                                 @include('components.input-text', [
                                     'name' => 'birth_date',
                                     'label' => 'Birth Date',
-                                    'value' => $user->birth_date->toDateString(),
+                                    'value' => ($user->birth_date)? $user->birth_date->toDateString() : '',
                                     'errors' => $errors,
                                     'class' => 'datepicker'
                                 ])

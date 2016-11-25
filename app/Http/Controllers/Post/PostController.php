@@ -43,6 +43,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         //Postal Code Geocoder
         $coder = new PostalCoder();
 
@@ -76,7 +77,7 @@ class PostController extends Controller
             'name',
             'description',
             'num_riders',
-            'one_time'
+            'one_time',
         ]));
 
         //Setting other post attributes.
@@ -84,8 +85,11 @@ class PostController extends Controller
         $post->destination_pcode = $destination_pcode['postal_code'];
         $post->poster_id = Auth::user()->id;
         $post->cost = 90; //TODO: Determine cost of trip per kilometer.
+        $post->is_request = false; //TODO: Is request of trip.
 
         $trip = null;
+
+        //If the request is of type local trip
 
         if ($request->type)
         {
@@ -97,17 +101,23 @@ class PostController extends Controller
                 'every_thur' => 'required_if:one_time,false|boolean',
                 'every_fri' => 'required_if:one_time,false|boolean',
                 'every_sat' => 'required_if:one_time,false|boolean',
-                'time' => 'required_if:one_time,true'
+                'time' => 'required_if:one_time,true',
+                'depature_date' => 'required_if:one_time,true:date'
             ]);
 
             $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
+            $frequency = array_values($frequency); //Returns array of the values only
 
             $trip = new LocalTrip([
                 'frequency' => $frequency,
-                'time' => Carbon::now($request->time)->toTimeString()
+                'departure_time' => (new Carbon($request->time))->toTimeString()
             ]);
 
+            $post->departure_date = $request->departure_date;
+
         } else {
+            //If post is type of long distance
+
             $this->validate($request, [
 
             ]);
@@ -138,7 +148,7 @@ class PostController extends Controller
     {
         $post = Post::with('postable')->findOrFail($id);
 
-        return $post;
+        return view('posts.show', compact('post'));
     }
 
     /**

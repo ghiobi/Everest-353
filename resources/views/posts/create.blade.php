@@ -3,7 +3,8 @@
 @section('content')
     <div class="mdl-grid">
         <div class="fwidth">
-            <form action="">
+            <form action="/post" method="post">
+                {{ csrf_field() }}
                 @include('components.input-text', [
                     'name' => 'name',
                     'label' => 'Post Title',
@@ -17,7 +18,7 @@
                     'errors' => $errors
                 ])
                 <div class="mdl-textfield mdl-js-textfield{{ ($errors->has('num_riders'))? ' is-invalid' : '' }} mdl-textfield--floating-label fwidth">
-                    <input type="number" class="mdl-textfield__input" id="form__num_riders" name="form__num_riders" value="{{ old('num_riders') }}">
+                    <input type="number" class="mdl-textfield__input" id="form__num_riders" name="num_riders" value="{{ old('num_riders') }}">
                     <label class="mdl-textfield__label " for="form__num_riders" >Number of Riders</label>
                     @if($errors->has('num_riders'))
                         <span class="mdl-textfield__error">{{ $errors->first('num_riders') }}</span>
@@ -107,9 +108,9 @@
                         </fieldset>
                     </div>
                     @include('components.input-text', [
-                        'name' => 'destination_pcode',
+                        'name' => 'time',
                         'label' => 'Departure Time',
-                        'value' => old('destination_pcode'),
+                        'value' => old('time'),
                         'errors' => $errors,
                         'class' => 'timepicker'
                     ])

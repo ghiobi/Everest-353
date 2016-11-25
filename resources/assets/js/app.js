@@ -21,6 +21,8 @@ $(function() {
         selectMonths: true,
         selectYears: true
     });
-    $('.timepicker').pickatime()
+    $('.timepicker').pickatime({
+        format: 'HH:i'
+    })
 
 });
