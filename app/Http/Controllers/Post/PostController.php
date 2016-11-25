@@ -6,11 +6,12 @@ use App\Library\PostalCoder;
 use App\LocalTrip;
 use App\LongDistanceTrip;
 use App\Post;
-use Geocoder\Geocoder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -31,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create-edit');
+        return view('posts.create');
     }
 
     /**
@@ -40,14 +41,20 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, PostalCoder $coder)
+    public function store(Request $request)
     {
+        //dd($request->all());
+        //Postal Code Geocoder
+        $coder = new PostalCoder();
+
         $this->validate($request, [
             'name' => 'required|max:255',
             'description' => 'required|min:10',
             'departure_pcode' => 'required',
             'destination_pcode' => 'required',
-            'num_riders' => 'required|numeric'
+            'num_riders' => 'required|numeric',
+            'one_time' => 'required|boolean',
+            'type' => 'required|boolean'
         ]);
 
         $departure_pcode = $coder->geocode($request->departure_pcode);
@@ -56,7 +63,6 @@ class PostController extends Controller
                 'departure_pcode' => 'Invalid Postal Code.'
             ]);
         }
-
         $departure_pcode = $departure_pcode->toArray();
 
         $destination_pcode = $coder->geocode($request->destination_pcode);
@@ -65,49 +71,64 @@ class PostController extends Controller
                 'destination_pcode' => 'Invalid Postal Code.'
             ]);
         }
-
         $destination_pcode = $destination_pcode->toArray();
 
         $post = new Post($request->only([
             'name',
             'description',
-            'num_riders'
+            'num_riders',
+            'one_time',
         ]));
 
+        //Setting other post attributes.
         $post->departure_pcode = $departure_pcode['postal_code'];
         $post->destination_pcode = $destination_pcode['postal_code'];
+        $post->poster_id = Auth::user()->id;
+        $post->cost = 90; //TODO: Determine cost of trip per kilometer.
+        $post->is_request = false; //TODO: Is request of trip.
 
         $trip = null;
 
-        if ($request->type == 'local_trip')
+        //If the request is of type local trip
+
+        if ($request->type)
         {
             $this->validate($request, [
-                'every_sun' => 'required_if:frequent,true|boolean',
-                'every_mon' => 'required_if:frequent,true|boolean',
-                'every_tues' => 'required_if:frequent,true|boolean',
-                'every_wed' => 'required_if:frequent,true|boolean',
-                'every_thur' => 'required_if:frequent,true|boolean',
-                'every_fri' => 'required_if:frequent,true|boolean',
-                'every_sat' => 'required_if:frequent,true|boolean',
-                'time' => 'required_if:frequent,false'
+                'every_sun' => 'required_if:one_time,false|boolean',
+                'every_mon' => 'required_if:one_time,false|boolean',
+                'every_tues' => 'required_if:one_time,false|boolean',
+                'every_wed' => 'required_if:one_time,false|boolean',
+                'every_thur' => 'required_if:one_time,false|boolean',
+                'every_fri' => 'required_if:one_time,false|boolean',
+                'every_sat' => 'required_if:one_time,false|boolean',
+                'time' => 'required_if:one_time,true',
+                'depature_date' => 'required_if:one_time,true:date'
             ]);
 
             $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
+            $frequency = array_values($frequency); //Returns array of the values only
 
             $trip = new LocalTrip([
                 'frequency' => $frequency,
-                'time' => $request->time
+                'departure_time' => (new Carbon($request->time))->toTimeString()
             ]);
-        }
 
-        if ($request->type == 'long_distance_trip')
-        {
+            $post->departure_date = $request->departure_date;
+
+        } else {
+            //If post is type of long distance
+
+            $this->validate($request, [
+
+            ]);
+
             $trip = new LongDistanceTrip([
                 'departure_city' => $departure_pcode['city'],
                 'departure_province' => $departure_pcode['province'],
                 'destination_city' => $destination_pcode['city'],
                 'destination_province' => $destination_pcode['province']
             ]);
+
         }
 
         $trip->save();
@@ -127,7 +148,7 @@ class PostController extends Controller
     {
         $post = Post::with('postable')->findOrFail($id);
 
-        return $post;
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -138,7 +159,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        if (! $this->canEdit($post)){
+            return abort(403);
+        }
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -150,7 +177,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        if (! $this->canEdit()){
+            return abort(403);
+        }
+
+        return redirect(route('post.show', ['post' => $post]))
+            ->with('success', 'Your post is now live!');
     }
 
     /**
@@ -161,6 +195,18 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect(route('user.show', ['user' => Auth::user()->id]))
+            ->with('success', 'Your post has been deleted!');
+    }
+
+    private function canEdit(Post $post)
+    {
+        if($post->poster_id !== Auth::user()->id && ! Auth::user()->hasRole('admin')){
+            return false;
+        }
+        return true;
     }
 }

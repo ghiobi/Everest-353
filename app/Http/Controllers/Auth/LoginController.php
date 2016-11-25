@@ -50,5 +50,8 @@ class LoginController extends Controller
 
             return back()->withErrors(['email' => 'Your account has been suspended.']);
         }
+
+        //Updates the created at field.
+        Auth::user()->touch();
     }
 }

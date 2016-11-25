@@ -18,8 +18,7 @@ class CreateLongDistanceTripsTable extends Migration
             $table->string('departure_city');
             $table->string('departure_province');
             $table->string('destination_city');
-            $table->string('departure_province');
-            $table->text('frequency');
+            $table->text('frequency')->default(json_encode([]));
 
             $table->timestamps();
         });

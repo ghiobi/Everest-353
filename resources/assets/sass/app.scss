@@ -51,6 +51,12 @@ img{
   top: 0 !important;
   font-size: 12px;
 }
+.push-bottom{
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
 /*  MDL OVERRIDES */
 .mdl-grid{
   max-width: 1140px;
@@ -166,6 +172,11 @@ img{
     margin-left: 0;
     margin-right: 15px;
   }
+}
+.profile-edit-link{
+  right: 15px;
+  position: absolute;
+  top: 15px;
 }
 .profile-edit-table{
   width: 100%;

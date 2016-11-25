@@ -13,20 +13,23 @@ class Post extends Model
         'name',
         'description',
         'is_request',
+        'one_time',
         'departure_pcode',
+        'destination_pcode',
         'departure_date',
         'num_riders',
         'cost',
     ];
 
     protected $casts = [
+        'one_time' => 'boolean',
         'is_request' => 'boolean',
         'departure_date' => 'date',
         'num_rider' => 'integer',
         'cost' => 'float'
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'departure_date'];
 
     /**
      * This model is the parent of

@@ -71,7 +71,7 @@ class PostalCoder
         if ($this->place != null) {
             return $this->place->getPostalCode();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -84,7 +84,7 @@ class PostalCoder
         if ($this->place != null){
             return $this->place->getLocality();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -97,7 +97,7 @@ class PostalCoder
         if ($this->place != null){
             return $this->place->getAdminLevels()->first()->getName();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -110,7 +110,7 @@ class PostalCoder
         if ($this->place != null){
             return $this->place->getLongitude();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -123,7 +123,7 @@ class PostalCoder
         if ($this->place != null){
             return $this->place->getLatitude();
         }
-        return false;
+        return null;
     }
 
     /**
