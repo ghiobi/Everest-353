@@ -5,8 +5,8 @@
 Homestead.json
 Homestead.yaml
 .env
-/public/css/
-/public/js/
-/bower_components/
-/public/build/
-/public/templates/
+/public/css/vendor.css
+/public/css/vendor.css.map
+/public/js/vendor.js
+/public/js/vendor.js.map
+/public/fonts/

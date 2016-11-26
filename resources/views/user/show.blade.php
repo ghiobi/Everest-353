@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="profile-banner mdl-color--blue-grey-300"></div>
     <div class="profile-info">
         <div class="mdl-grid">

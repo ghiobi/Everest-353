@@ -87,8 +87,8 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function sayHello(){
-        return $this->first_name . ' said Hello!';
+    public function balance(){
+        return $this->balance;
     }
 
 }

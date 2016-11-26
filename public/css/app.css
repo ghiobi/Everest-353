@@ -1,0 +1,15 @@
+.navbar-brand > img{
+  position: relative;
+  max-width: 90px;
+  top: -2px;
+}
+.navbar-avatar{
+  max-width: 35px;
+  margin-right: 10px;
+}
+#navbar-dropdown{
+  display: inline-block;
+}
+.section{
+  padding: 60px 0;
+}
