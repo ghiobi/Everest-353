@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'poster_id');
     }
 
     public function balance(){
@@ -99,5 +99,60 @@ class User extends Authenticatable
     public function fullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function postedTrips()
+    {
+        return $this->hasManyThrough(Trip::class, Post::class);
+    }
+
+    public function getRating()
+    {
+        $sumRating = 0;
+        $numberOfRating = 0;
+
+        // Get all the ratings for all trips for all posts of that user
+        $this->posts()->get();
+        foreach($this->posts as $post) {
+            foreach ($post->trips as $trip) {
+                foreach ($trip->users as $user) {
+                    $user_rating = $user->pivot->rating;
+                    if ($user_rating != null) {
+                        $sumRating += $user_rating;
+                        $numberOfRating++;
+                    }
+                }
+            }
+        }
+
+        // Map the average number of stars to a letter ranking
+        $letter_ranking = 'N/A';
+
+        if($numberOfRating > 0) {
+            $average_rating = $sumRating/$numberOfRating;
+            if($average_rating > 9) {
+                $letter_ranking = 'A+';
+            } else if($average_rating > 8) {
+                $letter_ranking = 'A';
+            } else if($average_rating > 7) {
+                $letter_ranking = 'A-';
+            } else if($average_rating > 6) {
+                $letter_ranking = 'B+';
+            } else if($average_rating > 5) {
+                $letter_ranking = 'B';
+            } else if($average_rating > 4) {
+                $letter_ranking = 'B-';
+            } else if($average_rating > 3) {
+                $letter_ranking = 'C+';
+            } else if($average_rating > 2) {
+                $letter_ranking = 'C';
+            } else if($average_rating > 1) {
+                $letter_ranking = 'C-';
+            } else if($average_rating >= 0) {
+                $letter_ranking = 'F';
+            }
+        }
+
+        return $letter_ranking;
     }
 }

@@ -89,8 +89,7 @@ class PostController extends Controller
 
         $trip = null;
 
-        //If the request is of type local trip
-
+        //TYPE LOCAL TRIP
         if ($request->type)
         {
             $this->validate($request, [
@@ -119,7 +118,7 @@ class PostController extends Controller
             //If post is type of long distance
 
             $this->validate($request, [
-
+                //TODO incomplete
             ]);
 
             $trip = new LongDistanceTrip([

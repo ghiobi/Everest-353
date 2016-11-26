@@ -42,5 +42,23 @@ class SettingSeeder extends Seeder
             'description' => 'Percentage of each ride transaction that goes to the company. Remaining goes to the driver.',
             'value' => '0.05'
         ]);
+
+        // Initial cost for any ride
+        Setting::insert([
+            'key' => 'ride_initial_cost',
+            'display_name' => 'Initial Cost Of A Ride',
+            'description' => 'The initial cost for a car ride, excluding the fuel cost.',
+            'value' => '10.00'
+        ]);
+
+        // Fake average cost per kilometer for the fuel
+        Setting::insert([
+            'key' => 'fuel_cost_per_kilometer',
+            'display_name' => 'Fuel Cost Per Kilometer',
+            'description' => 'The average fuel cost required to ride one kilometer ($/kilometer)',
+            'value' => '0.20'
+        ]);
+
+
     }
 }

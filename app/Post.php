@@ -50,4 +50,18 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
+
+    public function cost(){
+        return $this->cost;
+    }
+
+    public function nextDeparture()
+    {
+        return $this->departure_date;
+    }
 }
