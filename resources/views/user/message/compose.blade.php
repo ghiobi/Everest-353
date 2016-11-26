@@ -1,44 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mdl-grid">
-        <div class="mdl-card__title padding-bottom--0">
-            <h1 class="mdl-card__title-text">Compose Message</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">
+                Compose a message to someone.
+            </h1>
+            <p class="lead">Getting in touch!</p>
         </div>
-        <div class="mdl-card__supporting-text padding-top--0">
-            <p>
-                @include('components.success-notification')
-            </p>
-            <form role="form" method="POST" action="{{ url('/mail') }}">
-                {{ csrf_field() }}
-
-                {{-- Drop down list of all users except ourself, if recipient is set, select it by default --}}
-                <select name="recipient_id">
-                    @foreach ($all_users as $user)
-
-                        @if ($user->id == Auth::user()->id)
-                            @continue
-                        @endif
-                        <option value="{{$user->id}}"
-                                @if ($recipient != null && $user->id == $recipient->id)
-                                    selected
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/mail">Mail Inbox</a></li>
+            <li class="breadcrumb-item"><a href="/mail/sent">Mail Sent</a></li>
+            <li class="breadcrumb-item active">Compose Message</li>
+        </ol>
+        <div class="row">
+            <div class="col-sm-6">
+                <form action="/mail" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="">Recipient</label>
+                        <select name="recipient_id" class="form-control">
+                            @foreach ($all_users as $user)
+                                @if ($user->id == Auth::user()->id)
+                                    @continue
                                 @endif
-                        >
-                            {{$user->first_name}} {{$user->last_name}}
-                        </option>
-                    @endforeach
-                </select>
-
-
-                @include('components.input-textarea', [
-                        'name' => 'body',
-                        'label' => 'Body',
-                        'errors' => $errors
-                ])
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
-                    Send
-                </button>
-            </form>
+                                <option value="{{$user->id}}" @if ($recipient != null && $user->id == $recipient->id) selected @endif>
+                                    {{$user->first_name}} {{$user->last_name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form__body">Your Message</label>
+                        <textarea class="form-control" id="form__body" rows="5" name="body" placeholder="Drop a message..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Send!</button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

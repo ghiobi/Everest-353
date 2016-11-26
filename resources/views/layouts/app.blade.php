@@ -10,11 +10,11 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <!-- FONTS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link href="/css/vendor.css" rel="stylesheet">
+    <script src="/js/vendor.js"></script>
 
-    <link href="{{ elixir('css/vendor.css') }}" rel="stylesheet">
-    <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+    <script src="/js/app.js"></script>
 
     <script>
         window.Everest = {!! json_encode([
@@ -24,98 +24,53 @@
 
 </head>
 <body>
-<!-- Always shows a header, even in smaller screens. -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title"><a href="/" class="mdl-color-text--grey-200" style="text-decoration: none">{{ config('app.name') }}</a></span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation. We hide it in small screens. -->
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    @if(Auth::guest())
-                        <a class="mdl-navigation__link" href="/login">Login</a>
-                        <a class="mdl-navigation__link" href="/register">Register</a>
-                    @else
-                        <a class="mdl-navigation__link navbar-user" href="{{ route('user.show', ['user' => Auth::user()->id]) }}">
-                            <img src="{{ url( 'images/' . ((Auth::user()->avatar) ? Auth::user()->avatar . '?w=40' : 'dummy_avatar.jpg')) }}" alt="">
-                            <span>{{ Auth::user()->first_name }}</span>
-                        </a>
-                        <a class="mdl-navigation__link" href="/home">
-                            Find a Ride
-                        </a>
-                        <!-- Right aligned menu below button -->
-                        <button id="demo-menu-lower-right"
-                                class="mdl-button mdl-js-button mdl-button--icon">
-                            <i class="material-icons">expand_more</i>
-                        </button>
 
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                            for="demo-menu-lower-right">
-                            <li class="mdl-menu__item"><a href="{{ url('mail') }}">Mail</a></li>
-                            <li class="mdl-menu__item">Trips</li>
-                            <li class="mdl-menu__item"><a href="{{ route('post.create') }}">Create a Post</a></li>
-                            <li class="mdl-menu__item">
-                                <a onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">Logout</a></li>
+    <nav class="navbar navbar-light bg-faded">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo/logo-hori.png" alt="">
+            </a>
+            @if(! Auth::guest())
+                <form class="form-inline float-xs-left">
+                    <input class="form-control" type="text" placeholder="Find a ride.">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            @endif
+            <ul class="nav navbar-nav float-xs-right">
+                @if(Auth::guest())
+                    <li class="nav-item">
+                        <span class="navbar-text">Sign in to get started!</span>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <span class="navbar-text text-muted">Balance ${{ Auth::user()->balance() }}</span>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt="">
+                        <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->first_name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                            <a class="dropdown-item" href="/mail">Mail</a>
+                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" href="/funds">Add Funds</a>
+                            <a class="dropdown-item" href="#"  onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                        </ul>
-                    @endif
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">{{ config('app.name') }}</span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-            </nav>
+                        </div>
+                    </li>
+                @endif
+            </ul>
         </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                @yield('content')
-            </div>
-            <footer class="mdl-mega-footer">
-                <div class="mdl-mega-footer__middle-section">
-                    <div class="mdl-mega-footer__drop-down-section">
-                        <h1 class="mdl-mega-footer__heading">Libraries</h1>
-                        <ul class="mdl-mega-footer__link-list">
-                            <li><a href="https://laravel.com/">Laravel</a></li>
-                            <li><a href="https://getmdl.io/">Material Design Lite</a></li>
-                            <li><a href="https://design.google.com/icons/">Material Icons</a></li>
-                            <li><a href="https://jquery.com/">JQuery</a></li>
-                            <li><a href="https://github.com/amsul/pickadate.js">PickaDateJS</a></li>
-                        </ul>
-                    </div>
-                    <div class="mdl-mega-footer__drop-down-section">
-                        <h1 class="mdl-mega-footer__heading">Tools</h1>
-                        <ul class="mdl-mega-footer__link-list">
-                            <li><a href="https://www.npmjs.com/">NPM</a></li>
-                            <li><a href="http://gulpjs.com/">Gulp</a></li>
-                            <li><a href="https://bower.io/">Bower</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mdl-mega-footer__bottom-section">
-                    <div class="mdl-logo">
-                        More Information
-                    </div>
-                    <ul class="mdl-mega-footer__link-list">
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Privacy and Terms</a></li>
-                    </ul>
-                </div>
-            </footer>
-        </main>
-    </div>
+    </nav>
 
-    <script src="{{ elixir('js/vendor.js') }}"></script>
-    <script src="{{ elixir('js/app.js') }}"></script>
+    @yield('content')
+
+    <div class="container text-xs-center copyright">
+        All rights reserved | &copy; Copyright {{ date('Y') }} Super | Made with &hearts; by <a href="https://github.com/limphilip">Philip</a> and <a href="http://github.com/ghiobi/">Laurendy</a>
+    </div>
 
     @yield('scripts')
 

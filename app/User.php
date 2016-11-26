@@ -87,8 +87,17 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function sayHello(){
-        return $this->first_name . ' said Hello!';
+    public function balance(){
+        return $this->balance;
     }
 
+    public function avatarUrl($width, $height = null)
+    {
+        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . ($height)? '&h=' . $height : ''  : 'dummy_avatar.jpg'));
+    }
+
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
