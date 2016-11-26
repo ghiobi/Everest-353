@@ -1,32 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mdl-grid">
-        <div class="mdl-card__title padding-bottom--0">
-            <h1 class="mdl-card__title-text">Mail Inbox</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">
+                Mail Inbox
+            </h1>
+            <p class="lead">Get cracking with people!</p>
         </div>
-        <div class="mdl-card__supporting-text padding-top--0">
-            @if(!empty($messages))
-                @foreach($messages as $message)
-                    <p>
-                        <img src="{{ url( 'images/' . (($message->sender->avatar) ? $message->sender->avatar . '?w=50' : 'dummy_avatar.jpg')) }}" alt="" style="max-width: 50px">
-                        {{ $message->sender->first_name . ' ' . $message->sender->last_name }}
-                    </p>
-                    <p>{{$message->created_at->diffForHumans()}} - Said: {{ $message->body }}</p>
-                    <p>
-                        <form role="form" method="GET" action="{{ url('/mail/compose') }}">
-                            <input type="hidden" name="recipient_id" value="{{$message->sender->id}}"/>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
-                                Reply
-                            </button>
-                        </form>
-                    </p>
-                @endforeach
-            @else
-                <p>
-                    Your inbox is empty.
-                </p>
-            @endif
-        </div>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sender</th>
+                    <th>Message</th>
+                    <th>Actions</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($messages) > 0)
+                    @foreach($messages as $message)
+                        <tr>
+                            <td>
+                                <img src="{{ $message->sender->avatarUrl(50) }}" class="img-fluid rounded" alt=""> {{ $message->sender->first_name . ' ' . $message->sender->last_name }}
+                            </td>
+                            <td>
+                                {{ $message->body }}
+                            </td>
+                            <td>
+                                <a href="/mail/compose?recipient_id={{ $message->sender->id }}" title="reply"><i class="fa fa-reply"></i></a>
+                            </td>
+                            <td>
+                                {{$message->created_at->diffForHumans()}}
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="text-xs-center">
+                        <td colspan="4">
+                            <div class="section">
+                                <h4>Have no message? <i class="fa fa-frown-o"></i></h4>
+                                <p class="lead">Find a friend who can help you by finding a ride!</p>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
     </div>
 @endsection

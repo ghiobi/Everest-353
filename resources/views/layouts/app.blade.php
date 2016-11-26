@@ -46,14 +46,14 @@
                         <span class="navbar-text text-muted">Balance ${{ Auth::user()->balance() }}</span>
                     </li>
                     <li class="nav-item dropdown">
-                        <img src="{{ url( 'images/' . ((Auth::user()->avatar) ? Auth::user()->avatar . '?w=40' : 'dummy_avatar.jpg')) }}" class="img-fluid rounded-circle navbar-avatar" alt="">
-                        <a class="nav-link dropdown-toggle" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt="">
+                        <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->first_name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
-                            <a class="dropdown-item" href="#">Mail</a>
+                            <a class="dropdown-item" href="/mail">Mail</a>
                             <a class="dropdown-item" href="#">Messages</a>
-                            <a class="dropdown-item" href="#">Add Funds</a>
+                            <a class="dropdown-item" href="/funds">Add Funds</a>
                             <a class="dropdown-item" href="#"  onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -67,6 +67,10 @@
     </nav>
 
     @yield('content')
+
+    <div class="container text-xs-center copyright">
+        All rights reserved | &copy; Copyright {{ date('Y') }} Super | Made with &hearts; by <a href="https://github.com/limphilip">Philip</a> and <a href="http://github.com/ghiobi/">Laurendy</a>
+    </div>
 
     @yield('scripts')
 

@@ -14,7 +14,7 @@ const elixir = require('laravel-elixir');
 
 elixir(mix => {
     mix.styles([
-      './node_modules/bootstrap/dist/css/bootstrap.css',
+      './node_modules/bootstrap/dist/css/bootstrap-flex.css',
       './node_modules/font-awesome/css/font-awesome.css'
     ],'public/css/vendor.css')
     .scripts([

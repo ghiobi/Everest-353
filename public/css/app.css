@@ -7,9 +7,14 @@
   max-width: 35px;
   margin-right: 10px;
 }
-#navbar-dropdown{
-  display: inline-block;
-}
 .section{
   padding: 60px 0;
+}
+.profile-stats{
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+.copyright{
+  padding: 20px 0;
 }

@@ -91,4 +91,8 @@ class User extends Authenticatable
         return $this->balance;
     }
 
+    public function avatarUrl($width, $height = null)
+    {
+        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . ($height)? '&h=' . $height : ''  : 'dummy_avatar.jpg'));
+    }
 }
