@@ -18,7 +18,8 @@ class PaymentController extends Controller
         ]);
 
         $errors = [];
-        // Further validation
+
+        // User must have agreed on terms and cost
         if ($request->confirm != 0) {
             $errors['confirm'] = 'Please agree to the terms and costs of this trip.';
         }
@@ -28,11 +29,21 @@ class PaymentController extends Controller
         if ($user->balance < $trip_cost) {
             $errors['balance'] = 'You have insufficient balance on your account to join that trip.';
         }
-
+        // Ensure that there is enough space in the trip
+        if(count($trip->users) >= $trip->num_riders) {
+            $errors['max_capacity'] = 'The trip has reached its maximum capacity of riders.';
+        }
+        // Ensure that the departure date is not already passed
+        $departure_datetime = strtotime($trip->departure_datetime);
+        $now_datetime = strtotime(date('Y-m-d H:i:s'));
+        if($now_datetime > $departure_datetime) {
+            $errors['late'] = 'The departure date has already passed.';
+        }
         // Ensure that the user is not already part of the trip
         foreach($trip->users as $trip_user) {
             if($user->id == $trip_user->id) {
-                $errors['already_joined'] = 'You are already part of this trip';
+                $errors['already_joined'] = 'You already joined this trip.';
+                break;
             }
         }
 
@@ -50,6 +61,6 @@ class PaymentController extends Controller
         // Add that user to the trip
         $trip->users()->attach($user);
 
-        return redirect();
+        return redirect('trip');
     }
 }

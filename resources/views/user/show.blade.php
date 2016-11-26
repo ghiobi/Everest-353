@@ -10,7 +10,7 @@
                         <h4 class="card-title text-xs-center">{{ $user->first_name . ' ' . $user->last_name }}</h4>
                         <div class="row flex-items-xs-between text-xs-center">
                             <div class="col-xs">
-                                <div>A+</div>
+                                <div>{{$user->getRating()}}</div>
                                 <div>rating</div>
                             </div>
                             <div class="col-xs">
