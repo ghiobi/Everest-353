@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="container section">
-        @if(Session::has('success')))
-            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,7 +19,7 @@
         @endif
         <div class="row">
             <div class="col-md-9">
-                <h4 class="font-weight-normal mb-1">Profile info</h4>
+                <h3 class="mb-1">Profile info</h3>
                 <form action="{{ route('user.update', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('patch') }}
@@ -64,7 +64,7 @@
                                 <input class="form-control" id="form__birth_date" type="text" value="{{ $user->birth_date }}" name="birth_date">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_birth_date" value="0">
-                                    <input type="checkbox" name="is_visible_birth_date" {{ ($user->is_visible_birth_date)? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_visible_birth_date" {{ ($user->is_visible_birth_date)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
                             @if($errors->has('birth_date'))
@@ -81,7 +81,7 @@
                                 <input class="form-control" id="form__address" type="text" value="{{ $user->address }}" name="address">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_address" value="0">
-                                    <input type="checkbox" name="is_visible_address" {{ ($user->is_visible_address)? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_visible_address" {{ ($user->is_visible_address)? 'checked' : '' }}  value="1">
                                 </span>
                             </div>
                             @if($errors->has('address'))
@@ -98,7 +98,7 @@
                                 <input class="form-control" id="form__license_num" type="text" value="{{ $user->license_num }}" name="license_num">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_license_num" value="0">
-                                    <input type="checkbox" name="is_visible_license_num" {{ ($user->is_visible_license_num)? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_visible_license_num" {{ ($user->is_visible_license_num)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
                             @if($errors->has('license_num'))
@@ -115,7 +115,7 @@
                                 <input class="form-control" id="form__policies" type="text" value="{{ (empty($user->policies))? '' : implode(';', $user->policies) }}" name="policies">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_policies" value="0">
-                                    <input type="checkbox" name="is_visible_policies" {{ ($user->is_visible_policies)? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_visible_policies" {{ ($user->is_visible_policies)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
                             @if($errors->has('policies'))
@@ -132,7 +132,7 @@
                                 <input class="form-control" id="form__external_email" type="text" value="{{ $user->external_email }}" name="external_email">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_external_email" value="0">
-                                    <input type="checkbox" name="is_visible_external_email" {{ ($user->is_visible_external_email)? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_visible_external_email" {{ ($user->is_visible_external_email)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
                             @if($errors->has('external_email'))
@@ -164,7 +164,7 @@
                         <button class="btn btn-primary float-xs-right" type="submit">Update!</button>
                     </div>
                 </form>
-                <h4 class="font-weight-normal mt-2 mb-1">Change Password</h4>
+                <h3 class="mt-2 mb-1">Change Password</h3>
                 <form action="{{ route('user.update', ['user' => $user->id]) }}" method="post">
                     {{ csrf_field() }}
                     {{ method_field('patch') }}

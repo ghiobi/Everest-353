@@ -29,7 +29,7 @@
                     @foreach($messages as $message)
                         <tr>
                             <td>
-                                <img src="{{ $message->sender->avatarUrl(50) }}" class="img-fluid rounded" alt=""> {{ $message->sender->fullName() }}
+                                <img src="{{ $message->sender->avatarUrl(30) }}" width="35" class="img-fluid rounded-circle" alt=""> {{ $message->sender->fullName() }}
                             </td>
                             <td>
                                 {{ $message->body }}

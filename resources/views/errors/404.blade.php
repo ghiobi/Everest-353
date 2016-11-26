@@ -1,18 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="">
-
-    </div>
-    <div class="mdl-grid">
-        <div class="mdl-card__title padding-bottom--0">
-            <h1 class="mdl-card__title-text">Page Not Found</h1>
-        </div>
-        <div class="mdl-card__supporting-text padding-top--0">
-            <p>
-                The requested page has not been found. Please ensure the provided link is valid or go back
-                to the <a href="/">home page</a>.
-            </p>
+    <div class="container section text-xs-center">
+        <div class="row flex-items-xs-center">
+            <div class="col-xs-8">
+                <img src="/images/404.gif" alt="" class="img-fluid" width="340">
+                <div style="font-size: 86px">404</div>
+                <h1 style="font-weight: 300;">OOOPPS.! THE PAGE YOU WERE LOOKING FOR, COULDN'T BE FOUND.</h1>
+                <a href="/">Return back home</a>
+            </div>
         </div>
     </div>
 @endsection

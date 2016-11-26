@@ -89,8 +89,12 @@
                     <script>
                         $(function(){
                             $('.auth-tabs').tabs({
-                                classes: {
-                                    'ui-tabs-anchor': 'active'
+                                activate: function(event, ui){
+                                    ui.oldTab.find('> a').removeClass('active');
+                                    ui.newTab.find('> a').addClass('active');
+                                },
+                                create: function( event, ui) {
+                                    ui.tab.find('> a').addClass('active');
                                 }
                             });
                         });

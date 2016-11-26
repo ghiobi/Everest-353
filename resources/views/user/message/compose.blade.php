@@ -18,6 +18,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <form action="/mail" method="post">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Recipient</label>
                         <select name="recipient_id" class="form-control">

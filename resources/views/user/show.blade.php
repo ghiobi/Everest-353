@@ -8,18 +8,18 @@
                     <img class="card-img-top img-fluid" src="{{ $user->avatarUrl(340) }}" alt="">
                     <div class="card-block">
                         <h4 class="card-title text-xs-center">{{ $user->first_name . ' ' . $user->last_name }}</h4>
-                        <div class="profile-stats">
-                            <div class="stat-item">
-                                <div class="value">A+</div>
-                                <div class="name">rating</div>
+                        <div class="row flex-items-xs-between text-xs-center">
+                            <div class="col-xs">
+                                <div>A+</div>
+                                <div>rating</div>
                             </div>
-                            <div class="stat-item">
-                                <div class="value">44</div>
-                                <div class="name">posts</div>
+                            <div class="col-xs">
+                                <div>44</div>
+                                <div>posts</div>
                             </div>
-                            <div class="stat-item">
-                                <div class="value">1</div>
-                                <div class="name">trips</div>
+                            <div class="col-xs">
+                                <div>1</div>
+                                <div>trips</div>
                             </div>
                         </div>
                     </div>
