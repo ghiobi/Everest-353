@@ -49,11 +49,16 @@ Route::group(['middleware'=>'auth'], function () {
         });
 
         // ------------------------------------------------------------------------
-        // Resource routes
+        // POSTS and TRIPS
         // ------------------------------------------------------------------------
 
         Route::resource('post', 'Post\PostController');
+        Route::resource('trip', 'Trip\TripController');
+        Route::post('/trip/{trip}/join', 'Trip\PaymentController@processPayment');
 
+        // ------------------------------------------------------------------------
+        // Settings
+        // ------------------------------------------------------------------------
         Route::resource('setting', 'SettingController', ['only' => [
             'index', 'update'
         ]]);

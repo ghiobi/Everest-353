@@ -147,7 +147,9 @@ class PostController extends Controller
     {
         $post = Post::with('postable')->findOrFail($id);
 
-        return view('posts.show', compact('post'));
+        $trip = null; //TODO $post->getNextTrip();
+
+        return view('posts.show', compact('post', 'trip'));
     }
 
     /**

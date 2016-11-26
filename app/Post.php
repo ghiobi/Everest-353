@@ -64,4 +64,13 @@ class Post extends Model
     {
         return $this->departure_date;
     }
+
+    public function getNextTrip()
+    {
+        if ($this->postable_type == LocalTrip::class){
+
+        }
+
+        return ;
+    }
 }
