@@ -1,26 +1,58 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mdl-grid">
-        <div class="mdl-card__title padding-bottom--0">
-            <h1 class="mdl-card__title-text">Mail Sent</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">
+                Mail Sent
+            </h1>
+            <p class="lead">Reply to your loved ones!</p>
         </div>
-        <div class="mdl-card__supporting-text padding-top--0">
-            @if(!empty($messages))
+    </div>
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/mail">Mail Inbox</a></li>
+            <li class="breadcrumb-item active">Mail Sent</li>
+            <li class="breadcrumb-item"><a href="/mail/compose">Compose Message</a></li>
+        </ol>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Message</th>
+                <th>Actions</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(count($messages) > 0)
                 @foreach($messages as $message)
-                    <p>
-                        <img src="{{ url( 'images/' . (($message->messageable->avatar) ? $message->messageable->avatar . '?w=50' : 'dummy_avatar.jpg')) }}" alt="" style="max-width: 50px">
-                        {{ $message->messageable->first_name . ' ' . $message->messageable->last_name }}
-                    </p>
-                    <p>
-                        {{$message->created_at->diffForHumans()}} - You sent: {{ $message->body }}
-                    </p>
+                    <tr>
+                        <td>
+                            <img src="{{ $message->messageable->avatarUrl(50) }}" class="img-fluid rounded" alt=""> {{ $message->messageable->fullName() }}
+                        </td>
+                        <td>
+                            {{ $message->body }}
+                        </td>
+                        <td>
+                            <a href="/mail/compose?recipient_id={{ $message->messageable->id }}" title="reply"><i class="fa fa-reply"></i></a>
+                        </td>
+                        <td>
+                            {{$message->created_at->diffForHumans()}}
+                        </td>
+                    </tr>
                 @endforeach
             @else
-                <p>
-                    You did not send any messages.
-                </p>
+                <tr class="text-xs-center">
+                    <td colspan="4">
+                        <div class="section">
+                            <h4>Not creating enough love? <i class="fa fa-frown-o"></i></h4>
+                            <p class="lead"><a href="/mail/compose">Start by sending a message!</a></p>
+                        </div>
+                    </td>
+                </tr>
             @endif
-        </div>
+            </tbody>
+        </table>
     </div>
 @endsection

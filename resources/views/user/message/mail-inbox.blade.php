@@ -10,6 +10,11 @@
         </div>
     </div>
     <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Mail Inbox</li>
+            <li class="breadcrumb-item"><a href="/mail/sent">Mail Sent</a></li>
+            <li class="breadcrumb-item"><a href="/mail/compose">Compose Message</a></li>
+        </ol>
         <table class="table">
             <thead>
                 <tr>
@@ -24,7 +29,7 @@
                     @foreach($messages as $message)
                         <tr>
                             <td>
-                                <img src="{{ $message->sender->avatarUrl(50) }}" class="img-fluid rounded" alt=""> {{ $message->sender->first_name . ' ' . $message->sender->last_name }}
+                                <img src="{{ $message->sender->avatarUrl(50) }}" class="img-fluid rounded" alt=""> {{ $message->sender->fullName() }}
                             </td>
                             <td>
                                 {{ $message->body }}

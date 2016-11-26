@@ -47,6 +47,15 @@
                             <div class="card-text" id="register" style="display: none">
                                 <form action="/register" enctype="multipart/form-data" method="post">
                                     {{ csrf_field() }}
+                                    @if(count($errors) > 0)
+                                        <div class="alert alert danger">
+                                            <ul>
+                                                @foreach($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-6">
@@ -69,7 +78,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Avatar</label>
-                                        <input type="file" class="form-control-file" >
+                                        <input type="file" class="form-control-file" name="avatar" accept="image/*">
                                         <small class="form-text text-muted">Optional, 300 by 300 minimum, 5MB max</small>
                                     </div>
                                     <button class="btn btn-primary btn-block">Register</button>

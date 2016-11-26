@@ -95,4 +95,9 @@ class User extends Authenticatable
     {
         return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . ($height)? '&h=' . $height : ''  : 'dummy_avatar.jpg'));
     }
+
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

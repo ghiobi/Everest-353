@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Active</li>
+                        <li class="list-group-item">Active, logged in {{ $user->updated_at->diffForHumans() }}.</li>
                         @if($user->external_email && $user->is_visible_external_email)
                             <li class="list-group-item">
                                 {{ $user->external_email }}
@@ -64,7 +64,18 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Trips and services</h4>
+                        <h4 class="card-title">Posts</h4>
+                        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                    </div>
+                    <div class="card-block">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Reviews</h4>
                         <h6 class="card-subtitle text-muted">Support card subtitle</h6>
                     </div>
                     <div class="card-block">

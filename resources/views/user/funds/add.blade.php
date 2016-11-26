@@ -38,9 +38,13 @@
     </div>
     <div class="section text-xs-center">
         <div class="container">
-            <h2 class="display-4">Learn More on how to save!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, assumenda consequuntur cum debitis dolorum ex hic, ipsam labore laudantium mollitia porro quas quod ratione sequi sit tempora temporibus voluptate voluptatum?</p>
-            <button class="btn btn-info">Learn More</button>
+            <div class="row flex-items-xs-center">
+                <div class="col-md-8">
+                    <h2 class="display-4">Learn more on how to save!</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, assumenda consequuntur cum debitis dolorum ex hic, ipsam labore laudantium mollitia porro quas quod ratione sequi sit tempora temporibus voluptate voluptatum?</p>
+                    <button class="btn btn-info">Learn More</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

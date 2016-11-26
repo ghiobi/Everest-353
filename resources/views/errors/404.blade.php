@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="">
+
+    </div>
     <div class="mdl-grid">
         <div class="mdl-card__title padding-bottom--0">
             <h1 class="mdl-card__title-text">Page Not Found</h1>

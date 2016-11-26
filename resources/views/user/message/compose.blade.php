@@ -9,7 +9,12 @@
             <p class="lead">Getting in touch!</p>
         </div>
     </div>
-    <div class="container section">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/mail">Mail Inbox</a></li>
+            <li class="breadcrumb-item"><a href="/mail/sent">Mail Sent</a></li>
+            <li class="breadcrumb-item active">Compose Message</li>
+        </ol>
         <div class="row">
             <div class="col-sm-6">
                 <form action="/mail" method="post">
@@ -27,7 +32,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="form__body">Example textarea</label>
+                        <label for="form__body">Your Message</label>
                         <textarea class="form-control" id="form__body" rows="5" name="body" placeholder="Drop a message..."></textarea>
                     </div>
                     <button class="btn btn-primary" type="submit">Send!</button>

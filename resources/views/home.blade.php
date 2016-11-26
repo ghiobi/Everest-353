@@ -15,7 +15,7 @@
     <div class="container section">
         <h1 class="font-weight-normal mb-2">Found 43 results for 'toronto'.</h1>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Special title treatment</h4>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Special title treatment</h4>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Special title treatment</h4>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Special title treatment</h4>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-block">
                         <h4 class="card-title">Special title treatment</h4>
