@@ -48,7 +48,8 @@ class Post extends Model
      */
     public function poster()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)
+            ->select(['id', 'first_name', 'last_name', 'avatar']);
     }
 
     public function trips()

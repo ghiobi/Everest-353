@@ -64,7 +64,7 @@
                 @else
                     <div class="section">
                         <h3>No messages.</h3>
-                        <p class="lead">Be first to comment!</p>
+                        <p class="lead mb-0">Be first to comment!</p>
                     </div>
                 @endif
             <div class="card-footer">

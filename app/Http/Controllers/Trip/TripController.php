@@ -48,9 +48,12 @@ class TripController extends Controller
     public function show($id)
     {
         //Todo make sure the user is part of this trip
-        $trip = Trip::firstOrFail($id);
+        $trip = Trip::with('post.poster')
+            ->with('riders')
+            ->with('messages.sender')
+            ->findOrFail($id);
 
-        return view('trips.show');
+        return view('trips.show', compact('trip'));
     }
 
     /**
