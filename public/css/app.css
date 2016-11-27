@@ -30,3 +30,6 @@
 .card-post > .card-block{
   margin-bottom: 70px;
 }
+.card-post{
+  min-width: 47.5%;
+}

@@ -64,8 +64,6 @@ class HomeController extends Controller
                 }
             });
 
-            dd($starts);
-
             $search['postal_start'] = $postal_start->getPostalCode();
 
         }

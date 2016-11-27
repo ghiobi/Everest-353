@@ -30,6 +30,7 @@
                     <label class="form-check-inline">
                         <input class="form-check-input" type="radio" name="type" value="2"{{ (request()->type != 2)? '' : ' checked' }}> Long Distance
                     </label>
+                    <small class="text-muted" style="margin-left: 15px;top: 2px;position: relative;">Found {{ count($posts) }} results.</small>
                     <button class="btn btn-primary float-xs-right" type="submit">Search</button>
                 </form>
             </div>
@@ -38,7 +39,7 @@
             <div class="col-md-9">
                 <div class="card-deck">
                     @foreach($posts as $post)
-                        <div class="card card-post">
+                        <div class="card card-post mb-1">
                             <div class="card-block">
                                 <small>Posted {{ $post->created_at->diffForHumans() }}</small>
                                 <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
