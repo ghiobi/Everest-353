@@ -134,15 +134,15 @@
                             <div class="form-group">
                                 <label for="">Frequency</label>
                                 <select class="form-control" name="frequency">
-                                    <option value="0">Every Sunday</option>
-                                    <option value="1">Every Monday</option>
-                                    <option value="2">Every Tuesday</option>
-                                    <option value="3">Every Wednesday</option>
-                                    <option value="4">Every Thursday</option>
-                                    <option value="5">Every Friday</option>
-                                    <option value="6">Every Saturday</option>
-                                    <option value="7">Twice-Monthly</option>
-                                    <option value="8">Monthly</option>
+                                    <option value="0" {{ (old('frequency') == 0)? 'selected' : '' }}>Every Sunday</option>
+                                    <option value="1" {{ (old('frequency') == 1)? 'selected' : '' }}>Every Monday</option>
+                                    <option value="2" {{ (old('frequency') == 2)? 'selected' : '' }}>Every Tuesday</option>
+                                    <option value="3" {{ (old('frequency') == 3)? 'selected' : '' }}>Every Wednesday</option>
+                                    <option value="4" {{ (old('frequency') == 4)? 'selected' : '' }}>Every Thursday</option>
+                                    <option value="5" {{ (old('frequency') == 5)? 'selected' : '' }}>Every Friday</option>
+                                    <option value="6" {{ (old('frequency') == 6)? 'selected' : '' }}>Every Saturday</option>
+                                    <option value="7" {{ (old('frequency') == 7)? 'selected' : '' }}>Twice-Monthly</option>
+                                    <option value="8" {{ (old('frequency') == 8)? 'selected' : '' }}>Monthly</option>
                                 </select>
                             </div>
                         </div>
@@ -175,10 +175,10 @@
             });
             $freq_selection.change(function(){
                 var val = $(this).val();
-                if(val == 0){
-                    $freq_wrap.addClass('active');
-                } else {
+                if(val == 1){
                     $freq_wrap.removeClass('active');
+                } else {
+                    $freq_wrap.addClass('active');
                 }
             });
         });

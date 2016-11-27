@@ -71,8 +71,12 @@
                             </div>
                             <p class="card-text">{{$post->description}}</p>
                             @if(canEdit($user->id))
-                                <a href="/post/{{$post->id}}/edit" class="card-link">Update</a>
-                                <a href="/post/{{$post->id}}/delete" class="card-link">Delete</a>
+                                <a href="/post/{{$post->id}}/edit" class="btn btn-outline-info">Update</a>
+                                <a href="#" class="delete btn btn-outline-danger"><i class="fa fa-trash"></i> Delete</a>
+                                <form action="/post/{{$post->id}}/" method="post" style="display: none">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                </form>
                             @endif
                         </div>
                     </div>

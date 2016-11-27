@@ -36,6 +36,12 @@
 .sidebar-item > a{
   line-height: 12px;
 }
+.sidebar-item{
+  margin-bottom: 5px;
+}
 .type-wrap:not(.active), .freq-wrap:not(.active){
   display: none;
+}
+.delete{
+  cursor: pointer;
 }

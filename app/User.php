@@ -94,7 +94,7 @@ class User extends Authenticatable
 
     public function avatarUrl($width, $height = null)
     {
-        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . ($height)? '&h=' . $height : ''  : 'dummy_avatar.jpg'));
+        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . (($height)? '&h=' . $height : '')  : 'dummy_avatar.jpg'));
     }
 
     public function fullName()

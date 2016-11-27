@@ -202,9 +202,21 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        if (! $this->canEdit()) {
-            return abort(403);
-        }
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'description' => 'required|min:10',
+            'departure_date' => 'required|date',
+            'departure_pcode' => 'required',
+            'destination_pcode' => 'required',
+            'num_riders' => 'required|numeric'
+        ]);
+
+        // Updating attributes other than postal code dependent attributes
+        $post->name = $request->name;
+        $post->description = $request->description;
+        $post->departure_date = $request->departure_date;;
+        $post->num_riders = $request->num_riders;
 
         // Avoiding updating the postal codes for nothing
         if($post->departure_pcode != $request->departure_pcode
@@ -241,9 +253,6 @@ class PostController extends Controller
             $post->cost = round($cost,2);
         }
 
-        //Setting other post attributes.
-        $post->departure_date = $request->departure_date;
-
         $post->save();
         return redirect(route('post.show', ['post' => $post]))
             ->with('success', 'Your post has been updated successfully!');
@@ -258,7 +267,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        if(!canEdit($post)) {
+        if(!$this->canEdit($post)) {
             abort(403);
         } else {
             $post->delete();
