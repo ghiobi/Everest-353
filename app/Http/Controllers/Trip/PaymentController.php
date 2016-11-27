@@ -61,6 +61,6 @@ class PaymentController extends Controller
         // Add that user to the trip
         $trip->users()->attach($user);
 
-        return redirect('trip');
+        return redirect()->route('trip', [$trip]);
     }
 }

@@ -31,6 +31,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::group(['middleware' => 'has-funds'], function(){
 
         Route::get('/home', 'HomeController@index');
+        Route::get('/home/search', 'HomeController@search');
 
         Route::group(['namespace' => 'User'], function(){
 
