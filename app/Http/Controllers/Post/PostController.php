@@ -258,12 +258,12 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        if(Auth::user()->id == $post->poster_id) {
-            $post->delete();
+        if(!canEdit($post)) {
+            abort(403);
         } else {
-            // Does not have permission to delete this post
+            $post->delete();
         }
-
+        // Does not have permission to delete this post
         return redirect(route('user.show', ['user' => Auth::user()->id]))
             ->with('success', 'Your post has been deleted!');
     }

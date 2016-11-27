@@ -7,7 +7,7 @@
             <p class="lead">Remember you must have a valid license number.</p>
         </div>
     </div>
-    <div class="container">
+    <div class="container section">
         <div class="row">
             <div class="col-md-8">
                 @if(! empty(Auth::user()->license_num))
@@ -85,8 +85,8 @@
                             <input class="form-check-input" type="radio" name="one_time" value="0" {{ (old('one_time') == 0 && old('one_time') != null)? 'checked' : '' }}> Frequent
                         </label>
                     </div>
-                    <div class="type-wrap">
-                        <div class="freq-wrap">
+                    <div class="type-wrap{{ (old('type') == 1 || old('type') == null)? ' active' : '' }}">
+                        <div class="freq-wrap{{ (old('one_time') == 0 && old('one_time') != null)? ' active' : '' }}">
                             <div class="form-group">
                                 <legend>Frequency</legend>
                                 <label class="form-check-inline">
@@ -129,8 +129,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="type-wrap">
-                        <div class="freq-wrap">
+                    <div class="type-wrap{{ (old('type') == 0 && old('one_time') != null)? ' active' : '' }}">
+                        <div class="freq-wrap{{ (old('one_time') == 0 && old('one_time') != null)? ' active' : '' }}">
                             <div class="form-group">
                                 <label for="">Frequency</label>
                                 <select class="form-control" name="frequency">
@@ -165,19 +165,20 @@
         $(function(){
             var $type_selection = $('input[name="type"]');
             var $freq_selection = $('input[name="one_time"]');
-            var $type_wrap = $('type-wrap');
-            var $freq_wrap = $('freq-wrap');
+            var $type_wrap = $('.type-wrap');
+            var $freq_wrap = $('.freq-wrap');
 
             $type_selection.change(function(){
                 var val = $(this).val();
-                if(val == 0){
-                    $type_wrap.eq(val);
-                }
+                $('.type-wrap.active').removeClass('active');
+                $type_wrap.eq(++val % 2).addClass('active');
             });
             $freq_selection.change(function(){
                 var val = $(this).val();
                 if(val == 0){
-                    $freq_wrap.eq(val);
+                    $freq_wrap.addClass('active');
+                } else {
+                    $freq_wrap.removeClass('active');
                 }
             });
         });

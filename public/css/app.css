@@ -36,3 +36,6 @@
 .sidebar-item > a{
   line-height: 12px;
 }
+.type-wrap:not(.active), .freq-wrap:not(.active){
+  display: none;
+}
