@@ -18,3 +18,18 @@
 .copyright{
   padding: 20px 0;
 }
+.font-weight-light{
+  font-weight: 300;
+}
+.card-post > .card-footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.card-post > .card-block{
+  margin-bottom: 70px;
+}
+.card-post{
+  min-width: 47.5%;
+}

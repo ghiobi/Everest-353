@@ -115,7 +115,7 @@ class User extends Authenticatable
         $this->posts()->get();
         foreach($this->posts as $post) {
             foreach ($post->trips as $trip) {
-                foreach ($trip->users as $user) {
+                foreach ($trip->riders as $user) {
                     $user_rating = $user->pivot->rating;
                     if ($user_rating != null) {
                         $sumRating += $user_rating;

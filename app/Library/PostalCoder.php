@@ -37,7 +37,7 @@ class PostalCoder
      */
     public function geocode($postalCode)
     {
-        if (! preg_match('/(^[a-z]\d[a-z]\s?\d[a-z]\d$)/i', $postalCode)){
+        if (!preg_match('/(^[a-z]\d[a-z]\s?\d[a-z]\d$)/i', $postalCode) && !preg_match('/(^[a-z]\d[a-z]$)/i', $postalCode)){
             return null;
         }
 
