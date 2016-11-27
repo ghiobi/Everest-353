@@ -63,6 +63,8 @@ Route::group(['middleware'=>'auth'], function () {
 
         Route::resource('post', 'Post\PostController');
         Route::post('/post/{post}/message', 'Post\MessageController@message');
+        Route::get('/post/{post}/edit', 'Post\PostController@edit');
+        Route::get('/post/{post}/delete', 'Post\PostController@destroy');
 
         Route::resource('trip', 'Trip\TripController');
         Route::post('/trip/{trip}/join', 'Trip\PaymentController@processPayment');

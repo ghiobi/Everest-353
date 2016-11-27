@@ -12,9 +12,9 @@ class Trip extends Model
         'arrival_datetime'
     ];
 
-    public function riders()
+    public function users()
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'trip_user', 'trip_id', 'user_id')
             ->withPivot('rating')->select(['id', 'first_name', 'last_name', 'avatar']);
     }
 
@@ -41,6 +41,16 @@ class Trip extends Model
     public function messages()
     {
         return $this->morphMany(Message::class, 'messageable');
+    }
+
+    public function isRider(User $user)
+    {
+        foreach ($this->users as $rider){
+            if($rider->id == $user->id){
+                return $rider;
+            }
+        }
+        return null;
     }
 
     //foreach($trip->users as $user){

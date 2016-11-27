@@ -29,11 +29,47 @@ class UserSeeder extends Seeder
 
         $admin->attachRole(2);
 
-        $user = \App\User::create([
+        \App\User::create([
             'password' => bcrypt('password'),
             'email' => 'lamlaurendy@gmail.com',
             'first_name' => 'Laurendy',
             'last_name' => 'Lam'
+        ]);
+
+        \App\User::create([
+            'password' => bcrypt('password'),
+            'email' => 'donaldtrump@mail.com',
+            'first_name' => 'Donald',
+            'last_name' => 'Trump'
+        ]);
+
+        \App\User::create([
+            'password' => bcrypt('password'),
+            'email' => 'barackobama@mail.com',
+            'first_name' => 'Barack',
+            'last_name' => 'obama'
+        ]);
+
+        \App\User::create([
+            'password' => bcrypt('password'),
+            'email' => 'justintrudeau@mail.com',
+            'first_name' => 'Justin',
+            'last_name' => 'Trudeau'
+        ]);
+
+        \App\User::create([
+            'password' => bcrypt('password'),
+            'email' => 'stephenhawking@mail.com',
+            'first_name' => 'Stephen',
+            'last_name' => 'Hawking'
+        ]);
+
+
+        \App\User::create([
+            'password' => bcrypt('password'),
+            'email' => 'hillaryclinton@mail.com',
+            'first_name' => 'Hillary',
+            'last_name' => 'Clinton'
         ]);
     }
 }

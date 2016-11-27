@@ -46,13 +46,13 @@
                         <span class="navbar-text text-muted">Balance ${{ Auth::user()->balance() }}</span>
                     </li>
                     <li class="nav-item dropdown">
-                        <img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt="">
+                        <a href="/user/{{ Auth::user()->id }}"><img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt=""></a>
                         <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->first_name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
                             <a class="dropdown-item" href="/mail">Mail</a>
-                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" href="/post/create">Create Post</a>
                             <a class="dropdown-item" href="/funds">Add Funds</a>
                             <a class="dropdown-item" href="#"  onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>

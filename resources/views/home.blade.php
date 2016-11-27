@@ -67,9 +67,21 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <h5 class="font-weight-light">Current Trips</h5>
+                        @foreach($current_trips as $current_trip)
+                            <div class="sidebar-item" @if (! $loop->last && count($current_trips) > 0) style="margin-bottom: 5px;" @endif>
+                                <small class="text-muted">{{ $current_trip->status() }}</small>
+                                <a class="d-block" href="/trip/{{$current_trip->id}}">{{$current_trip['post']['name']}}</a>
+                            </div>
+                        @endforeach
                     </li>
                     <li class="list-group-item">
                         <h5 class="font-weight-light">Posted Trips</h5>
+                        @foreach($posted_trips as $posted_trip)
+                            <div class="sidebar-item">
+                                <small class="text-muted">{{ $posted_trip->status() }}</small>
+                                <a class="d-block" href="/trip/{{$posted_trip->id}}">{{$posted_trip['post']['name']}}</a>
+                            </div>
+                        @endforeach
                     </li>
                     <li class="list-group-item">
                         <h5 class="font-weight-light">Notifications</h5>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Trip;
 use App\Trip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TripController extends Controller
 {
@@ -49,7 +50,7 @@ class TripController extends Controller
     {
         //Todo make sure the user is part of this trip
         $trip = Trip::with('post.poster')
-            ->with('riders')
+            ->with('users')
             ->with('messages.sender')
             ->findOrFail($id);
 
@@ -94,30 +95,22 @@ class TripController extends Controller
     {
         // Validate request
         $this->validate($request, [
-            'rating' => 'required'
+            'rating' => 'required|min:1|max:10'
         ]);
-
-        $errors = [];
 
         // Obtain the rating
         $rating = $request->rating;
 
-        // Check if rating is valid
-        if($rating < 0 || $rating > 10) {
-            $errors['invalid_rating'] = 'This rating is invalid, rating must be between 0 and 10.';
-        }
-
-        // Get the user who is rating
-        $user = Auth::user();
-
         // Add its rating and check at the same time if the user actually attended the trip
-        foreach($trip->users as $rider) {
-            if($rider->id == $user->id) {
-                $rider->pivot->rating = $rating;
-                return back()->with('success', 'Message has been sent.');
+        foreach($trip->users as $user) {
+            if($user->id == Auth::user()->id) {
+                if($user->pivot->rating == NULL){
+                    $trip->users()->updateExistingPivot($user->id, ['rating' => $rating]);
+                    return back()->with('success', 'Review submitted.');
+                }
             }
         }
-        $errors['did_not_attend'] = 'You have not attended this trip.';
-        return back()->withErrors($errors);
+
+        return back();
     }
 }

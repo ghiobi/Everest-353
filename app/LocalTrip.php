@@ -15,6 +15,8 @@ class LocalTrip extends Model
       'frequency' => 'array'
     ];
 
+    public $timestamps = false;
+
     public function postable()
     {
         return $this->morphOne(Post::class, 'postable');

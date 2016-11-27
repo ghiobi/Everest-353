@@ -10,6 +10,7 @@ use App\LongDistanceTrip;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -100,7 +101,16 @@ class HomeController extends Controller
         $posts->with('messages')->orderBy('created_at');
         $posts = $posts->get();
 
-        return view('home', compact('posts', 'search'));
+        // Get Trips
+        $current_trips = Auth::user()->rides()->with('post')->get();
+
+        // Posted trips
+        $posted_trips = Auth::user()->postedTrips()->with('post')->get();
+
+        //Notifications
+        $notifications = Auth::user()->notifications;
+
+        return view('home', compact('posts', 'search', 'current_trips', 'posted_trips', 'notifications'));
     }
 
 }

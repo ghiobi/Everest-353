@@ -17,7 +17,6 @@ class CreateLocalTripsTable extends Migration
             $table->increments('id');
             $table->string('frequency')->default(json_encode([]));
             $table->time('departure_time');
-            $table->timestamps();
         });
     }
 

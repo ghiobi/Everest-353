@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container section">
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <strong>Success!</strong> {{ Session::get('success') }}</a>.
+            </div>
+        @endif
         <div class="row mb-1">
             <div class="col-md-8">
                 <h2>{{ $post->name }}</h2>

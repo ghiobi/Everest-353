@@ -38,44 +38,64 @@
                         </li>
                         <li class="list-group-item">
                             <h6 class="font-weight-normal mb-1">Riders:</h6>
-                            @foreach($trip->riders as $rider)
-                                <span class="d-block" @if(! $loop->last && count($trip->riders) > 1) style="margin-bottom: 5px;" @endif>
-                                    <img class="img-fluid rounded-circle mr-1" src="{{ $rider->avatarUrl(45) }}" width="45" alt=""> {{ $rider->fullName() }}
+                            @foreach($trip->users as $user)
+                                <span class="d-block" @if(! $loop->last && count($trip->users) > 1) style="margin-bottom: 5px;" @endif>
+                                    <img class="img-fluid rounded-circle mr-1" src="{{ $user->avatarUrl(45) }}" width="45" alt=""> {{ $user->fullName() }}
                                 </span>
                             @endforeach
                         </li>
-                        <li class="list-group-item">
-                            <form action="">
-                                <h5 class="font-weight-normal mb-1">Rate your trip!</h5>
-                                <div class="form-group">
-                                    <select name="rating">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-outline-info btn-block">
-                                    Submit!
-                                </button>
-                            </form>
-                            <script>
-                                $(function(){
-                                    $('select[name="rating"]').barrating({
-                                        theme: 'fontawesome-stars'
-                                    });
-                                });
-                            </script>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#" class="card-link btn btn-outline-warning btn-block">Complete Trip</a>
-                        </li>
+                        @if(Auth::user()->id != $trip->post->poster->id)
+                            <li class="list-group-item">
+                                @if($trip->isRider(Auth::user())->pivot->rating == null)
+                                        <form action="/trip/{{$trip->id}}/rate" method="post">
+                                            {{ csrf_field() }}
+                                            <h5 class="font-weight-normal mb-1">Rate your trip!</h5>
+                                            <div class="form-group">
+                                                <select name="rating">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                                @if($errors->has('rating'))
+                                                    <div class="form-control-feedback">
+                                                        {{ $error->first('rating') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <button class="btn btn-outline-info btn-block">
+                                                Submit!
+                                            </button>
+                                        </form>
+                                        <script>
+                                            $(function(){
+                                                $('select[name="rating"]').barrating({
+                                                    theme: 'fontawesome-stars'
+                                                });
+                                            });
+                                        </script>
+                                @else
+                                    <div class="text-xs-center">
+                                        <h5 class="font-weight-normal" style="margin-bottom: 5px">Your rating!</h5>
+                                        @for($i = 0; $i < $trip->isRider(Auth::user())->pivot->rating; $i++)
+                                            <i class="fa fa-star"></i>
+                                        @endfor
+                                    </div>
+                                @endif
+                            </li>
+                        @endif
+
+                        @if(Auth::user()->id == $trip->post->poster->id)
+                            <li class="list-group-item">
+                                <a href="#" class="card-link btn btn-outline-warning btn-block">Complete Trip</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

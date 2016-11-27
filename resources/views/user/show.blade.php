@@ -14,11 +14,11 @@
                                 <div>rating</div>
                             </div>
                             <div class="col-xs">
-                                <div>44</div>
+                                <div>{{$user->posts->count()}}</div>
                                 <div>posts</div>
                             </div>
                             <div class="col-xs">
-                                <div>1</div>
+                                <div>{{$user->rides()->count()}}</div>
                                 <div>trips</div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                         @if($user->policies && $user->is_visible_policies)
                             <li class="list-group-item">
                                 @foreach($user->policies as $policy)
-                                    <span class="badge">{{ $policy }}</span>
+                                    <span class="tag tag-default">{{ $policy }}</span>
                                 @endforeach
                             </li>
                         @endif
@@ -62,28 +62,21 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Posts</h4>
-                        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                @foreach($user->posts as $post)
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-title">
+                                <a href="/post/{{$post->id}}"><h4 class="card-title">{{$post->name}}</h4></a>
+                                <h6 class="card-subtitle text-muted">Departure: {{ $post->departure_pcode }} | Destination: {{ $post->destination_pcode }} | Max riders: {{ $post->num_riders }}</h6>
+                            </div>
+                            <p class="card-text">{{$post->description}}</p>
+                            @if(canEdit($user->id))
+                                <a href="/post/{{$post->id}}/edit" class="card-link">Update</a>
+                                <a href="/post/{{$post->id}}/delete" class="card-link">Delete</a>
+                            @endif
+                        </div>
                     </div>
-                    <div class="card-block">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Reviews</h4>
-                        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                    </div>
-                    <div class="card-block">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

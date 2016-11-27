@@ -33,3 +33,6 @@
 .card-post{
   min-width: 47.5%;
 }
+.sidebar-item > a{
+  line-height: 12px;
+}

@@ -34,7 +34,7 @@ class CreateTripsTable extends Migration
 
             $table->foreign('trip_id')->references('id')
                 ->on('trips');
-            $table->foreign('rider_id')->references('id')
+            $table->foreign('user_id')->references('id')
                 ->on('users');
         });
     }
