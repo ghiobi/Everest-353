@@ -145,7 +145,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with('postable')->findOrFail($id);
+        $post = Post::with('postable')
+            ->with('messages')->findOrFail($id);
 
         $trip = null; //TODO $post->getNextTrip();
 

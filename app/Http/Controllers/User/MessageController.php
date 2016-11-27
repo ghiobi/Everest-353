@@ -62,6 +62,7 @@ class MessageController extends Controller
     {
         $messages = Auth::user()
             ->messages()
+            ->where('messageable_type', User::class)
             ->with('sender')
             ->get();
 
@@ -77,6 +78,7 @@ class MessageController extends Controller
     {
         $messages = Message::with('messageable')
             ->where('sender_id', Auth::user()->id)
+            ->where('messageable_type', User::class)
             ->get();
 
         return view('user.message.mail-sent', compact('messages'));

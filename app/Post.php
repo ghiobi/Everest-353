@@ -41,6 +41,16 @@ class Post extends Model
         return $this->morphTo();
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messageable');
+    }
+
+    public function countMessages()
+    {
+        return $this->messages()->count();
+    }
+
     /**
      * This model belongs to user.
      *

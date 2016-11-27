@@ -37,9 +37,9 @@
                             </ul>
                         </li>
                         <li class="list-group-item">
-                            <h6 class="font-weight-normal mb-1">Participants:</h6>
+                            <h6 class="font-weight-normal mb-1">Riders:</h6>
                             @foreach($trip->riders as $rider)
-                                <span class="d-block" style="margin-bottom: 5px;">
+                                <span class="d-block" @if(! $loop->last && count($trip->riders) > 1) style="margin-bottom: 5px;" @endif>
                                     <img class="img-fluid rounded-circle mr-1" src="{{ $rider->avatarUrl(45) }}" width="45" alt=""> {{ $rider->fullName() }}
                                 </span>
                             @endforeach
@@ -87,7 +87,7 @@
                     <div class="card-block">
                         @if(count($trip->messages) > 0)
                             @foreach($trip->messages as $message)
-                                <div class="media">
+                                <div class="media" @if(! $loop->last && count($trip->messages) > 1) style="margin-bottom: 10px;" @endif>
                                     <a class="media-left" href="/user/{{ $message->sender->id }}">
                                         <img class="media-object rounded-circle" src="{{ $message->sender->avatarUrl(45) }}" width="45">
                                     </a>

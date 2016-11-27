@@ -18,17 +18,15 @@
 .copyright{
   padding: 20px 0;
 }
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
+.font-weight-light{
+  font-weight: 300;
 }
-.rating > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-}
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
-  content: "\2605";
+.card-post > .card-footer{
   position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.card-post > .card-block{
+  margin-bottom: 70px;
 }
