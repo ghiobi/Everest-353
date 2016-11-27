@@ -61,10 +61,7 @@ class NearestPostalCode
     public function nearestUsingCoordinates($latitude, $longitude, $radius) {
 
         // Check validity of parameters
-        if(is_null($latitude) || is_null($longitude) || is_null($radius) ||
-            (!is_double($latitude) && !is_int($latitude)) ||
-            (!is_double($longitude) && !is_int($longitude)) ||
-            (!is_double($radius) && !is_int($radius))) {
+        if(is_null($latitude) || is_null($longitude) || is_null($radius)) {
             return null;
         }
 
@@ -82,9 +79,13 @@ class NearestPostalCode
                 ->kilometers();
 
             if($distance <= $radius) {
-                $nearest_postal_codes[] = $compared_location->code;
+                $nearest_postal_codes[$compared_location->code] = $distance;
             }
         }
+
+        // Sort the postal codes by distance (value)
+        asort($nearest_postal_codes);
+
         return $nearest_postal_codes;
     }
 }

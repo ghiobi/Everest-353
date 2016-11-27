@@ -6,6 +6,7 @@ use App\Library\NearestPostalCode;
 use App\Library\PostalCoder;
 use App\LocalTrip;
 use App\LongDistanceTrip;
+
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +46,8 @@ class HomeController extends Controller
             $starts = $nearestPCoder->nearestUsingCoordinates($location->getLatitude(), $location->getLongitude(), $radius);
 
             $posts->where(function($query) use ($starts) {
-                for($i = 0; $i < count($starts); $i++){
-                    $query->orWhere('departure_pcode', 'like', $starts[$i] . '%');
+                foreach($starts as $p_code => $distance) {
+                    $query->orWhere('departure_pcode', 'like', $p_code . '%');
                 }
             });
 
@@ -59,8 +60,8 @@ class HomeController extends Controller
             $starts = $nearestPCoder->nearestUsingCoordinates($postal_start->getLatitude(), $postal_start->getLongitude(), $radius);
 
             $posts->where(function($query) use ($starts) {
-                for($i = 0; $i < count($starts); $i++){
-                    $query->orWhere('departure_pcode', 'like', $starts[$i] . '%');
+                foreach($starts as $p_code => $distance) {
+                    $query->orWhere('departure_pcode', 'like', $p_code . '%');
                 }
             });
 
@@ -76,7 +77,7 @@ class HomeController extends Controller
             $ends = $nearestPCoder->nearestUsingCoordinates($postal_end->getLatitude(), $postal_end->getLongitude(), $radius);
 
             $posts->where(function($query) use ($ends) {
-                for($i = 0; $i < count($ends); $i++){
+                foreach($ends as $p_code => $distance) {
                     $query->orWhere('destination_pcode', 'like', $ends[$i] . '%');
                 }
             });
@@ -101,4 +102,5 @@ class HomeController extends Controller
 
         return view('home', compact('posts', 'search'));
     }
+
 }

@@ -92,6 +92,32 @@ class TripController extends Controller
 
     public function rate(Trip $trip, Request $request)
     {
+        // Validate request
+        $this->validate($request, [
+            'rating' => 'required'
+        ]);
 
+        $errors = [];
+
+        // Obtain the rating
+        $rating = $request->rating;
+
+        // Check if rating is valid
+        if($rating < 0 || $rating > 10) {
+            $errors['invalid_rating'] = 'This rating is invalid, rating must be between 0 and 10.';
+        }
+
+        // Get the user who is rating
+        $user = Auth::user();
+
+        // Add its rating and check at the same time if the user actually attended the trip
+        foreach($trip->users as $rider) {
+            if($rider->id == $user->id) {
+                $rider->pivot->rating = $rating;
+                return back()->with('success', 'Message has been sent.');
+            }
+        }
+        $errors['did_not_attend'] = 'You have not attended this trip.';
+        return back()->withErrors($errors);
     }
 }
