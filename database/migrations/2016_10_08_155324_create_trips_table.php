@@ -18,7 +18,7 @@ class CreateTripsTable extends Migration
             $table->integer('post_id')->unsigned()->index();
             $table->dateTime('departure_datetime');
             $table->string('departure_pcode');
-            $table->dateTime('arrival_datetime');
+            $table->dateTime('arrival_datetime')->nullable();
             $table->string('arrival_pcode');
             $table->integer('num_riders');
             $table->float('cost', 8, 2);
@@ -29,7 +29,7 @@ class CreateTripsTable extends Migration
 
         Schema::create('trip_user', function (Blueprint $table) {
             $table->integer('trip_id')->unsigned()->index();
-            $table->integer('rider_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
             $table->integer('rating')->unsigned()->nullable();
 
             $table->foreign('trip_id')->references('id')

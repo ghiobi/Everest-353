@@ -30,7 +30,16 @@ Route::group(['middleware'=>'auth'], function () {
 
     Route::group(['middleware' => 'has-funds'], function(){
 
+        // ------------------------------------------------------------------------
+        // Home
+        // ------------------------------------------------------------------------
+
         Route::get('/home', 'HomeController@index');
+
+
+        // ------------------------------------------------------------------------
+        // User
+        // ------------------------------------------------------------------------
 
         Route::group(['namespace' => 'User'], function(){
 
@@ -53,8 +62,11 @@ Route::group(['middleware'=>'auth'], function () {
         // ------------------------------------------------------------------------
 
         Route::resource('post', 'Post\PostController');
+        Route::post('/post/{post}/message', 'Post\MessageController@message');
+
         Route::resource('trip', 'Trip\TripController');
         Route::post('/trip/{trip}/join', 'Trip\PaymentController@processPayment');
+        Route::post('/trip/{trip}/message', 'Trip\MessageController@message');
         Route::post('/trip/{trip}/rate', 'Trip\TripController@rate');
 
         // ------------------------------------------------------------------------

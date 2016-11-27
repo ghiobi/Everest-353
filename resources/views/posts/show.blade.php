@@ -50,27 +50,32 @@
                 @endif
             </div>
         </div>
-        <div class="card text-xs-center">
+        <div class="card">
+            <div class="card-block">
                 @if(count($post->messages) > 0)
-                    <ul class="list-group list-group-flush">
-                        @foreach($post->messages as $message)
-                            <li class="list-group-item">
-                                <img src="{{ $message->sender->avatarUrl(30) }}" width="35" class="img-fluid rounded-circle" alt="">
-                                {{ $message->sender->fullName() }} {{ $message->body }}
-                                <small class="float-xs-right">{{ $message->diffForHumans() }}</small>
-                            </li>
-                        @endforeach
-                    </ul>
+                    @foreach($post->messages as $message)
+                        <div class="media" @if(! $loop->last && count($post->messages) > 1) style="margin-bottom: 10px;" @endif>
+                            <a class="media-left" href="/user/{{ $message->sender->id }}">
+                                <img class="media-object rounded-circle" src="{{ $message->sender->avatarUrl(45) }}" width="45">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading" style="font-size: 14px">{{ $message->sender->fullName() }} <small class="text-muted">{{ $message->created_at->diffForHumans() }}</small></h4>
+                                {{ $message->body }}
+                            </div>
+                        </div>
+                    @endforeach
                 @else
-                    <div class="section">
+                    <div class="section text-xs-center">
                         <h3>No messages.</h3>
-                        <p class="lead">Be first to comment!</p>
+                        <p class="lead mb-0">Be first to comment!</p>
                     </div>
                 @endif
+            </div>
             <div class="card-footer">
-                <form action="">
+                <form action="/post/{{ $post->id }}/message" method="post">
+                    {{ csrf_field() }}
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="body">
                         <span class="input-group-btn">
                              <button class="btn btn-outline-info" type="submit">Comment</button>
                         </span>
