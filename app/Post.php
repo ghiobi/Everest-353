@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -78,10 +79,35 @@ class Post extends Model
 
     public function getNextTrip()
     {
-        if ($this->postable_type == LocalTrip::class){
+        $trip = $this->trips()->where('departure_datetime', '>', Carbon::now())->first();
+
+        //Load the postable item.
+        $this->load('postable');
+        if($trip == null){
+
+            $depature_date = null;
+
+            if($this->departure_date->gte(Carbon::now())){
+                if($this->postable_type == LocalTrip::class){
+
+                } else {
+
+                }
+            }
+
+
+            $trip = Trip::create([
+                'post_id' => '',
+                'departure_datetime' => $this->departure_date->toDateString . ' ' . $this->postable->time,
+                'departure_pcode' => $this->departure_pcode,
+                'arrival_pcode' => $this->destination_pcode,
+                'num_riders' => $this->num_riders,
+                'cost' => $this->cost,
+            ]);
 
         }
 
-        return ;
+
+        return $trip;
     }
 }

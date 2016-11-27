@@ -67,6 +67,7 @@ Route::group(['middleware'=>'auth'], function () {
         Route::resource('trip', 'Trip\TripController');
         Route::post('/trip/{trip}/join', 'Trip\PaymentController@processPayment');
         Route::post('/trip/{trip}/message', 'Trip\MessageController@message');
+        Route::post('/trip/{trip}/rate', 'Trip\TripController@rate');
 
         // ------------------------------------------------------------------------
         // Settings

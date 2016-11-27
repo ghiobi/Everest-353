@@ -89,4 +89,9 @@ class TripController extends Controller
     {
         //
     }
+
+    public function rate(Trip $trip, Request $request)
+    {
+
+    }
 }
