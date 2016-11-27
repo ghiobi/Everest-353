@@ -31,6 +31,7 @@
             @endif
         </div>
     </div>
+    @if($nearest_posts != null)
     <div class="container section">
         <h1 class="font-weight-normal mb-2">Found {{count($nearest_posts)}} results for 'Toronto'.</h1>
         <div class="row">
@@ -47,6 +48,7 @@
             @endforeach
         </div>
     </div>
+    @endif
     <div class="container section">
         <div class="row">
             <div class="col-md-6">
