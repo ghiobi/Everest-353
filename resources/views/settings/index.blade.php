@@ -25,7 +25,7 @@
                                 {{ method_field('patch') }}
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" value="{{ $setting->value }}" required>
+                                        <input type="text" class="form-control" name="key" value="{{ $setting->value }}" required>
                                         <span class="input-group-btn">
                                             <button class="btn btn-warning" type="submit">Update!</button>
                                         </span>
