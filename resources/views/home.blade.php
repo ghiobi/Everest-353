@@ -41,12 +41,16 @@
                     @foreach($posts as $post)
                         <div class="card card-post mb-1">
                             <div class="card-block">
-                                <small>Posted {{ $post->created_at->diffForHumans() }}</small>
+                                <div><small>Posted {{ $post->created_at->diffForHumans() }}</small></div>
                                 <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
-                                    <span class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</span>
                                 </h4>
                                 <p class="card-text">{{ substr($post->description, 0, 160) . ((strlen($post->description) > 160)? '...' : '') }}</p>
-                                <p>S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} | {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }}</p>
+                                <div>S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} | {{ $post->cost() }} |
+                                    <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }}</div>
+                                <div class="tag-container">
+                                    <div class="tag tag-default tag-trip">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
+                                    <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="media">

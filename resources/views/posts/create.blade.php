@@ -58,15 +58,6 @@
                             </div>
                         @endif
                     </div>
-                    <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
-                        <label class="form-control-label" for="form__departure_date">First Departure Date</label>
-                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}" required>
-                        @if($errors->has('departure_date'))
-                            <div class="form-control-feedback">
-                                {{ $errors->first('departure_date') }}
-                            </div>
-                        @endif
-                    </div>
                     <div class="form-group">
                         <legend>Trip Type</legend>
                         <label class="form-check-inline">
@@ -84,6 +75,15 @@
                         <label class="form-check-inline">
                             <input class="form-check-input" type="radio" name="one_time" value="0" {{ (old('one_time') == 0 && old('one_time') != null)? 'checked' : '' }}> Frequent
                         </label>
+                    </div>
+                    <div class="form-group onet-wrap{{ ($errors->has('departure_date'))? ' has-danger' : '' }}{{ (old('one_time') == 1 || old('one_time') == null)? ' active' : '' }}">
+                        <label class="form-control-label" for="form__departure_date">Departure Date</label>
+                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}" required>
+                        @if($errors->has('departure_date'))
+                            <div class="form-control-feedback">
+                                {{ $errors->first('departure_date') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="type-wrap{{ (old('type') == 1 || old('type') == null)? ' active' : '' }}">
                         <div class="freq-wrap{{ (old('one_time') == 0 && old('one_time') != null)? ' active' : '' }}">
@@ -167,6 +167,7 @@
             var $freq_selection = $('input[name="one_time"]');
             var $type_wrap = $('.type-wrap');
             var $freq_wrap = $('.freq-wrap');
+            var $onet_wrap = $('.onet-wrap');
 
             $type_selection.change(function(){
                 var val = $(this).val();
@@ -177,8 +178,10 @@
                 var val = $(this).val();
                 if(val == 1){
                     $freq_wrap.removeClass('active');
+                    $onet_wrap.addClass('active');
                 } else {
                     $freq_wrap.addClass('active');
+                    $onet_wrap.removeClass('active');
                 }
             });
         });

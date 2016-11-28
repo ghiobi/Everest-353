@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('posts.messages')->findOrFail($id);
 
         //Return view response
         return view('user.show', compact('user'));

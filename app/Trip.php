@@ -29,6 +29,11 @@ class Trip extends Model
         return $this->belongsTo(Post::class);
     }
 
+    public function cost()
+    {
+        return '$' . number_format($this->cost, 2);
+    }
+
     public function status()
     {
         if($this->departure_datetime->lt(Carbon::now())){

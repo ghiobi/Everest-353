@@ -26,17 +26,18 @@
 <body>
 
     <nav class="navbar navbar-light bg-faded">
-        <div class="container-fluid">
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-toggleable-md" id="nav-collapse">
             <a class="navbar-brand" href="/">
                 <img src="/images/logo/logo-hori.png" alt="">
             </a>
             @if(! Auth::guest())
-                <form class="form-inline float-xs-left">
-                    <input class="form-control" type="text" placeholder="Find a ride.">
+                <form class="form-inline float-lg-left">
+                    <input class="form-control" type="text" placeholder="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             @endif
-            <ul class="nav navbar-nav float-xs-right">
+            <ul class="nav navbar-nav float-lg-right">
                 @if(Auth::guest())
                     <li class="nav-item">
                         <span class="navbar-text">Sign in to get started!</span>

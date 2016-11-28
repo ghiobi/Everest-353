@@ -33,7 +33,7 @@
                                 <li>Departure Address: {{ $trip->departure_pcode }}</li>
                                 <li>Arrival: {{ ($trip->arrival_datetime)? $trip->arrival_datetime : '' }}</li>
                                 <li>Arrival Address: {{ $trip->arrival_pcode }} </li>
-                                <li>Cost: {{ $trip->cost }}</li>
+                                <li>Cost: {{ $trip->cost() }}</li>
                             </ul>
                         </li>
                         <li class="list-group-item">
@@ -82,7 +82,7 @@
                                         </script>
                                 @else
                                     <div class="text-xs-center">
-                                        <h5 class="font-weight-normal" style="margin-bottom: 5px">Your rating!</h5>
+                                        <h5 class="font-weight-normal" style="margin-bottom: 5px">Thanks for rating!</h5>
                                         @for($i = 0; $i < $trip->isRider(Auth::user())->pivot->rating; $i++)
                                             <i class="fa fa-star"></i>
                                         @endfor
@@ -139,5 +139,4 @@
             </div>
         </div>
     </div>
-    {{ $trip }}
 @endsection

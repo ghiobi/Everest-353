@@ -69,7 +69,7 @@ class Post extends Model
     }
 
     public function cost(){
-        return $this->cost;
+        return '$' . number_format($this->cost, 2);
     }
 
     public function nextDeparture()

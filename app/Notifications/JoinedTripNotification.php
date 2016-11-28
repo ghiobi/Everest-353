@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Trip;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,9 +18,10 @@ class JoinedTripNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Trip $trip, User $joiner)
     {
-        //
+        $this->trip = $trip;
+        $this->user = $joiner;
     }
 
     /**
@@ -29,7 +32,7 @@ class JoinedTripNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -52,10 +55,10 @@ class JoinedTripNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
-            //
+
         ];
     }
 }

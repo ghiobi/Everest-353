@@ -8,7 +8,8 @@
   margin-right: 10px;
 }
 .section{
-  padding: 60px 0;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 .profile-stats{
   text-align: center;
@@ -16,7 +17,8 @@
   justify-content: space-around;
 }
 .copyright{
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .font-weight-light{
   font-weight: 300;
@@ -39,9 +41,20 @@
 .sidebar-item{
   margin-bottom: 5px;
 }
-.type-wrap:not(.active), .freq-wrap:not(.active){
+.type-wrap:not(.active),
+.freq-wrap:not(.active),
+.onet-wrap:not(.active){
   display: none;
 }
-.delete{
-  cursor: pointer;
+.tag-container{
+
+}
+.vcontainer{
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.valign{
+  display: table-cell;
+  vertical-align: middle;
 }
