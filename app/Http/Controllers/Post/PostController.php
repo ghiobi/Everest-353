@@ -272,7 +272,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         if(!$this->canEdit($post)) {
-            abort(403);
+            return abort(403);
         } else {
             $post->delete();
         }

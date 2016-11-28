@@ -63,8 +63,8 @@
                             @if(Auth::user()->hasRole('admin'))
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/user">Manage Users</a>
-                                <a class="dropdown-item" href="/user">Manage Posts</a>
-                                <a class="dropdown-item" href="/user">Manage Trips</a>
+                                <a class="dropdown-item" href="/post">Manage Posts</a>
+                                <a class="dropdown-item" href="/trip">Manage Trips</a>
                                 @if(Auth::user()->hasRole('super-admin'))
                                     <a class="dropdown-item" href="/setting">System Settings</a>
                                 @endif

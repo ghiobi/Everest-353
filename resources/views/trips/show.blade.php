@@ -58,7 +58,7 @@
                                 </div>
                             @endforeach
                         </li>
-                        @if(Auth::user()->id != $trip->post->poster->id)
+                        @if(Auth::user()->id != $trip->host->id && $trip->isRider(Auth::user()) != null)
                             <li class="list-group-item">
                                 @if($trip->isRider(Auth::user())->pivot->rating == null)
                                         <form action="/trip/{{$trip->id}}/rate" method="post">
@@ -102,7 +102,7 @@
                             </li>
                         @endif
 
-                        @if(Auth::user()->id == $trip->post->poster->id && empty($trip->arrival_datetime))
+                        @if((Auth::user()->id == $trip->host->id  || Auth::user()->hasRole('admin')) && empty($trip->arrival_datetime))
                             <li class="list-group-item">
                                 <form action="/trip/{{ $trip->id }}" method="post">
                                     {{ csrf_field() }}

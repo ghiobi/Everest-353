@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if (! $this->canModifyUser($user)){
+        if (! $this->canEdit($user)){
             return abort(403);
         }
 
@@ -65,7 +65,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if (! $this->canModifyUser($user)){
+        if (! $this->canEdit($user)){
             return abort(403);
         }
 
@@ -158,7 +158,7 @@ class UserController extends Controller
      * @param User $user
      * @return bool
      */
-    private function canModifyUser(User $user)
+    private function canEdit(User $user)
     {
         return Auth::user()->id == $user->id || Auth::user()->hasRole('admin');
     }

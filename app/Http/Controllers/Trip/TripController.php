@@ -32,11 +32,15 @@ class TripController extends Controller
      */
     public function show($id)
     {
-        //Todo make sure the user is part of this trip
         $trip = Trip::with('host')
             ->with('users')
             ->with('messages.sender')
             ->findOrFail($id);
+
+        //Only the rider or the admin can access the ride.
+        if(! $trip->isRider(Auth::user()) && ! Auth::user()->hasRole('admin')){
+            return abort(403);
+        }
 
         return view('trips.show', compact('trip'));
     }
@@ -77,19 +81,17 @@ class TripController extends Controller
         $rating = $request->rating;
 
         // Add its rating and check at the same time if the user actually attended the trip
-        foreach($trip->users as $user) {
-            if($user->id == Auth::user()->id) {
-                if($user->pivot->rating == NULL){
+        if($rider = $trip->isRider(Auth::user())){
+            //User can't rade twice
+            if($rider->pivot->rating == NULL){
+                //Set rating
+                $trip->users()->updateExistingPivot($rider->id, ['rating' => $rating]);
 
-                    //Set rating
-                    $trip->users()->updateExistingPivot($user->id, ['rating' => $rating]);
+                //Notify the host;
+                $host = $trip->host;
+                $host->notify(new HasNewTripRating($rider->first_name, $trip));
 
-                    //Notify the host;
-                    $host = $trip->host;
-                    $host->notify(new HasNewTripRating($user->first_name, $trip));
-
-                    return back()->with('success', 'Review submitted.');
-                }
+                return back()->with('success', 'Review submitted.');
             }
         }
 

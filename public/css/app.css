@@ -59,6 +59,7 @@
   font-size: 12px;
   color: #ffc200;
   letter-spacing: -3px;
+  line-height: 0;
 }
 .vcontainer{
   display: table;
