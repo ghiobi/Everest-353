@@ -44,7 +44,7 @@ class SettingController extends Controller
 
         // Update the setting
         $setting = Setting::findOrFail($id);
-        $setting->value = $request->key;
+        $setting->value = $request->value;
 
         $setting->save();
 
@@ -52,7 +52,7 @@ class SettingController extends Controller
     }
 
     private function verifyAdmin() {
-        if(!Auth::user()->hasRole('admin')){
+        if(!Auth::user()->hasRole('super-admin')){
             abort(403);
         }
     }
