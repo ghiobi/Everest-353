@@ -14,11 +14,11 @@
                                 <div>rating</div>
                             </div>
                             <div class="col-xs">
-                                <div>{{$user->posts->count()}}</div>
+                                <div>{{$user->posts()->count() }}</div>
                                 <div>posts</div>
                             </div>
                             <div class="col-xs">
-                                <div>{{$user->rides()->count()}}</div>
+                                <div>{{$user->rides()->count() + $user->hosts()->count() }}</div>
                                 <div>trips</div>
                             </div>
                         </div>

@@ -96,6 +96,7 @@ class Post extends Model
             }
 
             $trip = Trip::create([
+                'host_id' => $this->poster_id,
                 'post_id' => $this->id,
                 'departure_datetime' => $this->departure_date->toDateString() . ' ' . $this->postable->departure_time,
                 'departure_pcode' => $this->departure_pcode,

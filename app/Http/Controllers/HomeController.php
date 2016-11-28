@@ -102,10 +102,10 @@ class HomeController extends Controller
         $posts = $posts->get();
 
         // Get Trips
-        $current_trips = Auth::user()->rides()->with('post')->get();
+        $current_trips = Auth::user()->rides()->get();
 
-        // Posted trips
-        $posted_trips = Auth::user()->postedTrips()->with('post')->get();
+        // Hosted trips
+        $posted_trips = Auth::user()->hosts()->get();
 
         //Notifications
         $notifications = Auth::user()->notifications;

@@ -29,6 +29,9 @@ class PostSeeder extends Seeder
             'frequency' => [0, 0, 0, 0, 0, 0, 0]
         ])->postable()->save($post);
         $trip = new \App\Trip([
+            'host_id' => $post->poster_id,
+            'name' => $post->name,
+            'description' => $post->description,
             'departure_datetime' => (new \Carbon\Carbon())->addDays(3),
             'departure_pcode' => 'H4B 1R6',
             'arrival_pcode' => 'H1X 1H2',
@@ -78,6 +81,9 @@ class PostSeeder extends Seeder
             'frequency' => []
         ])->postable()->save($post);
         $trip = new \App\Trip([
+            'host_id' => $post->poster_id,
+            'name' => $post->name,
+            'description' => $post->description,
             'departure_datetime' => (new \Carbon\Carbon())->addDays(3),
             'departure_pcode' => 'H3B 0A2',
             'arrival_pcode' => 'M5J 1E6',
@@ -108,6 +114,9 @@ class PostSeeder extends Seeder
             'frequency' => []
         ])->postable()->save($post);
         $trip = new \App\Trip([
+            'host_id' => $post->poster_id,
+            'name' => $post->name,
+            'description' => $post->description,
             'departure_datetime' => (new \Carbon\Carbon())->addDays(3),
             'departure_pcode' => 'H3B 0A2',
             'arrival_pcode' => 'M5J 1E6',
