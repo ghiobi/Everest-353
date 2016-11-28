@@ -37,8 +37,10 @@ class TripController extends Controller
             ->with('messages.sender')
             ->findOrFail($id);
 
-        //Only the rider or the admin can access the ride.
-        if(! $trip->isRider(Auth::user()) && ! Auth::user()->hasRole('admin')){
+        $current = Auth::user();
+
+        //Only the rider or the admin can access the ride or the hoster.
+        if(! $trip->isRider($current) && ! $current->hasRole('admin') && $current->id != $trip->host_id){
             return abort(403);
         }
 

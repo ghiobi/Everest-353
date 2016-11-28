@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
         $owner = \App\User::create([
             'password' => bcrypt('password'),
             'email' => 'admin@mail.ca',
-            'first_name' => 'The',
-            'last_name' => 'System'
+            'first_name' => 'System',
+            'last_name' => 'User'
         ]);
 
         $owner->attachRoles([1, 2]);

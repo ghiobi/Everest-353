@@ -19,7 +19,7 @@
                                         <label for="form__amount">Amount</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
-                                            <input type="text" class="form-control" id="form__amount" name="amount">
+                                            <input type="number" class="form-control" id="form__amount" name="amount" required min="0">
                                         </div>
                                         @if($errors->has('amount'))
                                             <div class="form-control-feedback">
@@ -61,7 +61,7 @@
                                         <label for="form__amount">Amount</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
-                                            <input type="text" class="form-control" id="form__amount" name="amount">
+                                            <input type="number" class="form-control" id="form__amount" name="amount" required min="0">
                                         </div>
                                         @if($errors->has('amount'))
                                             <div class="form-control-feedback">

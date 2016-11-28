@@ -145,7 +145,7 @@
                         <form action="/trip/{{ $trip->id }}/message" method="post">
                             {{ csrf_field() }}
                             <div class="input-group">
-                                <textarea name="body" rows="3" class="form-control" placeholder="Drop a message..."></textarea>
+                                <textarea name="body" rows="3" class="form-control" placeholder="Drop a message..." minlength="1"></textarea>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary h-100">Send!</button>
                                 </span>

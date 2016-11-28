@@ -27,7 +27,7 @@
                     <div class="form-group row{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                         <label class="col-xs-2 col-form-label" for="form__first_name">First Name</label>
                         <div class="col-xs-10">
-                            <input class="form-control" id="form__first_name" type="text" value="{{ $user->first_name }}" name="first_name">
+                            <input class="form-control" id="form__first_name" type="text" value="{{ $user->first_name }}" name="first_name" required maxlength="255">
                             @if($errors->has('first_name'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('first_name') }}
@@ -38,7 +38,7 @@
                     <div class="form-group row{{ ($errors->has('last_name'))? ' has-danger' : '' }}">
                         <label class="col-xs-2 col-form-label" for="form__last_name">Last Name</label>
                         <div class="col-xs-10">
-                            <input class="form-control" id="form__last_name" type="text" value="{{ $user->last_name }}" name="last_name">
+                            <input class="form-control" id="form__last_name" type="text" value="{{ $user->last_name }}" name="last_name" required maxlength="255">
                             @if($errors->has('last_name'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('last_name') }}
@@ -49,7 +49,7 @@
                     <div class="form-group row{{ ($errors->has('timezone'))? ' has-danger' : '' }}">
                         <label class="col-xs-2 col-form-label" for="form__timezone">Tiemzone</label>
                         <div class="col-xs-10">
-                            <input class="form-control" id="form__timezone" type="text" value="{{ $user->timezone }}" name="timezone">
+                            <input class="form-control" id="form__timezone" type="text" value="{{ $user->timezone }}" name="timezone" required>
                             @if($errors->has('timezone'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('timezone') }}
@@ -61,12 +61,15 @@
                         <label class="col-xs-2 col-form-label" for="form__birth_date">Brithday</label>
                         <div class="col-xs-10">
                             <div class="input-group">
-                                <input class="form-control" id="form__birth_date" type="text" value="{{ $user->birth_date }}" name="birth_date">
+                                <input class="form-control" id="form__birth_date" type="date" value="{{ ($user->birth_date)? $user->birth_date->format('Y-m-d') : '' }}" name="birth_date">
                                 <span class="input-group-addon">
                                     <input type="hidden" name="is_visible_birth_date" value="0">
                                     <input type="checkbox" name="is_visible_birth_date" {{ ($user->is_visible_birth_date)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
+                            <small class="form-control-feedback">
+                                (YYYY-MM-DD)
+                            </small>
                             @if($errors->has('birth_date'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('birth_date') }}
@@ -118,6 +121,9 @@
                                     <input type="checkbox" name="is_visible_policies" {{ ($user->is_visible_policies)? 'checked' : '' }} value="1">
                                 </span>
                             </div>
+                            <small class="form-control-feedback">
+                                Separate your policies by a semicolon.
+                            </small>
                             @if($errors->has('policies'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('policies') }}
@@ -148,7 +154,7 @@
                             <input type="file" id="form__avatar" accept="image/*" name="avatar">
                             <div class="form-control-feedback">
                                 @if($user->avatar)
-                                    <img src="{{ url('images/' . $user->avatar . '?w=50') }}" alt="">
+                                    <img src="{{ url('images/' . $user->avatar . '?w=90') }}" alt="">
                                 @endif
                                 <span>Optional, 300 by 300 minimum, 5MB max</span>
                             </div>
@@ -156,9 +162,6 @@
                                 <span class="form-control-feedback">{{ $errors->first('avatar') }}</span>
                             @endif
                         </div>
-                        @if($user->avatar)
-                            <img src="{{ url('images/' . $user->avatar . '?w=90') }}" alt="">
-                        @endif
                     </div>
                     <div class="clearfix">
                         <button class="btn btn-primary float-xs-right" type="submit">Update!</button>
@@ -172,13 +175,16 @@
                     <div class="form-group row">
                         <label class="col-xs-2 col-form-label">Password</label>
                         <div class="col-xs-10">
-                            <input class="form-control" type="password" name="password">
+                            <input class="form-control" type="password" name="password" required minlength="6" maxlength="255">
                         </div>
+                        <small class="form-control-feedback">
+                            minimum length of 6
+                        </small>
                     </div>
                     <div class="form-group row">
                         <label class="col-xs-2 col-form-label">Confirm</label>
                         <div class="col-xs-10">
-                            <input class="form-control" type="password" name="password_confirmation">
+                            <input class="form-control" type="password" name="password_confirmation" required minlength="6" maxlength="255">
                         </div>
                     </div>
                     <div class="clearfix">

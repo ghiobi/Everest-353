@@ -24,29 +24,31 @@
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Active, logged in {{ $user->updated_at->diffForHumans() }}.</li>
+                        <li class="list-group-item text-muted">
+                            <small>Active, had activity {{ $user->updated_at->diffForHumans() }}.</small>
+                        </li>
                         @if($user->external_email && $user->is_visible_external_email)
                             <li class="list-group-item">
                                 {{ $user->external_email }}
                             </li>
                         @endif
                         @if($user->address && $user->is_visible_address)
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Address">
                                 {{ $user->address }}
                             </li>
                         @endif
                         @if($user->license_num && $user->is_visible_license_num)
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="License">
                                 {{ $user->license_num }}
                             </li>
                         @endif
                         @if($user->birth_date && $user->is_visible_birth_date)
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Birthday">
                                 {{ $user->birth_date->toFormattedDateString() }}
                             </li>
                         @endif
                         @if($user->policies && $user->is_visible_policies)
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Policies">
                                 @foreach($user->policies as $policy)
                                     <span class="tag tag-default">{{ $policy }}</span>
                                 @endforeach
@@ -60,6 +62,47 @@
                         @endif
                     </div>
                 </div>
+                @if(Auth::user()->id == $user->id || Auth::user()->hasRole('admin'))
+                    <ul class="list-group">
+                        @if(count($old_posts) > 0)
+                            <li class="list-group-item">
+                                <h5 class="font-weight-light">Old Posts</h5>
+                                @foreach($old_posts as $old_post)
+                                    <div class="sidebar-item">
+                                        <a class="d-block" href="/post/{{$old_post->id}}">{{$old_post->name}}</a>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
+                        @if(count($old_trips) > 0)
+                            <li class="list-group-item">
+                                <h5 class="font-weight-light">Old Trips</h5>
+                                @foreach($old_trips as $old_trip)
+                                    <div class="sidebar-item">
+                                        <small class="text-muted">{{ $old_trip->status() }}</small>
+                                        <a class="d-block" href="/trip/{{$old_trip->id}}">{{$old_trip->name}}</a>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
+                        @if(count($old_hosts) > 0)
+                            <li class="list-group-item">
+                                <h5 class="font-weight-light">Old Hosted Trips</h5>
+                                @foreach($old_hosts as $old_host)
+                                    <div class="sidebar-item">
+                                        <small class="text-muted">{{ $old_host->status() }}</small>
+                                        <a class="d-block" href="/trip/{{$old_host->id}}">{{$old_host->name}}</a>
+                                    </div>
+                                @endforeach
+                            </li>
+                        @endif
+                        @if(count($old_hosts) == 0 && count($old_trips) == 0 && count($old_posts) == 0)
+                            <li class="list-group-item">
+                                <h5 class="font-weight-light text-xs-center mb-0">No Archive <i class="fa fa-archive"></i></h5>
+                            </li>
+                        @endif
+                    </ul>
+                @endif
             </div>
             <div class="col-md-9">
                 @if(count($user->posts) == 0)
