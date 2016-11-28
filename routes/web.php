@@ -35,7 +35,7 @@ Route::group(['middleware'=>'auth'], function () {
         // ------------------------------------------------------------------------
 
         Route::get('/home', 'HomeController@index');
-
+        Route::post('notifications/clear', 'HomeController@clearNotifications');
 
         // ------------------------------------------------------------------------
         // User
@@ -43,7 +43,9 @@ Route::group(['middleware'=>'auth'], function () {
 
         Route::group(['namespace' => 'User'], function(){
 
-            Route::resource('user', 'UserController');
+            Route::resource('user', 'UserController', ['except' => [
+                'create', 'store', 'destroy'
+            ]]);
 
             Route::group(['prefix' => 'mail'], function(){
                 Route::get('/', 'MessageController@mailInbox');
@@ -52,9 +54,7 @@ Route::group(['middleware'=>'auth'], function () {
                 Route::post('/', 'MessageController@sendMessage');
             });
 
-            Route::group(['prefix' => 'funds'], function() {
-                Route::post('/withdraw', 'FundsController@withdrawFunds');
-            });
+            Route::post('funds/withdraw', 'FundsController@withdrawFunds');
         });
 
         // ------------------------------------------------------------------------
@@ -66,7 +66,9 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/post/{post}/edit', 'Post\PostController@edit');
         Route::get('/post/{post}/delete', 'Post\PostController@destroy');
 
-        Route::resource('trip', 'Trip\TripController');
+        Route::resource('trip', 'Trip\TripController', ['except' => [
+            'create', 'destroy', 'edit', 'store'
+        ]]);
         Route::post('/trip/{trip}/join', 'Trip\PaymentController@processPayment');
         Route::post('/trip/{trip}/message', 'Trip\MessageController@message');
         Route::post('/trip/{trip}/rate', 'Trip\TripController@rate');
@@ -77,10 +79,13 @@ Route::group(['middleware'=>'auth'], function () {
         Route::resource('setting', 'SettingController', ['only' => [
             'index', 'update'
         ]]);
-        Route::post('/setting/{setting}', 'Setting\SettingController@update');
 
     });
 });
+
+// ------------------------------------------------------------------------
+// Image requests, for this to function, web server must be configured.
+// ------------------------------------------------------------------------
 
 Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) {
 

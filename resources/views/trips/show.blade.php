@@ -39,9 +39,23 @@
                         <li class="list-group-item">
                             <h6 class="font-weight-normal mb-1">Riders:</h6>
                             @foreach($trip->users as $user)
-                                <span class="d-block" @if(! $loop->last && count($trip->users) > 1) style="margin-bottom: 5px;" @endif>
-                                    <img class="img-fluid rounded-circle mr-1" src="{{ $user->avatarUrl(45) }}" width="45" alt=""> {{ $user->fullName() }}
-                                </span>
+                                <div @if(! $loop->last && count($trip->users) > 1) style="margin-bottom: 5px;" @endif>
+                                    <div class="media">
+                                        <a class="media-left" href="#">
+                                            <img class="img-fluid rounded-circle mr-1" src="{{ $user->avatarUrl(45) }}" width="45" alt="">
+                                        </a>
+                                        <div class="media-body">
+                                            <div>{{ $user->fullName() }}</div>
+                                            @if($user->pivot->rating != null)
+                                                <div class="ratings">
+                                                    @for($i = 0; $i < $user->pivot->rating; $i++)
+                                                        <i class="fa fa-star"></i>
+                                                    @endfor
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </li>
                         @if(Auth::user()->id != $trip->post->poster->id)
@@ -83,17 +97,20 @@
                                 @else
                                     <div class="text-xs-center">
                                         <h5 class="font-weight-normal" style="margin-bottom: 5px">Thanks for rating!</h5>
-                                        @for($i = 0; $i < $trip->isRider(Auth::user())->pivot->rating; $i++)
-                                            <i class="fa fa-star"></i>
-                                        @endfor
                                     </div>
                                 @endif
                             </li>
                         @endif
 
-                        @if(Auth::user()->id == $trip->post->poster->id)
+                        @if(Auth::user()->id == $trip->post->poster->id && empty($trip->arrival_datetime))
                             <li class="list-group-item">
-                                <a href="#" class="card-link btn btn-outline-warning btn-block">Complete Trip</a>
+                                <form action="/trip/{{ $trip->id }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('patch') }}
+                                    <button class="card-link btn btn-outline-warning btn-block">
+                                        Complete Trip
+                                    </button>
+                                </form>
                             </li>
                         @endif
                     </ul>

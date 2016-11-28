@@ -3,25 +3,27 @@
 namespace App\Notifications;
 
 use App\Trip;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RatedTripNotification extends Notification
+class HasNewTripComment extends Notification
 {
     use Queueable;
+
+    private $sender;
+    private $trip;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Trip $trip, User $rater)
+    public function __construct($sender, Trip $trip)
     {
+        $this->sender = $sender;
         $this->trip = $trip;
-        $this->user = $rater;
     }
 
     /**
@@ -44,7 +46,8 @@ class RatedTripNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            //
+            'url' => '/trip/' . $this->trip->id,
+            'message' => $this->sender . ' posted a message on trip, ' . $this->trip->name . '.'
         ];
     }
 }

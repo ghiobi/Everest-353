@@ -36,7 +36,13 @@
   min-width: 47.5%;
 }
 .sidebar-item > a{
+  line-height: 16px;
+}
+.sidebar-item.notifications > a{
   line-height: 12px;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 .sidebar-item{
   margin-bottom: 5px;
@@ -48,6 +54,11 @@
 }
 .tag-container{
 
+}
+.ratings > i{
+  font-size: 12px;
+  color: #ffc200;
+  letter-spacing: -3px;
 }
 .vcontainer{
   display: table;

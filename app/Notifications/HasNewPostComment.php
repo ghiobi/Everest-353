@@ -2,30 +2,34 @@
 
 namespace App\Notifications;
 
-use App\Trip;
+use App\Message;
+use App\Post;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class JoinedTripNotification extends Notification
+class HasNewPostComment extends Notification
 {
     use Queueable;
+
+    private $sender;
+    private $post;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Trip $trip, User $joiner)
+    public function __construct($sender, Post $post)
     {
-        $this->trip = $trip;
-        $this->user = $joiner;
+        $this->sender = $sender;
+        $this->post = $post;
     }
 
     /**
-     * Get the notification's delivery channels.
+     * Get the notification's delivery channels.a
      *
      * @param  mixed  $notifiable
      * @return array
@@ -33,20 +37,6 @@ class JoinedTripNotification extends Notification
     public function via($notifiable)
     {
         return ['database'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', 'https://laravel.com')
-                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -58,7 +48,8 @@ class JoinedTripNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-
+            'url' => '/post/' . $this->post->id,
+            'message' => $this->sender . ' posted a comment on post, ' . $this->post->name . '.'
         ];
     }
 }

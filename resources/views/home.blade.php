@@ -93,6 +93,21 @@
                     @endif
                     <li class="list-group-item">
                         <h5 class="font-weight-light">Notifications</h5>
+                        @foreach($notifications as $notification)
+                            <div class="sidebar-item notifications">
+                                <a href="{{ $notification->data['url'] }}">{{ $notification->data['message'] }}</a>
+                            </div>
+                        @endforeach
+                        @if(count($notifications) == 0)
+                            <small class="text-muted">No notifications.</small>
+                        @else
+                            <form action="/notifications/clear" method="post" class="">
+                                {{ csrf_field() }}
+                                <button class="btn btn-sm btn-danger">
+                                    Clear <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        @endif
                     </li>
                 </ul>
             </div>

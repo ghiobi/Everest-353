@@ -15,39 +15,19 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        if(! Auth::user()->hasRole('admin'))
+            abort(403);
+
         $users = User::all();
         return $users;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -61,7 +41,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -78,7 +57,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -100,14 +78,17 @@ class UserController extends Controller
                 $this->validate($request, [
                     'is_suspended' => 'required|boolean',
                 ]);
-
                 if (
+                    //If user is the same user
                     (Auth::user()->id == $user->id) ||
+                    //Or if user has role admin
                     (! Auth::user()->hasRole('admin')) ||
-                    (! Auth::user()->hasRole('super-admin') && Auth::user()->hasRole('admin') && $user->hasRole('admin'))
+                    //Only super admin can ban an admin
+                    (! Auth::user()->hasRole('super-admin') && $user->hasRole('admin'))
                 ){
                     return abort(403);
                 }
+                //Update suspended attribute.
                 $user->update($request->only('is_suspended'));
                 return back()->with('success', 'Account has been suspended.');;
 
@@ -115,11 +96,7 @@ class UserController extends Controller
                 $this->validate($request, [
                     'password' => 'required|min:6|confirmed',
                 ]);
-                if(
-                    Auth::user()->id != $user->id
-                ){
-                    return abort(403);
-                }
+
                 $user->update(['password' => bcrypt($request->password)]);
                 return back()->with('success', 'Password has been changed.');
 
@@ -177,19 +154,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
      * Determines if the current user can modify this user.
-     *
      * @param User $user
      * @return bool
      */

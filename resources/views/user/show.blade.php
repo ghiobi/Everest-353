@@ -75,12 +75,12 @@
                     </table>
                 @endif
                 @foreach($user->posts as $post)
-                    <div class="card card-post mb-1">
+                    <div class="card mb-1">
                         <div class="card-block">
                             <div><small>Posted {{ $post->created_at->diffForHumans() }}</small></div>
                             <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
                             </h4>
-                            <p class="card-text">{{ substr($post->description, 0, 160) . ((strlen($post->description) > 160)? '...' : '') }}</p>
+                            <p class="card-text">{{ substr($post->description, 0, 260) . ((strlen($post->description) > 160)? '...' : '') }}</p>
                             <div>
                                 S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} |
                                 {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} |
@@ -100,16 +100,16 @@
                                 <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            @if(canEdit($user->id))
+                        @if(canEdit($user->id))
+                            <div class="card-footer">
                                 <a href="/post/{{$post->id}}/edit" class="btn btn-outline-info">Update</a>
                                 <a href="#" class="delete btn btn-outline-danger"><i class="fa fa-trash"></i> Delete</a>
                                 <form action="/post/{{$post->id}}/" method="post" style="display: none">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                 </form>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             </div>

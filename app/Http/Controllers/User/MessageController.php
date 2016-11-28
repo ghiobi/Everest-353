@@ -7,14 +7,13 @@ use App\Http\Controllers\Controller;
 
 use App\Message;
 use App\User;
-use App\Notifications\HasNewMessage;
+use App\Notifications\HasNewMail;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
     /**
      * Send a message to a user
-     *
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
@@ -47,7 +46,7 @@ class MessageController extends Controller
         $user->messages()->save($message);
 
         // Notify the recipient user that a new message has arrived
-        $user->notify(new HasNewMessage($message));
+        $user->notify(new HasNewMail(Auth::user()->fullName(), $message));
 
         // Confirm that the message has been sent successfully
         return back()->with('success', 'Message has been sent.');
@@ -55,7 +54,6 @@ class MessageController extends Controller
 
     /**
      * Display the mail inbox
-     *
      * @return \Illuminate\Http\Response
      */
     public function mailInbox()
@@ -71,7 +69,6 @@ class MessageController extends Controller
 
     /**
      * Displays mail sent
-     *
      * @return string
      */
     public function mailSent()
@@ -86,7 +83,6 @@ class MessageController extends Controller
 
     /**
      * Display a compose message view
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function compose(Request $request)

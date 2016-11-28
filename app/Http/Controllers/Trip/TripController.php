@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Trip;
 
+use App\Notifications\HasNewTripRating;
 use App\Trip;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,29 +22,7 @@ class TripController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -58,37 +38,28 @@ class TripController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $trip = Trip::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if(! $this->canEdit($trip)){
+            return abort(403);
+        }
+
+        if( empty($trip->arrival_datetime)){
+            return abort(500);
+        }
+
+        //Complete the trip
+        $trip->arrival_datetime = Carbon::now();
+        $trip->save();
+
+        return back();
     }
 
     public function rate(Trip $trip, Request $request)
@@ -105,12 +76,23 @@ class TripController extends Controller
         foreach($trip->users as $user) {
             if($user->id == Auth::user()->id) {
                 if($user->pivot->rating == NULL){
+
+                    //Set rating
                     $trip->users()->updateExistingPivot($user->id, ['rating' => $rating]);
+
+                    //Notify the host;
+                    $host = $trip->host;
+                    $host->notify(new HasNewTripRating($user->first_name, $trip));
+
                     return back()->with('success', 'Review submitted.');
                 }
             }
         }
 
         return back();
+    }
+
+    private function canEdit($trip){
+        return Auth::user()->id == $trip->host_id || Auth::user()->hasRole('admin');
     }
 }

@@ -51,7 +51,7 @@
                         <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->first_name }}
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
                             <a class="dropdown-item" href="/mail">Mail</a>
                             <a class="dropdown-item" href="/post/create">Create Post</a>
                             <a class="dropdown-item" href="/funds">Add Funds</a>
@@ -61,7 +61,7 @@
                                 {{ csrf_field() }}
                             </form>
                             @if(Auth::user()->hasRole('super-admin'))
-                                <a href="/setting">System Settings.</a>
+                                <a class="dropdown-item" href="/setting">System Settings</a>
                             @endif
                         </div>
                     </li>
