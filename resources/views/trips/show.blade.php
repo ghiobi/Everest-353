@@ -3,9 +3,9 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-3">{{ $trip->post->name }}</h1>
-            <p class="lead">{{ $trip->post->description }}</p>
-            <a href="/post/{{ $trip->post->id }}">Back to original post.</a>
+            <h1 class="display-3">{{ $trip->name }}</h1>
+            <p class="lead">{{ $trip->description }}</p>
+            <a href="/post/{{ $trip->post_id }}">Back to original post.</a>
         </div>
     </div>
     <div class="container section">
@@ -17,12 +17,12 @@
                     </div>
                     <div class="card-block">
                         <div class="media">
-                            <a class="media-left" href="/user/{{ $trip->post->poster->id }}">
-                                <img class="media-object rounded-circle" src="{{ $trip->post->poster->avatarUrl(45) }}" width="45">
+                            <a class="media-left" href="/user/{{ $trip->host->id }}">
+                                <img class="media-object rounded-circle" src="{{ $trip->host->avatarUrl(45) }}" width="45">
                             </a>
                             <div class="media-body">
                                 <h4 class="media-heading" style="font-size: 14px">Hosted By</h4>
-                                {{ $trip->post->poster->fullName() }}
+                                {{ $trip->host->fullName() }}
                             </div>
                         </div>
                     </div>

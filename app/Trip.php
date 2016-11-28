@@ -18,9 +18,10 @@ class Trip extends Model
             ->withPivot('rating')->select(['id', 'first_name', 'last_name', 'avatar']);
     }
 
-    public function poster()
+    public function host()
     {
-        return $this->belongsTo(Post::class)->poster();
+        return $this->belongsTo(User::class)
+            ->select(['id', 'first_name', 'last_name', 'avatar']);;
     }
 
     public function post()

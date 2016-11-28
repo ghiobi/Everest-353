@@ -49,7 +49,7 @@ class TripController extends Controller
     public function show($id)
     {
         //Todo make sure the user is part of this trip
-        $trip = Trip::with('post.poster')
+        $trip = Trip::with('host')
             ->with('users')
             ->with('messages.sender')
             ->findOrFail($id);

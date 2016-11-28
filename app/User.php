@@ -78,11 +78,19 @@ class User extends Authenticatable
         return $this->morphMany(Message::class, 'messageable');
     }
 
+    /**
+     * Rides the user is currently taking
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function rides()
     {
         return $this->belongsToMany(Trip::class);
     }
 
+    /**
+     * User's posts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class, 'poster_id');
@@ -102,9 +110,13 @@ class User extends Authenticatable
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function postedTrips()
+    /**
+     * Trips the user has posted
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function hosts()
     {
-        return $this->hasManyThrough(Trip::class, Post::class, 'poster_id');
+        return $this->hasMany(Trip::class, 'host_id');
     }
 
     public function getRating()
@@ -114,15 +126,14 @@ class User extends Authenticatable
             $numberOfRating = 0;
 
             // Get all the ratings for all trips for all posts of that user
-            $posts = $this->posts()->with('trips.users')->get();
-            foreach($posts as $post) {
-                foreach ($post->trips as $trip) {
-                    foreach ($trip->users as $user) {
-                        $user_rating = $user->pivot->rating;
-                        if ($user_rating != null) {
-                            $sumRating += $user_rating;
-                            $numberOfRating++;
-                        }
+            $trips = $this->hosts()->with('users')->get();
+
+            foreach($trips as $trip) {
+                foreach ($trip->users as $user) {
+                    $user_rating = $user->pivot->rating;
+                    if ($user_rating != null) {
+                        $sumRating += $user_rating;
+                        $numberOfRating++;
                     }
                 }
             };
