@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    /**
+     * Enables soft deletes in the database
+     */
     use SoftDeletes;
 
+    /**
+     * Fillables attributes
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
@@ -22,6 +29,10 @@ class Post extends Model
         'cost',
     ];
 
+    /**
+     * Castable attributes
+     * @var array
+     */
     protected $casts = [
         'one_time' => 'boolean',
         'is_request' => 'boolean',
@@ -30,11 +41,14 @@ class Post extends Model
         'cost' => 'float'
     ];
 
+    /**
+     * Cast attributes to Carbon objects
+     * @var array
+     */
     protected $dates = ['deleted_at', 'departure_date'];
 
     /**
-     * This model is the parent of
-     *
+     * Returns the child LocalTrip or LongDistanceTrip
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function postable()
@@ -42,19 +56,17 @@ class Post extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Returns the comments of the post
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function messages()
     {
         return $this->morphMany(Message::class, 'messageable');
     }
 
-    public function countMessages()
-    {
-        return $this->messages()->count();
-    }
-
     /**
      * This model belongs to user.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function poster()
@@ -63,20 +75,36 @@ class Post extends Model
             ->select(['id', 'first_name', 'last_name', 'avatar']);
     }
 
+    /**
+     * Returns the trip relation model
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function trips()
     {
         return $this->hasMany(Trip::class);
     }
 
+    /**
+     * Formats the price
+     * @return string
+     */
     public function cost(){
-        return $this->cost;
+        return '$' . number_format($this->cost, 2);
     }
 
+    /**
+     * Gets the next departure date.
+     * @return mixed
+     */
     public function nextDeparture()
     {
         return $this->departure_date;
     }
 
+    /**
+     * Finds the next Trip.
+     * @return Trip
+     */
     public function getNextTrip()
     {
         $trip = $this->trips()->where('departure_datetime', '>', Carbon::now())->first();

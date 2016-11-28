@@ -2,26 +2,28 @@
 
 namespace App\Notifications;
 
-use App\Message;
+use App\Trip;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class HasNewMessage extends Notification
+class HasNewTripComment extends Notification
 {
     use Queueable;
 
-    private $message;
+    private $sender;
+    private $trip;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct($sender, Trip $trip)
     {
-        $this->message = $message;
+        $this->sender = $sender;
+        $this->trip = $trip;
     }
 
     /**
@@ -34,8 +36,9 @@ class HasNewMessage extends Notification
     {
         return ['database'];
     }
+
     /**
-     * Get the representation of the notification.
+     * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return array
@@ -43,8 +46,8 @@ class HasNewMessage extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'sender_id' => $this->message->sender_id,
-            'message_id' => $this->message->id
+            'url' => '/trip/' . $this->trip->id,
+            'message' => $this->sender . ' posted a message on trip, ' . $this->trip->name . '.'
         ];
     }
 }

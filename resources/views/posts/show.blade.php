@@ -9,11 +9,25 @@
         @endif
         <div class="row mb-1">
             <div class="col-md-8">
+                <div class="tag-container">
+                    <div class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
+                    <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
+                    <small>Posted {{ $post->created_at->diffForHumans() }}</small>
+                </div>
                 <h2>{{ $post->name }}</h2>
                 <p class="lead">{{ $post->description }}</p>
-                <p class="mb-1">
+                <div>
                     Departure: {{ $post->departure_pcode }} | Destination: {{ $post->destination_pcode }} | Max riders: {{ $post->num_riders }}
-                </p>
+                </div>
+                <div>
+                    @if(! $post->one_time)
+                        @if($post->postable_type == \App\LocalTrip::class)
+                            {{ $post->postable->displayFrequency() }}
+                        @else
+                            {{ $post->postable->displayFrequency() }}
+                        @endif
+                    @endif
+                </div>
             </div>
             <div class="col-md-4">
                 @if($trip)
@@ -34,7 +48,7 @@
                                     </div>
                                 @endif
                                 <div class="form-check">
-                                        <label class="form-check-label">
+                                    <label class="form-check-label">
                                         <input type="hidden" name="confirm" value="0">
                                         <input type="checkbox" class="form-check-input" name="confirm" value="1">
                                         <small>By Checking this you agree to the terms and the cost of this trip.</small>
@@ -48,9 +62,13 @@
                     </div>
                 @else
                     <div class="card card-block text-xs-center card h-100">
-                        <h4 class="card-title">Oh no...</h4>
-                        <p class="card-text">Looks like we weren't able to find the next trip! Contact support for help!</p>
-                        <a href="/home" class="btn btn-primary">Find another trip!</a>
+                        <div class="vcontainer">
+                            <div class="valign">
+                                <h4 class="card-title">Oh no...</h4>
+                                <p class="card-text">Looks like we weren't able to find the next trip! It coult be expired or contact support for help!</p>
+                                <a href="/home" class="btn btn-primary">Find another trip!</a>
+                            </div>
+                        </div>
                     </div>
                 @endif
             </div>

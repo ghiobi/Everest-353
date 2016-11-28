@@ -6,7 +6,7 @@
             Hello! {{ Auth::user()->fullName() }}
         </h1>
         <div class="card mb-2">
-            <div class="card-block" style="background-color: #f3f3f3;">
+            <div class="card-block p-1" style="background-color: #f3f3f3;">
                 <form action="" class="form-inline">
                     <div class="form-group">
                         <input type="text" class="form-control" name="postal_start" placeholder="Postal Code Start" value="{{ $search['postal_start'] }}">
@@ -30,7 +30,6 @@
                     <label class="form-check-inline">
                         <input class="form-check-input" type="radio" name="type" value="2"{{ (request()->type != 2)? '' : ' checked' }}> Long Distance
                     </label>
-                    <small class="text-muted" style="margin-left: 15px;top: 2px;position: relative;">Found {{ count($posts) }} results.</small>
                     <button class="btn btn-primary float-xs-right" type="submit">Search</button>
                 </form>
             </div>
@@ -41,12 +40,16 @@
                     @foreach($posts as $post)
                         <div class="card card-post mb-1">
                             <div class="card-block">
-                                <small>Posted {{ $post->created_at->diffForHumans() }}</small>
+                                <div><small>Posted {{ $post->created_at->diffForHumans() }}</small></div>
                                 <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
-                                    <span class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</span>
                                 </h4>
                                 <p class="card-text">{{ substr($post->description, 0, 160) . ((strlen($post->description) > 160)? '...' : '') }}</p>
-                                <p>S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} | {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }}</p>
+                                <div>S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} | {{ $post->cost() }} |
+                                    <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }}</div>
+                                <div class="tag-container">
+                                    <div class="tag tag-default tag-trip">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
+                                    <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="media">
@@ -62,29 +65,49 @@
                         </div>
                     @endforeach
                 </div>
+                <small class="text-muted">Found {{ count($posts) }} results.</small>
             </div>
             <div class="col-md-3">
                 <ul class="list-group">
-                    <li class="list-group-item">
-                        <h5 class="font-weight-light">Current Trips</h5>
-                        @foreach($current_trips as $current_trip)
-                            <div class="sidebar-item">
-                                <small class="text-muted">{{ $current_trip->status() }}</small>
-                                <a class="d-block" href="/trip/{{$current_trip->id}}">{{$current_trip['post']['name']}}</a>
-                            </div>
-                        @endforeach
-                    </li>
-                    <li class="list-group-item">
-                        <h5 class="font-weight-light">Posted Trips</h5>
-                        @foreach($posted_trips as $posted_trip)
-                            <div class="sidebar-item">
-                                <small class="text-muted">{{ $posted_trip->status() }}</small>
-                                <a class="d-block" href="/trip/{{$posted_trip->id}}">{{$posted_trip['post']['name']}}</a>
-                            </div>
-                        @endforeach
-                    </li>
+                    @if(count($current_trips) > 0)
+                        <li class="list-group-item">
+                            <h5 class="font-weight-light">Current Trips</h5>
+                            @foreach($current_trips as $current_trip)
+                                <div class="sidebar-item">
+                                    <small class="text-muted">{{ $current_trip->status() }}</small>
+                                    <a class="d-block" href="/trip/{{$current_trip->id}}">{{$current_trip['post']['name']}}</a>
+                                </div>
+                            @endforeach
+                        </li>
+                    @endif
+                    @if(count($posted_trips)> 0)
+                        <li class="list-group-item">
+                            <h5 class="font-weight-light">Hosting Trips</h5>
+                            @foreach($posted_trips as $posted_trip)
+                                <div class="sidebar-item">
+                                    <small class="text-muted">{{ $posted_trip->status() }}</small>
+                                    <a class="d-block" href="/trip/{{$posted_trip->id}}">{{$posted_trip['post']['name']}}</a>
+                                </div>
+                            @endforeach
+                        </li>
+                    @endif
                     <li class="list-group-item">
                         <h5 class="font-weight-light">Notifications</h5>
+                        @foreach($notifications as $notification)
+                            <div class="sidebar-item notifications">
+                                <a href="{{ $notification->data['url'] }}">{{ $notification->data['message'] }}</a>
+                            </div>
+                        @endforeach
+                        @if(count($notifications) == 0)
+                            <small class="text-muted">No notifications.</small>
+                        @else
+                            <form action="/notifications/clear" method="post" class="">
+                                {{ csrf_field() }}
+                                <button class="btn btn-sm btn-danger">
+                                    Clear <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        @endif
                     </li>
                 </ul>
             </div>

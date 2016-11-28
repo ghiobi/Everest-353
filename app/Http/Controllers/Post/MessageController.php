@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Message;
+use App\Notifications\HasNewPostComment;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,12 @@ class MessageController extends Controller
             'body' => $request->body
         ]));
 
-        //TODO Notify
+        $poster = $post->poster;
+
+        //Notify if poster id is not the same as current user
+        if($poster->id != Auth::user()->id){
+            $poster->notify(new HasNewPostComment(Auth::user()->fullName(), $post));
+        }
 
         return back();
     }

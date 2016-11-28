@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Trip;
 
 use App\Message;
+use App\Notifications\HasNewTripComment;
 use App\Trip;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,11 @@ class MessageController extends Controller
 {
     public function message(Trip $trip, Request $request)
     {
+        //Only a admin or the rider can post something.
+        if($trip->isRider(Auth::user()) != null && ! Auth::user()->hasRole('admin')){
+            return abort(403);
+        }
+
         $this->validate($request, [
             'body' => 'required'
         ]);
@@ -23,7 +29,11 @@ class MessageController extends Controller
             'body' => $request->body
         ]));
 
-        //TODO Notify
+        $host = $trip->host;
+
+        if ($host->id != Auth::user()->id){
+            $host->notify(new HasNewTripComment(Auth::user()->first_name, $trip));
+        }
 
         return back();
     }

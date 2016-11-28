@@ -75,22 +75,41 @@
                     </table>
                 @endif
                 @foreach($user->posts as $post)
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-block">
-                            <div class="card-title">
-                                <a href="/post/{{$post->id}}"><h4 class="card-title">{{$post->name}}</h4></a>
-                                <h6 class="card-subtitle text-muted">Departure: {{ $post->departure_pcode }} | Destination: {{ $post->destination_pcode }} | Max riders: {{ $post->num_riders }}</h6>
+                            <div><small>Posted {{ $post->created_at->diffForHumans() }}</small></div>
+                            <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
+                            </h4>
+                            <p class="card-text">{{ substr($post->description, 0, 260) . ((strlen($post->description) > 160)? '...' : '') }}</p>
+                            <div>
+                                S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} |
+                                {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} |
+                                Max riders: {{ $post->num_riders }}
                             </div>
-                            <p class="card-text">{{$post->description}}</p>
-                            @if(canEdit($user->id))
+                            <div>
+                                @if(! $post->one_time)
+                                    @if($post->postable_type == \App\LocalTrip::class)
+                                        {{ $post->postable->displayFrequency() }}
+                                    @else
+                                        {{ $post->postable->displayFrequency() }}
+                                    @endif
+                                @endif
+                            </div>
+                            <div class="tag-container">
+                                <div class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
+                                <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
+                            </div>
+                        </div>
+                        @if(canEdit($user->id))
+                            <div class="card-footer">
                                 <a href="/post/{{$post->id}}/edit" class="btn btn-outline-info">Update</a>
                                 <a href="#" class="delete btn btn-outline-danger"><i class="fa fa-trash"></i> Delete</a>
                                 <form action="/post/{{$post->id}}/" method="post" style="display: none">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                 </form>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             </div>

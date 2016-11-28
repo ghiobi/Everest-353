@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="jumbotron">
+    <div class="jumbotron text-xs-center">
         <div class="container">
             <h1 class="display-1">Settings</h1>
             <p class="lead">System settings are applied immediately.</p>
         </div>
     </div>
     <div class="container section">
-        <div class="row">
+        <div class="row flex-items-xs-center">
             <div class="col-md-6">
                 @if(Session::has('success'))
                     <div class="alert alert-success">

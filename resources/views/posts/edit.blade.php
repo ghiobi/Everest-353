@@ -58,15 +58,17 @@
                             </div>
                         @endif
                     </div>
-                    <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
-                        <label class="form-control-label" for="form__departure_date">First Departure Date</label>
-                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
-                        @if($errors->has('departure_date'))
-                            <div class="form-control-feedback">
-                                {{ $errors->first('departure_date') }}
-                            </div>
-                        @endif
-                    </div>
+                    @if($post->one_time)
+                        <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
+                            <label class="form-control-label" for="form__departure_date">First Departure Date</label>
+                            <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
+                            @if($errors->has('departure_date'))
+                                <div class="form-control-feedback">
+                                    {{ $errors->first('departure_date') }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                     @if($post->postable_type)
                         @if(! $post->one_time)
                             <div class="form-group">

@@ -8,6 +8,7 @@ use App\LocalTrip;
 use App\LongDistanceTrip;
 
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,7 @@ class HomeController extends Controller
 
             $posts->where(function($query) use ($ends) {
                 foreach($ends as $p_code => $distance) {
-                    $query->orWhere('destination_pcode', 'like', $ends[$i] . '%');
+                    $query->orWhere('destination_pcode', 'like', $p_code . '%');
                 }
             });
 
@@ -108,9 +109,15 @@ class HomeController extends Controller
         $posted_trips = Auth::user()->hosts()->get();
 
         //Notifications
-        $notifications = Auth::user()->notifications;
+        $notifications = Auth::user()->unreadNotifications()->get();
 
         return view('home', compact('posts', 'search', 'current_trips', 'posted_trips', 'notifications'));
+    }
+
+    public function clearNotifications(){
+        Auth::user()->unreadNotifications()->update(['read_at' => Carbon::now()]);
+
+        return back();
     }
 
 }

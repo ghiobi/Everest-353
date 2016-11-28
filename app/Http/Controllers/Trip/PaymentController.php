@@ -56,10 +56,15 @@ class PaymentController extends Controller
         $user->balance -= $trip_cost;
         $company_income_percentage = Setting::find('company_income_percentage')->value;
         $trip->owner->balance += $trip_cost * (1 - $company_income_percentage);
+
+        //The the balance to the system user.
         User::find(1)->balance += $trip_cost * ($company_income_percentage);
 
         // Add that user to the trip
         $trip->users()->attach($user);
+
+        //Notify the hoster
+
 
         return redirect()->route('trip', [$trip]);
     }

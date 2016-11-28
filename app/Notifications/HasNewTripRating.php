@@ -2,23 +2,28 @@
 
 namespace App\Notifications;
 
+use App\Trip;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RatedTripNotification extends Notification
+class HasNewTripRating extends Notification
 {
     use Queueable;
+
+    private $rater;
+    private $trip;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($rater, Trip $trip)
     {
-        //
+        $this->rater = $rater;
+        $this->trip = $trip;
     }
 
     /**
@@ -29,21 +34,7 @@ class RatedTripNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', 'https://laravel.com')
-                    ->line('Thank you for using our application!');
+        return ['database'];
     }
 
     /**
@@ -52,10 +43,11 @@ class RatedTripNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
-            //
+            'url' => '/trip/' . $this->trip->id,
+            'message' => 'You have received a new rating by ' . $this->rater . '.',
         ];
     }
 }

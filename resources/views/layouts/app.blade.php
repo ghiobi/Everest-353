@@ -26,31 +26,32 @@
 <body>
 
     <nav class="navbar navbar-light bg-faded">
-        <div class="container-fluid">
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-toggleable-md" id="nav-collapse">
             <a class="navbar-brand" href="/">
                 <img src="/images/logo/logo-hori.png" alt="">
             </a>
             @if(! Auth::guest())
-                <form class="form-inline float-xs-left">
-                    <input class="form-control" type="text" placeholder="Find a ride.">
+                <form class="form-inline float-lg-left">
+                    <input class="form-control" type="text" placeholder="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             @endif
-            <ul class="nav navbar-nav float-xs-right">
+            <ul class="nav navbar-nav float-lg-right">
                 @if(Auth::guest())
                     <li class="nav-item">
                         <span class="navbar-text">Sign in to get started!</span>
                     </li>
                 @else
                     <li class="nav-item">
-                        <span class="navbar-text text-muted">Balance ${{ Auth::user()->balance() }}</span>
+                        <span class="navbar-text text-muted">Balance {{ Auth::user()->balance() }}</span>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="/user/{{ Auth::user()->id }}"><img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt=""></a>
                         <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->first_name }}
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
                             <a class="dropdown-item" href="/mail">Mail</a>
                             <a class="dropdown-item" href="/post/create">Create Post</a>
                             <a class="dropdown-item" href="/funds">Add Funds</a>
@@ -59,10 +60,16 @@
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                            @if(Auth::user()->hasRole('super-admin'))
-                                <a href="/setting">System Settings.</a>
+                            @if(Auth::user()->hasRole('admin'))
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/user">Manage Users</a>
+                                <a class="dropdown-item" href="/post">Manage Posts</a>
+                                <a class="dropdown-item" href="/trip">Manage Trips</a>
+                                @if(Auth::user()->hasRole('super-admin'))
+                                    <a class="dropdown-item" href="/setting">System Settings</a>
+                                @endif
                             @endif
-                        </div>
+                        </ul>
                     </li>
                 @endif
             </ul>

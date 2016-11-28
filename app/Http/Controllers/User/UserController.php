@@ -15,45 +15,25 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        if(! Auth::user()->hasRole('admin'))
+            return abort(403);
+
         $users = User::all();
-        return $users;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('user.index', compact('users'));
     }
 
     /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('posts.messages')->findOrFail($id);
 
         //Return view response
         return view('user.show', compact('user'));
@@ -61,7 +41,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -69,7 +48,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if (! $this->canModifyUser($user)){
+        if (! $this->canEdit($user)){
             return abort(403);
         }
 
@@ -78,7 +57,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -87,7 +65,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if (! $this->canModifyUser($user)){
+        if (! $this->canEdit($user)){
             return abort(403);
         }
 
@@ -97,29 +75,28 @@ class UserController extends Controller
 
         switch ($request->_request){
             case 'suspend' :
-                $this->validate($request, [
-                    'is_suspended' => 'required|boolean',
-                ]);
-
                 if (
+                    //If user is the same user
                     (Auth::user()->id == $user->id) ||
+                    //Or if user has role admin
                     (! Auth::user()->hasRole('admin')) ||
-                    (! Auth::user()->hasRole('super-admin') && Auth::user()->hasRole('admin') && $user->hasRole('admin'))
+                    //Only super admin can ban an admin
+                    (! Auth::user()->hasRole('super-admin') && $user->hasRole('admin'))
                 ){
                     return abort(403);
                 }
-                $user->update($request->only('is_suspended'));
-                return back()->with('success', 'Account has been suspended.');;
+
+                //Update suspended attribute.
+                $user->is_suspended = ! $user->is_suspended;
+                $user->save();
+
+                return back()->with('success', 'Account has been suspended or unsuspended.');;
 
             case 'password':
                 $this->validate($request, [
                     'password' => 'required|min:6|confirmed',
                 ]);
-                if(
-                    Auth::user()->id != $user->id
-                ){
-                    return abort(403);
-                }
+
                 $user->update(['password' => bcrypt($request->password)]);
                 return back()->with('success', 'Password has been changed.');
 
@@ -177,23 +154,11 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
      * Determines if the current user can modify this user.
-     *
      * @param User $user
      * @return bool
      */
-    private function canModifyUser(User $user)
+    private function canEdit(User $user)
     {
         return Auth::user()->id == $user->id || Auth::user()->hasRole('admin');
     }
