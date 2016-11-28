@@ -26,4 +26,12 @@ class Setting extends Model
      * @var string
      */
     public $primaryKey = 'key';
+
+    /**
+     * Do not increment, add this so that
+     * when retrieving the 'key' it is not 0.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 }

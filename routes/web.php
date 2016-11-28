@@ -77,6 +77,7 @@ Route::group(['middleware'=>'auth'], function () {
         Route::resource('setting', 'SettingController', ['only' => [
             'index', 'update'
         ]]);
+        Route::post('/setting/{setting}', 'Setting\SettingController@update');
 
     });
 });
