@@ -51,7 +51,7 @@
                         <a class="nav-link dropdown-toggle d-inline-block" id="navbar-dropdown" href="/user/{{ Auth::user()->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->first_name }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
                             <a class="dropdown-item" href="/mail">Mail</a>
                             <a class="dropdown-item" href="/post/create">Create Post</a>
                             <a class="dropdown-item" href="/funds">Add Funds</a>
@@ -60,10 +60,16 @@
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                            @if(Auth::user()->hasRole('super-admin'))
-                                <a class="dropdown-item" href="/setting">System Settings</a>
+                            @if(Auth::user()->hasRole('admin'))
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/user">Manage Users</a>
+                                <a class="dropdown-item" href="/user">Manage Posts</a>
+                                <a class="dropdown-item" href="/user">Manage Trips</a>
+                                @if(Auth::user()->hasRole('super-admin'))
+                                    <a class="dropdown-item" href="/setting">System Settings</a>
+                                @endif
                             @endif
-                        </div>
+                        </ul>
                     </li>
                 @endif
             </ul>

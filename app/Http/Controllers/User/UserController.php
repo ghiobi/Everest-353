@@ -20,10 +20,10 @@ class UserController extends Controller
     public function index()
     {
         if(! Auth::user()->hasRole('admin'))
-            abort(403);
+            return abort(403);
 
         $users = User::all();
-        return $users;
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -75,9 +75,6 @@ class UserController extends Controller
 
         switch ($request->_request){
             case 'suspend' :
-                $this->validate($request, [
-                    'is_suspended' => 'required|boolean',
-                ]);
                 if (
                     //If user is the same user
                     (Auth::user()->id == $user->id) ||
@@ -88,9 +85,12 @@ class UserController extends Controller
                 ){
                     return abort(403);
                 }
+
                 //Update suspended attribute.
-                $user->update($request->only('is_suspended'));
-                return back()->with('success', 'Account has been suspended.');;
+                $user->is_suspended = ! $user->is_suspended;
+                $user->save();
+
+                return back()->with('success', 'Account has been suspended or unsuspended.');;
 
             case 'password':
                 $this->validate($request, [

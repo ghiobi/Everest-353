@@ -18,7 +18,11 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
+        if(! Auth::user()->hasRole('admin'))
+            return abort(403);
+
+        $trips = Trip::with('users')->with('messages')->get();
+        return view('trips.index', compact('trips'));
     }
 
     /**
@@ -51,7 +55,7 @@ class TripController extends Controller
             return abort(403);
         }
 
-        if( empty($trip->arrival_datetime)){
+        if(! empty($trip->arrival_datetime)){
             return abort(500);
         }
 

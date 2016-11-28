@@ -24,7 +24,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        if(! Auth::user()->hasRole('admin'))
+            return abort(403);
+
+        $posts = Post::with('messages')->get();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -254,8 +258,8 @@ class PostController extends Controller
         }
 
         $post->save();
-        return redirect(route('post.show', ['post' => $post]))
-            ->with('success', 'Your post has been updated successfully!');
+
+        return back()->with('success', 'Your post has been updated successfully!');
     }
 
     /**
@@ -273,8 +277,7 @@ class PostController extends Controller
             $post->delete();
         }
         // Does not have permission to delete this post
-        return redirect(route('user.show', ['user' => Auth::user()->id]))
-            ->with('success', 'Your post has been deleted!');
+        return back()->with('success', 'Your post has been deleted!');
     }
 
     private function canEdit(Post $post)

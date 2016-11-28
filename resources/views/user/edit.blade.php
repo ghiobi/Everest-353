@@ -185,6 +185,16 @@
                         <button class="btn btn-primary float-xs-right" type="submit">Change!</button>
                     </div>
                 </form>
+                @if(Auth::user()->hasRole('admin'))
+                    <h3>{{ ($user->is_suspended)? 'Unsuspend' : 'Suspend' }}</h3>
+                    <p class="lead">Suspending the user will prevent the user form logging in.</p>
+                    <form action="/user/{{ $user->id }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('patch') }}
+                        <input type="hidden" name="_request" value="suspend">
+                        <button class="btn btn-warning">{{ ($user->is_suspended)? 'Unsuspend' : 'Suspend' }}</button>
+                    </form>
+                @endif
             </div>
             <div class="col-md-3">
                 <h3>Need Help?</h3>

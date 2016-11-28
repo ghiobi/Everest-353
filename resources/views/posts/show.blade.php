@@ -65,7 +65,7 @@
                         <div class="vcontainer">
                             <div class="valign">
                                 <h4 class="card-title">Oh no...</h4>
-                                <p class="card-text">Looks like we weren't able to find the next trip! Contact support for help!</p>
+                                <p class="card-text">Looks like we weren't able to find the next trip! It coult be expired or contact support for help!</p>
                                 <a href="/home" class="btn btn-primary">Find another trip!</a>
                             </div>
                         </div>
