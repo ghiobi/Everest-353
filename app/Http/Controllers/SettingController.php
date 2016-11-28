@@ -39,7 +39,7 @@ class SettingController extends Controller
 
         // Validate
         $this->validate($request, [
-            'key' => 'required|numeric'
+            'value' => 'required|numeric'
         ]);
 
         // Update the setting
