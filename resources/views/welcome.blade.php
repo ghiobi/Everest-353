@@ -49,34 +49,38 @@
                                     {{ csrf_field() }}
                                     @if(count($errors) > 0)
                                         <div class="alert alert danger">
-                                            <ul>
-                                                @foreach($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+                                            @foreach($errors->all() as $error)
+                                                <p>{{ $error }}</p>
+                                            @endforeach
                                         </div>
                                     @endif
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-6">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                                 <label for="form__first_name">First Name</label>
-                                                <input type="text" class="form-control" id="form__first_name" name="first_name">
+                                                <input type="text" class="form-control" id="form__first_name" name="first_name" value="{{ old('first_name') }}" required max="255">
                                             </div>
-                                            <div class="col-xs-6">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                                 <label for="form__last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="form__last_name" name="last_name">
+                                                <input type="text" class="form-control" id="form__last_name" name="last_name" value="{{ old('last_name') }}" required max="255">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group{{ ($errors->has('email'))? ' has-danger' : '' }}">
+                                        <label for="form__email">Email</label>
+                                        <input type="email" class="form-control" id="form__email" name="email" value="{{ old('email') }}" required max="255">
+                                    </div>
+                                    <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="form__password">Password</label>
-                                        <input type="password" class="form-control" id="form__password" name="password">
+                                        <input type="password" class="form-control" id="form__password" name="password" required max="255">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="form__password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation">
+                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required max="255">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="">Avatar</label>
                                         <input type="file" class="form-control-file" name="avatar" accept="image/*">
                                         <small class="form-text text-muted">Optional, 300 by 300 minimum, 5MB max</small>
