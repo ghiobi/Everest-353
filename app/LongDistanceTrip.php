@@ -8,7 +8,6 @@ class LongDistanceTrip extends Model
 {
     /**
      * Fillable attributes
-     *
      * @var array
      */
     protected $fillable = [
@@ -19,17 +18,33 @@ class LongDistanceTrip extends Model
         'frequency'
     ];
 
+    /**
+     * Castable attributes
+     * @var array
+     */
     public $casts = [
         'frequency' => 'array'
     ];
 
+    /**
+     * No timestamps
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * References the parent model Post
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
     public function postable()
     {
         return $this->morphOne(Post::class, 'postable');
     }
 
+    /**
+     * Returns the appropriate frequency display message
+     * @return null|string
+     */
     public function displayFrequency()
     {
         switch ($this->frequency){

@@ -13,7 +13,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be casted to native types.
-     *
      * @var array
      */
     protected $casts = [
@@ -37,7 +36,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -61,7 +59,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
@@ -70,7 +67,6 @@ class User extends Authenticatable
 
     /**
      * Returns all messages send to the user.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function messages()
@@ -96,20 +92,6 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'poster_id');
     }
 
-    public function balance(){
-        return $this->balance;
-    }
-
-    public function avatarUrl($width, $height = null)
-    {
-        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . (($height)? '&h=' . $height : '')  : 'dummy_avatar.jpg'));
-    }
-
-    public function fullName()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
     /**
      * Trips the user has posted
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
@@ -119,6 +101,38 @@ class User extends Authenticatable
         return $this->hasMany(Trip::class, 'host_id');
     }
 
+    /**
+     * Returns the display balance of the user
+     * @return string
+     */
+    public function balance(){
+        return '$' . number_format($this->balance, 2);
+    }
+
+    /**
+     * Returns the correct avatar image
+     * @param $width
+     * @param null $height
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public function avatarUrl($width, $height = null)
+    {
+        return url( 'images/' . (($this->avatar) ? $this->avatar . '?w=' . $width . (($height)? '&h=' . $height : '')  : 'dummy_avatar.jpg'));
+    }
+
+    /**
+     * Returns the display full name
+     * @return string
+     */
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Returns the rating of the user, updates every 1 minute.
+     * @return mixed
+     */
     public function getRating()
     {
         return Cache::remember('user.rating.'. $this->id, 1, function () {

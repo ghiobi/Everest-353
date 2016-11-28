@@ -86,6 +86,15 @@
                                 {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} |
                                 Max riders: {{ $post->num_riders }}
                             </div>
+                            <div>
+                                @if(! $post->one_time)
+                                    @if($post->postable_type == \App\LocalTrip::class)
+                                        {{ $post->postable->displayFrequency() }}
+                                    @else
+                                        {{ $post->postable->displayFrequency() }}
+                                    @endif
+                                @endif
+                            </div>
                             <div class="tag-container">
                                 <div class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
                                 <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>

@@ -7,22 +7,42 @@ use Illuminate\Database\Eloquent\Model;
 
 class LocalTrip extends Model
 {
+    /**
+     * Fillable attibutes
+     * @var array
+     */
     protected $fillable = [
         'departure_time',
         'frequency'
     ];
 
+    /**
+     * Castable attributes
+     * @var array
+     */
     protected $casts = [
-      'frequency' => 'array'
+        'frequency' => 'array'
     ];
 
+    /**
+     * No timestamps
+     * @var bool
+     */
     public $timestamps = false;
 
+    /**
+     * Parent model Post
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
     public function postable()
     {
         return $this->morphOne(Post::class, 'postable');
     }
 
+    /**
+     * Returns the appropriate frequency display message.
+     * @return string
+     */
     public function displayFrequency()
     {
         $display = 'Every ';
@@ -38,6 +58,11 @@ class LocalTrip extends Model
         return $display . 'at ' . (new Carbon($this->time))->format('g:i A') . '.';
     }
 
+    /**
+     * Helper function to conver weekday integer to string.
+     * @param $day
+     * @return null|string
+     */
     private function weekday($day)
     {
         switch ($day){

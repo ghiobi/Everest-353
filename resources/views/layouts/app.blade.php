@@ -44,7 +44,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <span class="navbar-text text-muted">Balance ${{ Auth::user()->balance() }}</span>
+                        <span class="navbar-text text-muted">Balance {{ Auth::user()->balance() }}</span>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="/user/{{ Auth::user()->id }}"><img src="{{ Auth::user()->avatarUrl(40) }}" class="img-fluid rounded-circle navbar-avatar" alt=""></a>

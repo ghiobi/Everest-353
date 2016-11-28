@@ -79,7 +79,7 @@ class HomeController extends Controller
 
             $posts->where(function($query) use ($ends) {
                 foreach($ends as $p_code => $distance) {
-                    $query->orWhere('destination_pcode', 'like', $ends[$i] . '%');
+                    $query->orWhere('destination_pcode', 'like', $p_code . '%');
                 }
             });
 

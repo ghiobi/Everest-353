@@ -11,7 +11,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-block">
-                            <h4 class="card-title text-xs-center">Your balance, ${{ Auth::user()->balance() }}</h4>
+                            <h4 class="card-title text-xs-center">Your balance, {{ Auth::user()->balance() }}</h4>
                             <div class="card-text">
                                 <form action="/funds/add" method="post">
                                     {{ csrf_field() }}
