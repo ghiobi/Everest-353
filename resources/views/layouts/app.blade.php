@@ -59,6 +59,9 @@
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
+                            @if(Auth::user()->hasRole('super-admin'))
+                                <a href="/setting">System Settings.</a>
+                            @endif
                         </div>
                     </li>
                 @endif

@@ -62,6 +62,18 @@
                 </div>
             </div>
             <div class="col-md-9">
+                @if(count($user->posts) == 0)
+                    <table class="h-100 w-100">
+                        <tbody>
+                            <tr>
+                                <td class="align-middle text-xs-center">
+                                    <h3>This user has no posts. <i class="fa fa-frown-o"></i></h3>
+                                    <p class="text-muted">Maybe one day.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endif
                 @foreach($user->posts as $post)
                     <div class="card">
                         <div class="card-block">

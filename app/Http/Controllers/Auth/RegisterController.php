@@ -68,13 +68,13 @@ class RegisterController extends Controller
         $timezone = 'US/EASTERN';
         try{
             //Find user timezone by ip address
-            $data = app('geocoder')->using('free_geo_ip')->geocode(request()->ip())
+            $geoip_timezone = app('geocoder')->using('free_geo_ip')->geocode(request()->ip())
                 ->first()
                 ->getTimezone();
 
             //If timezone is not null then overwrite the default timezone
-            if(! empty($data))
-                $timezone = $data;
+            if(! empty($geoip_timezone))
+                $timezone = $geoip_timezone;
 
         } catch (\Geocoder\Exception\UnsupportedOperation $e){
             //Nothing to do.
