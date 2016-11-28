@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Setting;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -16,6 +17,9 @@ class SettingController extends Controller
      */
     public function index()
     {
+        // Ensure that the user is an administrator
+        $this->verifyAdmin();
+
         $settings = Setting::all();
         return view('settings.index', compact('settings'));
     }
@@ -29,21 +33,27 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        // Ensure that the user is an administrator
+        $this->verifyAdmin();
+
         // Validate
         $this->validate($request, [
-            'display_name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'value' => 'required|max:255'
+            'key' => 'required|numeric'
         ]);
 
         // Update the setting
         $setting = Setting::findOrFail($id);
-        $setting->display_name = $request->display_name;
-        $setting->description = $request->description;
-        $setting->value = $request->value;
+        $setting->value = $request->key;
 
         $setting->save();
 
         return back()->with('success', 'Settings have been updated successfully!');
+    }
+
+    private function verifyAdmin() {
+        if(!Auth::user()->hasRole('admin')){
+            abort(403);
+        }
     }
 }
