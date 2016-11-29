@@ -120,7 +120,7 @@ class Post extends Model
 
                 $departure_time = '12:00:00';
                 if($this->postable_type == LocalTrip::class) {
-                    $departure_time = $this->postalble->departure_time;
+                    $departure_time = $this->postable->departure_time;
                 }
 
                 $trip = Trip::create([
