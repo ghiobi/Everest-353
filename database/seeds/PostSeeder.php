@@ -111,7 +111,7 @@ class PostSeeder extends Seeder
             'departure_province' => 'Quebec',
             'destination_city' => 'Quebec City',
             'destination_province' => 'Quebec',
-            'frequency' => []
+            'frequency' => 0
         ])->postable()->save($post);
         $trip = new \App\Trip([
             'host_id' => $post->poster_id,
