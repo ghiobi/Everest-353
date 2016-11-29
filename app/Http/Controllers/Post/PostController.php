@@ -121,7 +121,7 @@ class PostController extends Controller
                 'every_thur' => 'required_if:one_time,false|boolean',
                 'every_fri' => 'required_if:one_time,false|boolean',
                 'every_sat' => 'required_if:one_time,false|boolean',
-                'time' => 'required|date_format:H:i:s',
+                'time' => 'required|date_format:H:i',
                 'departure_date' => 'required_if:one_time,true:date'
             ]);
 
@@ -134,7 +134,7 @@ class PostController extends Controller
                     $atLeastOne = true;
                 }
             }
-            if(!$atLeastOne) {
+            if(!$atLeastOne && ! $request->one_time) {
                 return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
             }
 
@@ -267,11 +267,6 @@ class PostController extends Controller
             //Update locations
             if($post->postable_type != LocalTrip::class) {
 
-                //If post is type of long distance
-                $this->validate($request, [
-                    'frequency'=>'required_if:one_time,false|min:0|max:8'
-                ]);
-
                 $trip->update([
                     'departure_city' => $departure_pcode['city'],
                     'departure_province' => $departure_pcode['province'],
@@ -293,7 +288,7 @@ class PostController extends Controller
                 'every_thur' => 'required_if:one_time,false|boolean',
                 'every_fri' => 'required_if:one_time,false|boolean',
                 'every_sat' => 'required_if:one_time,false|boolean',
-                'time' => 'required|date_format:H:i:s'
+                'time' => 'required|date_format:H:i'
             ]);
 
             $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
@@ -305,7 +300,8 @@ class PostController extends Controller
                     $atLeastOne = true;
                 }
             }
-            if(!$atLeastOne) {
+
+            if(!$atLeastOne && ! $post->one_time) {
                 return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
             }
 
@@ -321,7 +317,7 @@ class PostController extends Controller
                 'frequency'=>'required_if:one_time,false|min:0|max:8'
             ]);
 
-            $trip = new LongDistanceTrip([
+            $trip->update([
                 'frequency' => $request->frequency
             ]);
 

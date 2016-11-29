@@ -5,6 +5,7 @@
         <div class="container">
             <h1>Edit a post!</h1>
             <p class="lead">Remember to drive safely.</p>
+            <a href="/post/{{ $post->id }}">Back to post!</a>
         </div>
     </div>
     <div class="container section">
@@ -64,6 +65,22 @@
                             </div>
                         @endif
                     </div>
+                    @if($post->postable_type != \App\LocalTrip::class)
+                        <div class="row">
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Departure City</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->departure_city }}">
+                                </div>
+                            </div>
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Departure Province</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->departure_province }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group{{ ($errors->has('destination_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__destination_pcode">Destination Postal Code</label>
                         <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ $post->destination_pcode }}" required pattern="^[A-z]\d[A-z]\s?\d[A-z]\d$">
@@ -76,6 +93,23 @@
                             </div>
                         @endif
                     </div>
+
+                    @if($post->postable_type != \App\LocalTrip::class)
+                        <div class="row">
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Destination City</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->destination_city }}">
+                                </div>
+                            </div>
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Destination Province</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->destination_province }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @if($post->one_time)
                         <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
                             <label class="form-control-label" for="form__departure_date">Departure Date</label>
@@ -87,7 +121,7 @@
                             @endif
                         </div>
                     @endif
-                    @if($post->postable_type)
+                    @if($post->postable_type == \App\LocalTrip::class)
                         @if(! $post->one_time)
                             <div class="form-group">
                                 <legend>Frequency</legend>
