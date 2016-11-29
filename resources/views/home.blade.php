@@ -54,8 +54,16 @@
                                 <h4 class="card-title"><a href="/post/{{ $post->id }}">{{ $post->name }}</a>
                                 </h4>
                                 <p class="card-text">{{ substr($post->description, 0, 160) . ((strlen($post->description) > 160)? '...' : '') }}</p>
-                                <div>S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} | {{ $post->cost() }} |
-                                    <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }}</div>
+                                <div>
+                                @if($post->postable_type == \App\LocalTrip::class)
+                                    S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} |
+                                @endif
+                                    {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }}</div>
+                                @if($post->postable_type != \App\LocalTrip::class)
+                                    <div>
+                                        S: {{ $post->postable->departure_city }}, {{ $post->postable->departure_province }} | E: {{ $post->postable->destination_city }}, {{ $post->postable->destination_province }}
+                                    </div>
+                                @endif
                                 <div class="tag-container">
                                     <div class="tag tag-default tag-trip">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
                                     <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
