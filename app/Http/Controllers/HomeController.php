@@ -33,6 +33,12 @@ class HomeController extends Controller
             'postal_end' => ''
         ];
 
+        $this->validate($request, [
+            'postal_start' => 'sometimes|required',
+            'radius' => 'sometimes|required|numeric',
+            'type' => 'sometimes|required'
+        ]);
+
         //Filtering the starting point.
 
         if($request->postal_start == null){
@@ -57,7 +63,11 @@ class HomeController extends Controller
 
         } else {
 
-            $postal_start = $postalCoder->geocode($request->postal_start);
+            $postal_start = $postalCoder->geocode(trim($request->postal_start));
+
+            if($postal_start == null){
+                return back()->withErrors(['postal_start' => "Couldn't find postal code."]);
+            }
 
             $starts = $nearestPCoder->nearestUsingCoordinates($postal_start->getLatitude(), $postal_start->getLongitude(), $radius);
 
@@ -74,7 +84,11 @@ class HomeController extends Controller
         //Filtering the destination.
         if($request->postal_end){
 
-            $postal_end = $postalCoder->geocode($request->postal_end);
+            $postal_end = $postalCoder->geocode(trim($request->postal_end));
+
+            if($postal_start == null){
+                return back()->withErrors(['postal_end' => "Couldn't find postal code."]);
+            }
 
             $ends = $nearestPCoder->nearestUsingCoordinates($postal_end->getLatitude(), $postal_end->getLongitude(), $radius);
 
@@ -98,15 +112,23 @@ class HomeController extends Controller
 
         }
 
+        //Filtering out old posts
+        $posts->where(function($query){
+            $query->where('one_time', 1);
+            $query->whereDate('departure_date', '>=', Carbon::now());
+        });
+        //Always including frequent posts
+        $posts->OrWhere('one_time', 0);
+
         //Execute Query
-        $posts->with('messages')->orderBy('created_at');
+        $posts->with('messages')->with('poster')->orderBy('created_at');
         $posts = $posts->get();
 
-        // Get Trips
-        $current_trips = Auth::user()->rides()->get();
+        // Get Trips //Not completed trips
+        $current_trips = Auth::user()->rides()->whereNull('arrival_datetime')->get();
 
-        // Hosted trips
-        $posted_trips = Auth::user()->hosts()->get();
+        // Hosted trips //Not completed trips
+        $posted_trips = Auth::user()->hosts()->whereNull('arrival_datetime')->get();
 
         //Notifications
         $notifications = Auth::user()->unreadNotifications()->get();

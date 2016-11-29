@@ -15,7 +15,7 @@
                     {{ method_field('patch')  }}
                     <div class="form-group{{ ($errors->has('name'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__name">Name</label>
-                        <input type="text" class="form-control" id="form__name" name="name" value="{{ $post->name }}" required max="255">
+                        <input type="text" class="form-control" id="form__name" name="name" value="{{ $post->name }}" required minlength="1" maxlength="255">
                         @if($errors->has('name'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('name') }}
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group{{ ($errors->has('description'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__description">Description</label>
-                        <textarea class="form-control" id="form__description" name="description" rows="3" required>{{ $post->description }}</textarea>
+                        <textarea class="form-control" id="form__description" name="description" rows="3" required minlength="1">{{ $post->description }}</textarea>
                         @if($errors->has('description'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('description') }}
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group{{ ($errors->has('num_riders'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__num_riders">Number of Riders</label>
-                        <input type="number" class="form-control" id="form__num_riders" name="num_riders" value="{{ $post->num_riders }}" required min="0">
+                        <input type="number" class="form-control" id="form__num_riders" name="num_riders" value="{{ $post->num_riders }}" required min="1">
                         @if($errors->has('num_riders'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('num_riders') }}
@@ -42,7 +42,10 @@
                     </div>
                     <div class="form-group{{ ($errors->has('departure_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__departure_pcode">Departure Postal Code</label>
-                        <input type="text" class="form-control" id="form__departure_pcode" name="departure_pcode" value="{{ $post->departure_pcode }}" required>
+                        <input type="text" class="form-control" id="form__departure_pcode" name="departure_pcode" value="{{ $post->departure_pcode }}" required pattern="^[A-z]\d[A-z]\s?\d[A-z]\d$">
+                        <small class="form-control-feedback">
+                            eg. A0A 1A1
+                        </small>
                         @if($errors->has('departure_pcode'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('departure_pcode') }}
@@ -51,7 +54,10 @@
                     </div>
                     <div class="form-group{{ ($errors->has('destination_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__destination_pcode">Destination Postal Code</label>
-                        <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ $post->destination_pcode }}" required max="7">
+                        <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ $post->destination_pcode }}" required pattern="^[A-z]\d[A-z]\s?\d[A-z]\d$">
+                        <small class="form-control-feedback">
+                            eg. A0A 1A1
+                        </small>
                         @if($errors->has('destination_pcode'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('destination_pcode') }}

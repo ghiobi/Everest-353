@@ -49,10 +49,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         //Postal Code Geocoder
         $coder = new PostalCoder();
 
+        //Validate Input
         $this->validate($request, [
             'name' => 'required|max:255',
             'description' => 'required|min:10',
@@ -64,6 +64,7 @@ class PostController extends Controller
             'type' => 'required|boolean'
         ]);
 
+        //Geocode departure postal code
         $departure_pcode = $coder->geocode($request->departure_pcode);
         if (! $departure_pcode){
             return back()->withErrors([
@@ -72,6 +73,7 @@ class PostController extends Controller
         }
         $departure_pcode = $departure_pcode->toArray();
 
+        //Geocode destination postal code
         $destination_pcode = $coder->geocode($request->destination_pcode);
         if (! $destination_pcode){
             return back()->withErrors([
@@ -80,6 +82,7 @@ class PostController extends Controller
         }
         $destination_pcode = $destination_pcode->toArray();
 
+        //Create Post
         $post = new Post($request->only([
             'name',
             'description',
@@ -102,6 +105,7 @@ class PostController extends Controller
         $cost = Setting::find('ride_initial_cost')->value + ($distance * Setting::find('fuel_cost_per_kilometer')->value);
         $post->cost = round($cost,2);
 
+        //Bonus
         $post->is_request = false; //TODO: Is request of trip.
 
         $trip = null;
@@ -123,6 +127,7 @@ class PostController extends Controller
 
             $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
             $frequency = array_values($frequency); //Returns array of the values only
+
             $atLeastOne  = false;
             for($i = 0; $i < count($frequency); $i++) {
                 if($frequency[$i]) {
@@ -139,8 +144,8 @@ class PostController extends Controller
             ]);
 
         } else {
-            //If post is type of long distance
 
+            //If post is type of long distance
             $this->validate($request, [
                 'frequency'=>'required|min:0|max:8'
             ]);
@@ -280,6 +285,11 @@ class PostController extends Controller
         return back()->with('success', 'Your post has been deleted!');
     }
 
+    /**
+     * Permission control for this resource
+     * @param $trip
+     * @return bool
+     */
     private function canEdit(Post $post)
     {
         if($post->poster_id !== Auth::user()->id && ! Auth::user()->hasRole('admin')){

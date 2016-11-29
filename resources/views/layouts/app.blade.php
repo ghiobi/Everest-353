@@ -31,12 +31,6 @@
             <a class="navbar-brand" href="/">
                 <img src="/images/logo/logo-hori.png" alt="">
             </a>
-            @if(! Auth::guest())
-                <form class="form-inline float-lg-left">
-                    <input class="form-control" type="text" placeholder="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            @endif
             <ul class="nav navbar-nav float-lg-right">
                 @if(Auth::guest())
                     <li class="nav-item">

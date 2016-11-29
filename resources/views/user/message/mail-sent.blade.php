@@ -32,7 +32,7 @@
                             <img src="{{ $message->messageable->avatarUrl(30) }}" width=35" class="img-fluid rounded-circle" alt=""> {{ $message->messageable->fullName() }}
                         </td>
                         <td>
-                            {{ $message->body }}
+                            {!! $message->body !!}
                         </td>
                         <td>
                             <a href="/mail/compose?recipient_id={{ $message->messageable->id }}" title="reply"><i class="fa fa-reply"></i></a>

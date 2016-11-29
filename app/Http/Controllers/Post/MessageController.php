@@ -27,7 +27,16 @@ class MessageController extends Controller
 
         //Notify if poster id is not the same as current user
         if($poster->id != Auth::user()->id){
+
             $poster->notify(new HasNewPostComment(Auth::user()->fullName(), $post));
+
+            //Send Mail
+            $poster->messages()->save(
+                new Message([
+                    'sender_id' => 1,
+                    'body' => 'You have received a new comment for one of your posts. <a href="/post/'.$post->id.'">Click here to visit the page.</a>'
+                ])
+            );
         }
 
         return back();

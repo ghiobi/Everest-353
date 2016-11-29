@@ -8,14 +8,24 @@
         <div class="card mb-2">
             <div class="card-block p-1" style="background-color: #f3f3f3;">
                 <form action="" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="postal_start" placeholder="Postal Code Start" value="{{ $search['postal_start'] }}">
+                    <div class="form-group{{ ($errors->has('postal_start')? ' has-danger' : '' ) }}">
+                        <input type="text" class="form-control" name="postal_start" placeholder="Postal Code Start (eg. A0A 1A1)" value="{{ $search['postal_start'] }}" required pattern="[A-z]\d[A-z]\s?(\d[A-z]\d)?$" maxlength="7">
+                        @if($errors->has('postal_start'))
+                            <div class="form-control-feedback">
+                                {{ $errors->first('postal_start') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group{{ ($errors->has('postal_end')? ' has-danger' : '' ) }}">
+                        <input type="text" class="form-control" name="postal_end" placeholder="Postal Code Destination (eg. A0A 1A1)" value="{{ $search['postal_end'] }}" pattern="[A-z]\d[A-z]\s?(\d[A-z]\d)?$" maxlength="7">
+                        @if($errors->has('postal_end'))
+                            <div class="form-control-feedback">
+                                {{ $errors->first('postal_end') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="postal_end" placeholder="Postal Code Destination" value="{{ $search['postal_end'] }}">
-                    </div>
-                    <div class="form-group">
-                        <select name="radius" id="" class="form-control" title="Radius">
+                        <select name="radius" id="" class="form-control" title="Radius" required>
                             @for ($i = 5; $i <= 50; $i += 5)
                                 <option value="{{ $i }}"{{ ($search['radius'] == $i)? ' selected' : ''}}>{{ $i }} KM</option>
                             @endfor
@@ -75,7 +85,7 @@
                             @foreach($current_trips as $current_trip)
                                 <div class="sidebar-item">
                                     <small class="text-muted">{{ $current_trip->status() }}</small>
-                                    <a class="d-block" href="/trip/{{$current_trip->id}}">{{$current_trip['post']['name']}}</a>
+                                    <a class="d-block" href="/trip/{{$current_trip->id}}">{{$current_trip->name}}</a>
                                 </div>
                             @endforeach
                         </li>
@@ -86,7 +96,7 @@
                             @foreach($posted_trips as $posted_trip)
                                 <div class="sidebar-item">
                                     <small class="text-muted">{{ $posted_trip->status() }}</small>
-                                    <a class="d-block" href="/trip/{{$posted_trip->id}}">{{$posted_trip['post']['name']}}</a>
+                                    <a class="d-block" href="/trip/{{$posted_trip->id}}">{{$posted_trip->name}}</a>
                                 </div>
                             @endforeach
                         </li>
