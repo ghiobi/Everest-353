@@ -52,7 +52,7 @@ class PaymentController extends Controller
         if($trip->isRider($user)){
             $errors['already_joined'] = 'You already joined this trip.';
         }
-        
+
         //Ensure the owner can't join trip trip.
         if($trip->host_id == $user->id){
             $errors['joining_own'] = 'You can\'t join your own trip.';

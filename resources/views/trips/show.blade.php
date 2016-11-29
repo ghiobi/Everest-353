@@ -9,6 +9,11 @@
         </div>
     </div>
     <div class="container section">
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <strong>Success!</strong> {{ Session::get('success') }}</a>.
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
