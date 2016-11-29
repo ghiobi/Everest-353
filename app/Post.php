@@ -117,12 +117,18 @@ class Post extends Model
 
             // If the departure date is in the future, create a trip
             if($this->departure_date->gte(Carbon::now())){
+
+                $departure_time = '12:00:00';
+                if($this->postable_type == LocalTrip::class) {
+                    $departure_time = $this->postalble->departure_time;
+                }
+
                 $trip = Trip::create([
                     'post_id' => $this->id,
                     'host_id' => $this->poster_id,
                     'name' => $this->name,
                     'description' => $this->description,
-                    'departure_datetime' => $this->departure_date->toDateString() . ' ' . $this->postable->departure_time,
+                    'departure_datetime' => $this->departure_date->toDateString() . ' ' . $departure_time,
                     'departure_pcode' => $this->departure_pcode,
                     'arrival_pcode' => $this->destination_pcode,
                     'num_riders' => $this->num_riders,
