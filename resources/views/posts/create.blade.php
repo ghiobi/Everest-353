@@ -142,7 +142,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="type-wrap{{ (old('type') == 0 && old('one_time') != null)? ' active' : '' }}">
+                    <div class="type-wrap{{ (old('type') == 0 && old('type') != null)? ' active' : '' }}">
                         <div class="freq-wrap{{ (old('one_time') == 0 && old('one_time') != null)? ' active' : '' }}">
                             <div class="form-group">
                                 <label for="">Frequency</label>
