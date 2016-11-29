@@ -58,7 +58,16 @@
                                 @if($post->postable_type == \App\LocalTrip::class)
                                     S: {{ $post->departure_pcode }} | E: {{ $post->destination_pcode }} |
                                 @endif
-                                    {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }}</div>
+                                    {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} | <i class="fa fa-car" aria-hidden="true"></i>: {{ $post->num_riders }} |
+                                    <a href="#"><i  class="fa fa-map" data-toggle="modal" data-target="#post-modal-{{$loop->index}}"></i></a>
+                                    <div class="modal fade" id="post-modal-{{$loop->index}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <iframe class="w-100" height="360" src="//www.google.com/maps/embed/v1/directions?origin={{ $post->departure_pcode }}&destination={{ $post->destination_pcode }}&key=AIzaSyCgfUnLm9_WaYa9hov9l8z4dhVdUuQ6nRg"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if($post->postable_type != \App\LocalTrip::class)
                                     <div>
                                         S: {{ $post->postable->departure_city }}, {{ $post->postable->departure_province }} | E: {{ $post->postable->destination_city }}, {{ $post->postable->destination_province }}

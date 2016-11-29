@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Trip;
 
+use App\Notifications\HasNewTripUser;
 use Illuminate\Http\Request;
 
 use App\Trip;
@@ -76,7 +77,7 @@ class PaymentController extends Controller
 
         //Notify the hoster
         $host = $trip->host;
-        $host->notify(new HasNewTripRating($user->fullName(), $trip));
+        $host->notify(new HasNewTripUser($user->fullName(), $trip));
 
         //Send Mail
         $host->messages()->save(

@@ -12,6 +12,16 @@ use App\Setting;
 
 class FundsController extends Controller
 {
+
+    /**
+     * Returns the view to add funds or withdraw
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function fundsPage()
+    {
+        return view('user/funds/add');
+    }
+
     /**
      * Adds funds
      * @param Request $request
