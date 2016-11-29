@@ -63,6 +63,7 @@ class PaymentController extends Controller
         $user->save();
 
         $company_income_percentage = Setting::find('company_income_percentage')->value;
+        $owner = User::find($trip->host->id);
         $owner->balance += $trip_cost * (1 - $company_income_percentage);
         $owner->save();
 
