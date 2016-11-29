@@ -11,6 +11,13 @@
         <div class="row">
             <div class="col-md-8">
                 @if(! empty(Auth::user()->license_num))
+                    @if(count($errors) > 0)
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     <form action="/post" method="post">
                     {{ csrf_field() }}
                     <div class="form-group{{ ($errors->has('name'))? ' has-danger' : '' }}">
@@ -24,7 +31,7 @@
                     </div>
                     <div class="form-group{{ ($errors->has('description'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__description">Description</label>
-                        <textarea class="form-control" id="form__description" name="description" rows="3" value="{{ old('description') }}" required></textarea>
+                        <textarea class="form-control" id="form__description" name="description" rows="3" required>{{ old('description') }}</textarea>
                         @if($errors->has('description'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('description') }}
@@ -84,7 +91,7 @@
                     </div>
                     <div class="form-group onet-wrap{{ ($errors->has('departure_date'))? ' has-danger' : '' }}{{ (old('one_time') == 1 || old('one_time') == null)? ' active' : '' }}">
                         <label class="form-control-label" for="form__departure_date">Departure Date</label>
-                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}">
+                        <input type="date" class="form-control form-reset" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}">
                         @if($errors->has('departure_date'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('departure_date') }}
@@ -127,7 +134,7 @@
                         </div>
                         <div class="form-group{{ ($errors->has('time'))? ' has-danger' : '' }}">
                             <label for="form__time">Departure Time</label>
-                            <input type="time" class="form-control" id="form__time" name="time" value="{{ old('time') }}">
+                            <input type="time" class="form-control form-reset" id="form__time" name="time" value="{{ old('time') }}">
                             @if($errors->has('time'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('time') }}
@@ -174,14 +181,17 @@
             var $type_wrap = $('.type-wrap');
             var $freq_wrap = $('.freq-wrap');
             var $onet_wrap = $('.onet-wrap');
+            var inputs = $('.form-reset');
 
             $type_selection.change(function(){
                 var val = $(this).val();
                 $('.type-wrap.active').removeClass('active');
                 $type_wrap.eq(++val % 2).addClass('active');
+                inputs.val('');
             });
             $freq_selection.change(function(){
                 var val = $(this).val();
+                $freq_wrap.find('input').val('');
                 if(val == 1){
                     $freq_wrap.removeClass('active');
                     $onet_wrap.addClass('active');
@@ -189,6 +199,7 @@
                     $freq_wrap.addClass('active');
                     $onet_wrap.removeClass('active');
                 }
+                inputs.val('');
             });
         });
     </script>

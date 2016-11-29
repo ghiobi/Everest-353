@@ -67,7 +67,7 @@
                     @if($post->one_time)
                         <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
                             <label class="form-control-label" for="form__departure_date">First Departure Date</label>
-                            <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
+                            <input type="date" class="form-control form-reset" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
                             @if($errors->has('departure_date'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('departure_date') }}
@@ -111,7 +111,7 @@
                         @endif
                         <div class="form-group{{ ($errors->has('time'))? ' has-danger' : '' }}">
                             <label for="form__time">Departure Time</label>
-                            <input type="time" class="form-control" id="form__time" name="time" value="{{ $post->postable->departure_time }}">
+                            <input type="time" class="form-control form-reset" id="form__time" name="time" value="{{ $post->postable->departure_time }}" required>
                             @if($errors->has('time'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('time') }}

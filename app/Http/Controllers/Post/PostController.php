@@ -56,7 +56,7 @@ class PostController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'description' => 'required|min:10',
-            'departure_date' => 'required|date',
+            'departure_date' => 'required_if:one_time,true|date',
             'departure_pcode' => 'required',
             'destination_pcode' => 'required',
             'num_riders' => 'required|numeric',
@@ -91,7 +91,7 @@ class PostController extends Controller
         ]));
 
         //Setting other post attributes.
-        $post->departure_date = $request->departure_date;
+        $post->departure_date = ($request->departure_date)? $request->departure_date : null;
         $post->departure_pcode = $departure_pcode['postal_code'];
         $post->destination_pcode = $destination_pcode['postal_code'];
         $post->poster_id = Auth::user()->id;
