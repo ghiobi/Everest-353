@@ -41,20 +41,20 @@
                 @if($trip)
                     <div class="card h-100">
                         <div class="card-header">
-                            Next trip at ... with currently 0 riders.
+                            Next trip on {{$trip->departure_datetime->toFormattedDateString()}}
+                            at {{$trip->departure_datetime->format('h:i:s A')}}
+                            with currently {{count($trip->users)}} riders.
                         </div>
                         <div class="card-block ">
                             <p class="text-xs-center" style="font-size: 32px">Now for {{ $post->cost() }}</p>
                             <form action="/trip/{{ $trip->id }}/join" method="post">
                                 {{ csrf_field() }}
                                 @if(count($errors)> 0)
+                                    @foreach($errors->all() as $error)
                                     <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach($errors as $error)
-                                                {{ $error }}
-                                            @endforeach
-                                        </ul>
+                                        {{ $error }}
                                     </div>
+                                    @endforeach
                                 @endif
                                 <div class="form-check">
                                     <label class="form-check-label">

@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Trip;
 
 use Illuminate\Http\Request;
 
+use App\Trip;
+use App\User;
+use App\Message;
+use App\Setting;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Notifications\HasNewTripRating;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -20,7 +26,7 @@ class PaymentController extends Controller
         $errors = [];
 
         // User must have agreed on terms and cost
-        if ($request->confirm != 0) {
+        if ($request->confirm == 0) {
             $errors['confirm'] = 'Please agree to the terms and costs of this trip.';
         }
         // Check if the user has enough funds for the trip
@@ -54,11 +60,16 @@ class PaymentController extends Controller
 
         // Proceed with transaction
         $user->balance -= $trip_cost;
-        $company_income_percentage = Setting::find('company_income_percentage')->value;
-        $trip->owner->balance += $trip_cost * (1 - $company_income_percentage);
+        $user->save();
 
-        //The the balance to the system user.
-        User::find(1)->balance += $trip_cost * ($company_income_percentage);
+        $company_income_percentage = Setting::find('company_income_percentage')->value;
+        $owner = User::find($trip->host->id);
+        $owner->balance += $trip_cost * (1 - $company_income_percentage);
+        $owner->save();
+
+        $system = User::find(1);
+        $system->balance += $trip_cost * ($company_income_percentage);
+        $system->save();
 
         // Add that user to the trip
         $trip->users()->attach($user);
@@ -75,6 +86,7 @@ class PaymentController extends Controller
             ])
         );
 
-        return redirect()->route('trip', [$trip]);
+        return redirect(route('trip.show', ['trip' => $trip]))
+            ->with('success', 'You have successfully joined the trip!');
     }
 }
