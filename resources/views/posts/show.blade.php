@@ -24,10 +24,13 @@
                     <small>Posted {{ $post->created_at->diffForHumans() }}</small>
                 </div>
                 <h2>{{ $post->name }}</h2>
-                <p class="lead">{{ $post->description }}</p>
+                <p class="lead mb-0">{{ $post->description }}</p>
                 <div>
                     Departure: {{ $post->departure_pcode }} | Destination: {{ $post->destination_pcode }} | Max riders: {{ $post->num_riders }}
                 </div>
+                @if($post->postable_type != \App\LocalTrip::class)
+                    <div>From: {{ $post->postable->departure_city }}, {{ $post->postable->departure_province }} | To: {{ $post->postable->destination_city }}, {{ $post->postable->destination_province }}</div>
+                @endif
                 @if(! $post->one_time)
                     <div>
                             {{ $post->postable->displayFrequency() }}

@@ -129,6 +129,9 @@
                                 {{ $post->cost() }} | <i class="fa fa-comments-o"></i> {{ count($post->messages) }} |
                                 Max riders: {{ $post->num_riders }}
                             </div>
+                            @if($post->postable_type != \App\LocalTrip::class)
+                                <div>From: {{ $post->postable->departure_city }}, {{ $post->postable->departure_province }} | To: {{ $post->postable->destination_city }}, {{ $post->postable->destination_province }}</div>
+                            @endif
                             <div>
                                 @if(! $post->one_time)
                                     @if($post->postable_type == \App\LocalTrip::class)

@@ -3,13 +3,26 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1>Create a post!</h1>
-            <p class="lead">Remember you must have a valid license number.</p>
+            <h1>Edit a post!</h1>
+            <p class="lead">Remember to drive safely.</p>
+            <a href="/post/{{ $post->id }}">Back to post!</a>
         </div>
     </div>
     <div class="container section">
         <div class="row">
             <div class="col-md-8">
+                @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
+                @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> {{ Session::get('success') }}
+                    </div>
+                @endif
                 <form action="/post/{{ $post->id }}" method="post">
                     {{ csrf_field() }}
                     {{ method_field('patch')  }}
@@ -52,6 +65,22 @@
                             </div>
                         @endif
                     </div>
+                    @if($post->postable_type != \App\LocalTrip::class)
+                        <div class="row">
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Departure City</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->departure_city }}">
+                                </div>
+                            </div>
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Departure Province</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->departure_province }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group{{ ($errors->has('destination_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__destination_pcode">Destination Postal Code</label>
                         <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ $post->destination_pcode }}" required pattern="^[A-z]\d[A-z]\s?\d[A-z]\d$">
@@ -64,10 +93,27 @@
                             </div>
                         @endif
                     </div>
+
+                    @if($post->postable_type != \App\LocalTrip::class)
+                        <div class="row">
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Destination City</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->destination_city }}">
+                                </div>
+                            </div>
+                            <div class="col-xs">
+                                <div class="form-group">
+                                    <label for="">Destination Province</label>
+                                    <input type="text" class="form-control" disabled value="{{ $post->postable->destination_province }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @if($post->one_time)
                         <div class="form-group{{ ($errors->has('departure_date'))? ' has-danger' : '' }}">
-                            <label class="form-control-label" for="form__departure_date">First Departure Date</label>
-                            <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
+                            <label class="form-control-label" for="form__departure_date">Departure Date</label>
+                            <input type="date" class="form-control form-reset" id="form__departure_date" name="departure_date" value="{{ $post->departure_date->format('Y-m-d') }}" required>
                             @if($errors->has('departure_date'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('departure_date') }}
@@ -75,43 +121,43 @@
                             @endif
                         </div>
                     @endif
-                    @if($post->postable_type)
+                    @if($post->postable_type == \App\LocalTrip::class)
                         @if(! $post->one_time)
                             <div class="form-group">
                                 <legend>Frequency</legend>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_sun" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_sun" value="1" {{ ($post->postable->freqency[0] == 1)? 'checked': ''}}> Sunday
+                                    <input class="form-check-input" type="checkbox" name="every_sun" value="1" {{ ($post->postable->frequency[0] == 1)? 'checked': ''}}> Sunday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_mon" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_mon" value="1" {{ ($post->postable->freqency[1] == 1)? 'checked': ''}}> Monday
+                                    <input class="form-check-input" type="checkbox" name="every_mon" value="1" {{ ($post->postable->frequency[1] == 1)? 'checked': ''}}> Monday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_tues" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_tues" value="1" {{ ($post->postable->freqency[2] == 1)? 'checked': ''}}> Tuesday
+                                    <input class="form-check-input" type="checkbox" name="every_tues" value="1" {{ ($post->postable->frequency[2] == 1)? 'checked': ''}}> Tuesday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_wed" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_wed" value="1" {{ ($post->postable->freqency[3] == 1)? 'checked': ''}}> Wednesday
+                                    <input class="form-check-input" type="checkbox" name="every_wed" value="1" {{ ($post->postable->frequency[3] == 1)? 'checked': ''}}> Wednesday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_thur" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_thur" value="1" {{ ($post->postable->freqency[4] == 1)? 'checked': ''}}> Thursday
+                                    <input class="form-check-input" type="checkbox" name="every_thur" value="1" {{ ($post->postable->frequency[4] == 1)? 'checked': ''}}> Thursday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_fri" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_fri" value="1" {{ ($post->postable->freqency[5] == 1)? 'checked': ''}}> Friday
+                                    <input class="form-check-input" type="checkbox" name="every_fri" value="1" {{ ($post->postable->frequency[5] == 1)? 'checked': ''}}> Friday
                                 </label>
                                 <label class="form-check-inline">
                                     <input type="hidden" name="every_sat" value="0">
-                                    <input class="form-check-input" type="checkbox" name="every_sat" value="1" {{ ($post->postable->freqency[6] == 1)? 'checked': ''}}> Saturday
+                                    <input class="form-check-input" type="checkbox" name="every_sat" value="1" {{ ($post->postable->frequency[6] == 1)? 'checked': ''}}> Saturday
                                 </label>
                             </div>
                         @endif
                         <div class="form-group{{ ($errors->has('time'))? ' has-danger' : '' }}">
                             <label for="form__time">Departure Time</label>
-                            <input type="time" class="form-control" id="form__time" name="time" value="{{ $post->postable->departure_time }}">
+                            <input type="time" class="form-control form-reset" id="form__time" name="time" value="{{ $post->postable->departure_time }}" required>
                             @if($errors->has('time'))
                                 <div class="form-control-feedback">
                                     {{ $errors->first('time') }}

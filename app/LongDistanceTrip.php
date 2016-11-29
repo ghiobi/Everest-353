@@ -19,14 +19,6 @@ class LongDistanceTrip extends Model
     ];
 
     /**
-     * Castable attributes
-     * @var array
-     */
-    public $casts = [
-        'frequency' => 'array'
-    ];
-
-    /**
      * No timestamps
      * @var bool
      */

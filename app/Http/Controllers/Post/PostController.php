@@ -56,7 +56,7 @@ class PostController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'description' => 'required|min:10',
-            'departure_date' => 'required|date',
+            'departure_date' => 'required_if:one_time,true|date',
             'departure_pcode' => 'required',
             'destination_pcode' => 'required',
             'num_riders' => 'required|numeric',
@@ -91,7 +91,7 @@ class PostController extends Controller
         ]));
 
         //Setting other post attributes.
-        $post->departure_date = $request->departure_date;
+        $post->departure_date = ($request->departure_date)? $request->departure_date : null;
         $post->departure_pcode = $departure_pcode['postal_code'];
         $post->destination_pcode = $destination_pcode['postal_code'];
         $post->poster_id = Auth::user()->id;
@@ -134,7 +134,7 @@ class PostController extends Controller
                     $atLeastOne = true;
                 }
             }
-            if(!$atLeastOne) {
+            if(!$atLeastOne && ! $request->one_time) {
                 return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
             }
 
@@ -147,7 +147,7 @@ class PostController extends Controller
 
             //If post is type of long distance
             $this->validate($request, [
-                'frequency'=>'required|min:0|max:8'
+                'frequency'=>'required_if:one_time,false|min:0|max:8'
             ]);
 
             $trip = new LongDistanceTrip([
@@ -209,13 +209,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::with('postable')->findOrFail($id);
+
+        //Child object model
+        $trip = $post->postable;
 
         // Validate
         $this->validate($request, [
             'name' => 'required|max:255',
             'description' => 'required|min:10',
-            'departure_date' => 'required|date',
+            'departure_date' => 'required_if:one_time,true|date',
             'departure_pcode' => 'required',
             'destination_pcode' => 'required',
             'num_riders' => 'required|numeric'
@@ -234,7 +237,7 @@ class PostController extends Controller
             // Obtain the new postal coder
             $coder = new PostalCoder();
             $departure_pcode = $coder->geocode($request->departure_pcode);
-            if (! $departure_pcode){
+            if (!$departure_pcode) {
                 return back()->withErrors([
                     'departure_pcode' => 'Invalid Postal Code.'
                 ]);
@@ -242,7 +245,7 @@ class PostController extends Controller
             $departure_pcode = $departure_pcode->toArray();
 
             $destination_pcode = $coder->geocode($request->destination_pcode);
-            if (! $destination_pcode){
+            if (!$destination_pcode) {
                 return back()->withErrors([
                     'destination_pcode' => 'Invalid Postal Code.'
                 ]);
@@ -259,9 +262,68 @@ class PostController extends Controller
                 [$destination_pcode['latitude'], $destination_pcode['longitude']])
                 ->kilometers();
             $cost = Setting::find('ride_initial_cost')->value + ($distance * Setting::find('fuel_cost_per_kilometer')->value);
-            $post->cost = round($cost,2);
+            $post->cost = round($cost, 2);
+
+            //Update locations
+            if($post->postable_type != LocalTrip::class) {
+
+                $trip->update([
+                    'departure_city' => $departure_pcode['city'],
+                    'departure_province' => $departure_pcode['province'],
+                    'destination_city' => $destination_pcode['city'],
+                    'destination_province' => $destination_pcode['province']
+                ]);
+
+            }
         }
 
+        //TYPE LOCAL TRIP
+        if ($post->postable_type == LocalTrip::class)
+        {
+            $this->validate($request, [
+                'every_sun' => 'required_if:one_time,false|boolean',
+                'every_mon' => 'required_if:one_time,false|boolean',
+                'every_tues' => 'required_if:one_time,false|boolean',
+                'every_wed' => 'required_if:one_time,false|boolean',
+                'every_thur' => 'required_if:one_time,false|boolean',
+                'every_fri' => 'required_if:one_time,false|boolean',
+                'every_sat' => 'required_if:one_time,false|boolean',
+                'time' => 'required|date_format:H:i'
+            ]);
+
+            $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
+            $frequency = array_values($frequency); //Returns array of the values only
+
+            $atLeastOne  = false;
+            for($i = 0; $i < count($frequency); $i++) {
+                if($frequency[$i]) {
+                    $atLeastOne = true;
+                }
+            }
+
+            if(!$atLeastOne && ! $post->one_time) {
+                return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
+            }
+
+            $trip->update([
+                'frequency' => $frequency,
+                'departure_time' => (new Carbon($request->time))->toTimeString()
+            ]);
+
+        } else {
+
+            //If post is type of long distance
+            $this->validate($request, [
+                'frequency'=>'required_if:one_time,false|min:0|max:8'
+            ]);
+
+            $trip->update([
+                'frequency' => $request->frequency
+            ]);
+
+        }
+
+        $trip->save();
         $post->save();
 
         return back()->with('success', 'Your post has been updated successfully!');
