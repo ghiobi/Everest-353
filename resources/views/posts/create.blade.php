@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-group onet-wrap{{ ($errors->has('departure_date'))? ' has-danger' : '' }}{{ (old('one_time') == 1 || old('one_time') == null)? ' active' : '' }}">
                         <label class="form-control-label" for="form__departure_date">Departure Date</label>
-                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}" required>
+                        <input type="date" class="form-control" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}">
                         @if($errors->has('departure_date'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('departure_date') }}
