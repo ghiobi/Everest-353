@@ -26,7 +26,8 @@
                 <form action="/conversation/{{ $conversation->id }}/set" method="post" id="chat-form">
                     {{ csrf_field() }}
                     <div class="input-group">
-                        <textarea name="body" id="chat-textarea" rows="3" class="form-control" placeholder="Drop a message..." minlength="1"></textarea>
+                        <textarea name="body" id="chat-textarea" rows="3" class="form-control"
+                                  placeholder="Drop a message..." minlength="1"></textarea>
                         <span class="input-group-btn">
                             <button class="btn btn-primary h-100">Send!</button>
                         </span>
@@ -36,7 +37,7 @@
         </div>
     </div>
     <script>
-        $(function(){
+        $(function () {
             var $chat_box = $('#chat-box');
 
             var $form = $('#chat-form');
@@ -44,39 +45,47 @@
 
             var $users = JSON.parse('{!! json_encode($users) !!}');
 
-            var no_message = '<div class="section text-xs-center"> <h4>No group messages? <i class="fa fa-frown-o"></i></h4> <p class="lead mb-0">Get to know each other because it\'s going to be a ride!</p> </div>';
+            var no_message = '<div class="section text-xs-center"> <h4>No group messages? <i class="fa fa-frown-o"></i></h4> <p class="lead mb-0">Get to know each other!</p> </div>';
 
-            var message = function(){
-                '<div class="media" style="margin-bottom: 10px;"><a class="media-left" href="/user/'+user.id+'"><img class="media-object rounded-circle" src="'+user.image+'" width="45"> </a> <div class="media-body"> <h4 class="media-heading" style="font-size: 14px">'+user.name+' <small class="text-muted"> </small></h4> '+ message +' </div> </div>'
+            var message_html = function (user, message) {
+                return '<div class="media" style="margin-bottom: 10px;"><a class="media-left" href="/user/' + message.sender_id + '"><img class="media-object rounded-circle" src="' + user.avatar + '" width="45"> </a> <div class="media-body"> <h4 class="media-heading" style="font-size: 14px">' + user.name + ' <small class="text-muted">' + message.created_at + '(UTC)</small></h4> ' + message.body + ' </div></div>';
             };
 
-            setInterval(function(){
+            var run = function () {
                 $.ajax('/conversation/{{ $conversation->id }}/get', {
                     method: 'get',
-                    success: function(data){
-                        var messages =  data.conversation.messages;
-                        if(messages.length == 0){
+                    success: function (data) {
+                        var messages = data.conversation.messages;
+                        if (messages.length == 0) {
                             $chat_box.html(no_message);
                         } else {
                             $chat_box.empty();
-
+                            var chat_string = '';
+                            for (var i = 0; i < messages.length; i++) {
+                                var user = $users[messages[i].sender_id];
+                                chat_string += message_html(user, messages[i]);
+                            }
+                            $chat_box.html(chat_string);
                         }
                     }
                 })
-            }, 3000);
+            };
+            run();
+            setInterval(run, 1000);
 
-            $form.submit(function(event){
+            $form.submit(function (event) {
                 event.preventDefault();
-                $.ajax('/conversation/{{ $conversation->id }}/set'), {
-                    method: 'post',
-                    data: { body: $textarea.val() },
-                    success: function(data){
-                        if(data.status == 'ok'){
+                $.ajax('/conversation/{{ $conversation->id }}/set', {
+                    method: 'POST',
+                    data: {body: $textarea.val()},
+                    success: function (data) {
+                        if (data.status == 'ok') {
                             $textarea.val('');
                         }
                     }
-                }
+                });
             });
+
         });
     </script>
 @endsection

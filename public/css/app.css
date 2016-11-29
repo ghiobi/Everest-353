@@ -70,3 +70,6 @@
   display: table-cell;
   vertical-align: middle;
 }
+#chat-box{
+  padding: 10px;
+}

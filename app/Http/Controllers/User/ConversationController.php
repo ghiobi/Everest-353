@@ -45,11 +45,17 @@ class ConversationController extends Controller
             return back()->withErrors(['with' => 'User does not exists']);
         }
 
-        $conversations = Auth::user()->conversations()->with('users');
+        if(Auth::user()->id == $with->id){
+            return back()->withErrors(['with' => 'Can\t have a conversation with yourself.']);
+        }
+
+        $conversations = Auth::user()->conversations()->with('users')->get();
 
         foreach ($conversations as $conversation){
-            if($conversation->isUser($with)){
-                return back()->withErrors(['with' => 'You already have a conservation with this person.']);
+            foreach ($conversation->users as $user){
+                if($user->id != Auth::user()->id && $conversation->isUser($with)){
+                    return back()->withErrors(['with' => 'You already have a conservation with this person.']);
+                }
             }
         }
 

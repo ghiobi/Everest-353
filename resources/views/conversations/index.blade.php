@@ -10,15 +10,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                @if(count($conversations)) > 0)
-                    @foreach($conversations as $conversation)
-                        @foreach($conversation->users as $user)
-                            With
-                            @if(Auth::user()->id != $user->id)
-                                {{ $user->fullName() }}.
-                            @endif
+                <h3>Your conversations.</h3>
+                @if(count($conversations) > 0)
+                    <ul class="list-group">
+                        @foreach($conversations as $conversation)
+                            <li class="list-group-item">
+                                <a href="/conversation/{{ $conversation->id }}">With ->
+                                @foreach($conversation->users as $user)
+                                    @if(Auth::user()->id != $user->id)
+                                        {{ $user->fullName() }}.
+                                    @endif
+                                @endforeach
+                                </a>
+                            </li>
                         @endforeach
-                    @endforeach
+                    </ul>
                 @else
                     <div class="section text-xs-center">
                         <h3>No conversations.</h3>
@@ -28,13 +34,22 @@
             </div>
             <div class="col-md-4">
                 <h4>Create a conversation with...</h4>
+                @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
                 <form action="/conversation" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Select a person!</label>
                         <select name="with" id="" class="form-control">
                             @foreach($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->fullName() }}</option>
+                                @if(Auth::user()->id != $user->id)
+                                    <option value="{{ $user->id }}">{{ $user->fullName() }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
