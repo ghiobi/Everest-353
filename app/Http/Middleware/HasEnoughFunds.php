@@ -17,6 +17,9 @@ class HasEnoughFunds
      */
     public function handle($request, Closure $next)
     {
+        //Activity track
+        Auth::user()->touch();
+        
         /*
          * Retrieving and storing.
          * https://laravel.com/docs/5.3/cache#retrieving-items-from-the-cache
