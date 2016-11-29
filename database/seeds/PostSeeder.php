@@ -43,20 +43,23 @@ class PostSeeder extends Seeder
 
         //Local and frequent
         $post = new \App\Post([
-            'name' => 'A trip to Concordia!',
+            'name' => 'Trip to Vancouver!',
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis blandit nisl. Morbi vestibulum.',
             'num_riders' => '4',
-            'one_time' => false,
-            'departure_pcode' => 'H4B 1R6',
-            'destination_pcode' => 'H1X 1H2',
-            'poster_id' => 3,
+            'one_time' => true,
+            'departure_pcode' => 'J3Z 1G9',
+            'destination_pcode' => 'V5Y 1V4',
+            'poster_id' => 2,
             'departure_date' => (new \Carbon\Carbon())->addDays(4),
-            'cost' => 90,
+            'cost' => 200,
             'is_request' => false
         ]);
-        \App\LocalTrip::create([
-            'departure_time' => '11:00:00',
-            'frequency' => [0, 1, 0, 0, 0, 1, 0]
+        \App\LongDistanceTrip::create([
+            'departure_city' => 'Montreal',
+            'departure_province' => 'Quebec',
+            'destination_city' => 'Vancouver',
+            'destination_province' => 'British Columbia',
+            'frequency' => 0
         ])->postable()->save($post);
 
 
