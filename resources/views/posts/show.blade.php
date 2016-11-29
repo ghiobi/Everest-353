@@ -43,6 +43,7 @@
                         <div class="card-block ">
                             <p class="text-xs-center" style="font-size: 32px">Now for {{ $post->cost() }}</p>
                             <form action="/trip/{{ $trip->id }}/join" method="post">
+                                {{ csrf_field() }}
                                 @if(count($errors)> 0)
                                     <div class="alert alert-danger">
                                         <ul>
