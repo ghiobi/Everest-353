@@ -6,7 +6,8 @@
             <div class="row">
                 <div class="col-md-8">
                     <h1>Add some fun funds to your account!</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis cumque delectus deleniti dignissimos dolores dolorum est exercitationem explicabo illo, ipsum, minus nemo neque nesciunt nulla odit reprehenderit saepe voluptatum.</p>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis cumque delectus deleniti dignissimos dolores dolorum est exercitationem explicabo illo, ipsum, minus nemo neque nesciunt nulla odit reprehenderit saepe voluptatum.</p>
+                    <p>A user must maintain a <strong>minimum</strong> balance of ${{ number_format(\App\Setting::find('user_balance_threshold')->value, 2) }}</p>
                 </div>
                 <div class="col-md-4">
                     <div class="card">

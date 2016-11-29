@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Setting;
 use App\User;
 use Intervention\Image\Facades\Image;
 use Validator;
@@ -48,7 +49,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $min_payment = Setting::find('user_membership_fee')->value;
         return Validator::make($data, [
+            'payment' => 'required|numeric|min:' . $min_payment,
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',

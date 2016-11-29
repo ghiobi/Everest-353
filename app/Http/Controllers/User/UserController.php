@@ -134,7 +134,7 @@ class UserController extends Controller
                     'avatar' => 'dimensions:min_width=300,min_height=300|image|max:5000' //is image type and max file size
                 ]);
 
-                $user->policies = explode(';', $request->policies);
+                $user->policies = ($request->policies)? explode(';', $request->policies) : [];
 
                 if (request()->hasFile('avatar')) {
                     //Generating unique file name.

@@ -64,7 +64,16 @@ class PaymentController extends Controller
         $trip->users()->attach($user);
 
         //Notify the hoster
+        $host = $trip->host;
+        $host->notify(new HasNewTripRating($user->fullName(), $trip));
 
+        //Send Mail
+        $host->messages()->save(
+            new Message([
+                'sender_id' => 1,
+                'body' => 'A user has joined a trip! <a href="/post/'.$trip->id.'">Click here to visit the page.</a>'
+            ])
+        );
 
         return redirect()->route('trip', [$trip]);
     }

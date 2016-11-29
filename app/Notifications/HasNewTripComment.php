@@ -47,7 +47,7 @@ class HasNewTripComment extends Notification
     {
         return [
             'url' => '/trip/' . $this->trip->id,
-            'message' => $this->sender . ' posted a message on trip, ' . $this->trip->name . '.'
+            'message' => $this->sender . ' posted a message on trip, ' . $this->trip->name . ''
         ];
     }
 }

@@ -121,7 +121,7 @@ class HomeController extends Controller
         $posts->OrWhere('one_time', 0);
 
         //Execute Query
-        $posts->with('messages')->orderBy('created_at');
+        $posts->with('messages')->with('poster')->orderBy('created_at');
         $posts = $posts->get();
 
         // Get Trips //Not completed trips

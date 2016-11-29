@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Trip;
 
+use App\Message;
 use App\Notifications\HasNewTripRating;
 use App\Trip;
 use Carbon\Carbon;
@@ -93,6 +94,14 @@ class TripController extends Controller
                 $host = $trip->host;
                 $host->notify(new HasNewTripRating($rider->first_name, $trip));
 
+                //Send Mail
+                $host->messages()->save(
+                    new Message([
+                        'sender_id' => 1,
+                        'body' => 'You have received a new rating from one of your hosted trips. <a href="/trip/'.$trip->id.'">Click here to visit the page.</a>'
+                    ])
+                );
+
                 return back()->with('success', 'Review submitted.');
             }
         }
@@ -100,6 +109,11 @@ class TripController extends Controller
         return back();
     }
 
+    /**
+     * Permission control for this resource
+     * @param $trip
+     * @return bool
+     */
     private function canEdit($trip){
         return Auth::user()->id == $trip->host_id || Auth::user()->hasRole('admin');
     }

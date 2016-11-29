@@ -49,7 +49,7 @@ class HasNewPostComment extends Notification
     {
         return [
             'url' => '/post/' . $this->post->id,
-            'message' => $this->sender . ' posted a comment on post, ' . $this->post->name . '.'
+            'message' => $this->sender . ' posted a comment on post, ' . $this->post->name . ''
         ];
     }
 }

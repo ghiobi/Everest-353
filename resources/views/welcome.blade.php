@@ -48,9 +48,9 @@
                                 <form action="/register" enctype="multipart/form-data" method="post">
                                     {{ csrf_field() }}
                                     @if(count($errors) > 0)
-                                        <div class="alert alert danger">
+                                        <div class="alert alert-danger">
                                             @foreach($errors->all() as $error)
-                                                <p>{{ $error }}</p>
+                                                <div>{{ $error }}</div>
                                             @endforeach
                                         </div>
                                     @endif
@@ -78,7 +78,11 @@
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="form__password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required maxlength="255">
+                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required maxlength="255" min="0">
+                                    </div>
+                                    <div class="form-group{{ ($errors->has('payment'))? ' has-danger' : '' }}">
+                                        <label for="form__payment">Membership Fee (${{ number_format(\App\Setting::find('user_membership_fee')->value, 2) }})</label>
+                                        <input type="number" class="form-control" id="form__payment" name="payment" value="{{ old('payment') }}" required min="10" max="10">
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="">Avatar</label>
