@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -35,8 +36,25 @@ class UserController extends Controller
     {
         $user = User::with('posts.messages')->findOrFail($id);
 
+        $old_posts = null;
+        $old_trips = null;
+        $old_hosts = null;
+
+        //Only the user or the administrator can see the user's old things.
+        if($this->canEdit($user)){
+            //Expired posts.
+            $old_posts = $user->posts()
+                ->where('one_time', 1)->whereDate('departure_date', '<', Carbon::now())->get();
+
+            //Old trips.
+            $old_trips = $user->rides()->whereNotNull('arrival_datetime')->get();
+
+            //Old hosted trips
+            $old_hosts = $user->hosts()->whereNotNull('arrival_datetime')->get();
+        }
+
         //Return view response
-        return view('user.show', compact('user'));
+        return view('user.show', compact('user', 'old_posts', 'old_trips', 'old_hosts'));
     }
 
     /**
@@ -116,7 +134,7 @@ class UserController extends Controller
                     'avatar' => 'dimensions:min_width=300,min_height=300|image|max:5000' //is image type and max file size
                 ]);
 
-                $user->policies = explode(';', $request->policies);
+                $user->policies = ($request->policies)? explode(';', $request->policies) : [];
 
                 if (request()->hasFile('avatar')) {
                     //Generating unique file name.

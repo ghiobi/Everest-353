@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Trip;
 use App\Message;
 use App\Notifications\HasNewTripComment;
 use App\Trip;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,10 +32,30 @@ class MessageController extends Controller
 
         $host = $trip->host;
 
-        if ($host->id != Auth::user()->id){
-            $host->notify(new HasNewTripComment(Auth::user()->first_name, $trip));
+        //Notify each user
+        if ($host->id != Auth::user()->id) {
+            $this->notify($host, $trip);
+        }
+
+        foreach ($trip->users as $user){
+            if($user->id != Auth::user()->id){
+                $this->notify($user, $trip);
+            }
         }
 
         return back();
+    }
+
+    private function notify(User $user, Trip $trip)
+    {
+        $user->notify(new HasNewTripComment(Auth::user()->first_name, $trip));
+
+        //Send Mail
+        $user->messages()->save(
+            new Message([
+                'sender_id' => 1,
+                'body' => 'You have received a new message from one of your hosted trips. <a href="/trip/'.$trip->id.'">Click here to visit the page.</a>'
+            ])
+        );
     }
 }

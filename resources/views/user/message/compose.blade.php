@@ -21,7 +21,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Recipient</label>
-                        <select name="recipient_id" class="form-control">
+                        <select name="recipient_id" class="form-control" required>
                             @foreach ($all_users as $user)
                                 @if ($user->id == Auth::user()->id)
                                     @continue
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="form__body">Your Message</label>
-                        <textarea class="form-control" id="form__body" rows="5" name="body" placeholder="Drop a message..."></textarea>
+                        <textarea class="form-control" id="form__body" rows="5" name="body" placeholder="Drop a message..." minlength="1"></textarea>
                     </div>
                     <button class="btn btn-primary" type="submit">Send!</button>
                 </form>

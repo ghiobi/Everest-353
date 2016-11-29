@@ -9,6 +9,15 @@
         @endif
         <div class="row mb-1">
             <div class="col-md-8">
+                <div class="media">
+                    <a class="media-left" href="/user/{{ $post->poster->id }}">
+                        <img class="media-object rounded-circle" src="{{ $post->poster->avatarUrl(45) }}" width="45">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading" style="font-size: 14px">Hosted By</h4>
+                        {{ $post->poster->fullName() }}
+                    </div>
+                </div>
                 <div class="tag-container">
                     <div class="tag tag-default">{{ ($post->postable_type == \App\LocalTrip::class)? 'Local' : 'Long Distance'}}</div>
                     <div class="tag tag-info">{{ ($post->one_time)? 'One Time' : 'Frequent'}}</div>
@@ -19,15 +28,11 @@
                 <div>
                     Departure: {{ $post->departure_pcode }} | Destination: {{ $post->destination_pcode }} | Max riders: {{ $post->num_riders }}
                 </div>
-                <div>
-                    @if(! $post->one_time)
-                        @if($post->postable_type == \App\LocalTrip::class)
+                @if(! $post->one_time)
+                    <div>
                             {{ $post->postable->displayFrequency() }}
-                        @else
-                            {{ $post->postable->displayFrequency() }}
-                        @endif
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
             <div class="col-md-4">
                 @if($trip)

@@ -23,7 +23,6 @@ elixir(mix => {
       './node_modules/jquery/dist/jquery.js',
       './node_modules/tether/dist/js/tether.js',
       './node_modules/bootstrap/dist/js/bootstrap.js',
-      './node_modules/jquery-ui-dist/jquery-ui.js',
       './node_modules/jquery-bar-rating/jquery.barrating.js',
       './node_modules/sweetalert/dist/sweetalert.min.js'
     ], 'public/js/vendor.js')

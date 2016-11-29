@@ -26,14 +26,14 @@
                                     {{ csrf_field() }}
                                     <div class="form-group{{ ($errors->has('email'))? ' has-danger' : '' }}">
                                         <label for="form__email">Email</label>
-                                        <input type="text" class="form-control" id="form__email"name="email">
+                                        <input type="text" class="form-control" id="form__email" name="email" required maxlength="255">
                                         @if($errors->has('email'))
                                             <div class="form-control-feedback">{{ $errors->first('email') }}</div>
                                         @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="form__password">Password</label>
-                                        <input type="password" class="form-control" id="form__password" name="password">
+                                        <input type="password" class="form-control" id="form__password" name="password" required maxlength="255">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -48,9 +48,9 @@
                                 <form action="/register" enctype="multipart/form-data" method="post">
                                     {{ csrf_field() }}
                                     @if(count($errors) > 0)
-                                        <div class="alert alert danger">
+                                        <div class="alert alert-danger">
                                             @foreach($errors->all() as $error)
-                                                <p>{{ $error }}</p>
+                                                <div>{{ $error }}</div>
                                             @endforeach
                                         </div>
                                     @endif
@@ -58,27 +58,31 @@
                                         <div class="col-xs-6">
                                             <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                                 <label for="form__first_name">First Name</label>
-                                                <input type="text" class="form-control" id="form__first_name" name="first_name" value="{{ old('first_name') }}" required max="255">
+                                                <input type="text" class="form-control" id="form__first_name" name="first_name" value="{{ old('first_name') }}" required maxlength="255">
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                                 <label for="form__last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="form__last_name" name="last_name" value="{{ old('last_name') }}" required max="255">
+                                                <input type="text" class="form-control" id="form__last_name" name="last_name" value="{{ old('last_name') }}" required maxlength="255">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group{{ ($errors->has('email'))? ' has-danger' : '' }}">
                                         <label for="form__email">Email</label>
-                                        <input type="email" class="form-control" id="form__email" name="email" value="{{ old('email') }}" required max="255">
+                                        <input type="email" class="form-control" id="form__email" name="email" value="{{ old('email') }}" required maxlength="255">
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="form__password">Password</label>
-                                        <input type="password" class="form-control" id="form__password" name="password" required max="255">
+                                        <input type="password" class="form-control" id="form__password" name="password" required maxlength="255">
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="form__password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required max="255">
+                                        <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required maxlength="255" min="0">
+                                    </div>
+                                    <div class="form-group{{ ($errors->has('payment'))? ' has-danger' : '' }}">
+                                        <label for="form__payment">Membership Fee (${{ number_format(\App\Setting::find('user_membership_fee')->value, 2) }})</label>
+                                        <input type="number" class="form-control" id="form__payment" name="payment" value="{{ old('payment') }}" required min="10" max="10">
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="">Avatar</label>

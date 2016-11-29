@@ -15,7 +15,7 @@
                     {{ csrf_field() }}
                     <div class="form-group{{ ($errors->has('name'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__name">Name</label>
-                        <input type="text" class="form-control" id="form__name" name="name" value="{{ old('name') }}" required max="255">
+                        <input type="text" class="form-control" id="form__name" name="name" value="{{ old('name') }}" required maxlength="255">
                         @if($errors->has('name'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('name') }}
@@ -42,7 +42,10 @@
                     </div>
                     <div class="form-group{{ ($errors->has('departure_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__departure_pcode">Departure Postal Code</label>
-                        <input type="text" class="form-control" id="form__departure_pcode" name="departure_pcode" value="{{ old('departure_pcode') }}" required>
+                        <input type="text" class="form-control" id="form__departure_pcode" name="departure_pcode" value="{{ old('departure_pcode') }}" required maxlength="7" pattern="[A-z]\d[A-z]\s?\d[A-z]\d$">
+                        <small class="form-control-feedback">
+                            eg. A0A 1A1
+                        </small>
                         @if($errors->has('departure_pcode'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('departure_pcode') }}
@@ -51,7 +54,10 @@
                     </div>
                     <div class="form-group{{ ($errors->has('destination_pcode'))? ' has-danger' : '' }}">
                         <label class="form-control-label" for="form__destination_pcode">Destination Postal Code</label>
-                        <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ old('destination_pcode') }}" required max="7">
+                        <input type="text" class="form-control" id="form__destination_pcode" name="destination_pcode" value="{{ old('destination_pcode') }}" required maxlength="7" pattern="^[A-z]\d[A-z]\s?\d[A-z]\d$">
+                        <small class="form-control-feedback">
+                            eg. A0A 1A1
+                        </small>
                         @if($errors->has('destination_pcode'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('destination_pcode') }}
