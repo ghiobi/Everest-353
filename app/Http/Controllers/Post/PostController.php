@@ -134,7 +134,7 @@ class PostController extends Controller
                     $atLeastOne = true;
                 }
             }
-            if(!$atLeastOne && ! $request->one_time) {
+            if(! $atLeastOne && ! $request->one_time) {
                 return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
             }
 
@@ -302,7 +302,7 @@ class PostController extends Controller
             }
 
             if(!$atLeastOne && ! $post->one_time) {
-                return back()->withErrors(['frequency' => 'At least one day of the week must be selected.']);
+                return back()->withErrors(['frequency' => 'At least one frequency must be selected.']);
             }
 
             $trip->update([

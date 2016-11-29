@@ -115,8 +115,9 @@ class Post extends Model
         // If the trip is not found
         if($trip == null) {
 
-            // If the departure date is in the future, create a trip
-            if($this->departure_date->gte(Carbon::now())){
+            // If there is a departure date (one time trip) and
+            // departure date is in the future, create a trip
+            if($this->departure_date != null && $this->departure_date->gte(Carbon::now())){
 
                 $departure_time = '12:00:00';
                 if($this->postable_type == LocalTrip::class) {
@@ -153,8 +154,16 @@ class Post extends Model
                     }
 
                     // Minimum of all potential next trips
+                    // After the sorting, the index are not orderd, cannot take index at 0 for the first
+                    // Loop once
                     asort($potentialNexts);
-                    $futureDate = $potentialNexts[0];
+                    $count_max_one = 0;
+                    foreach($potentialNexts as $date) {
+                        $futureDate = $date;
+                        if(++$count_max_one > 0) {
+                            break;
+                        }
+                    }
 
                 } else {
 

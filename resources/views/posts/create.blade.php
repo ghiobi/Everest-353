@@ -191,7 +191,6 @@
             });
             $freq_selection.change(function(){
                 var val = $(this).val();
-                $freq_wrap.find('input').val('');
                 if(val == 1){
                     $freq_wrap.removeClass('active');
                     $onet_wrap.addClass('active');
