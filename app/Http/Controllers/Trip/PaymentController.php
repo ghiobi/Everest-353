@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Trip;
 
+use App\Notifications\HasNewTripUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Trip;
@@ -31,6 +33,7 @@ class PaymentController extends Controller
         }
         // Check if the user has enough funds for the trip
         $user = Auth::user(); //The user that wants to attend the trip
+
         $trip_cost = $trip->cost;
         if ($user->balance < $trip_cost) {
             $errors['balance'] = 'You have insufficient balance on your account to join that trip.';
@@ -39,18 +42,20 @@ class PaymentController extends Controller
         if(count($trip->users) >= $trip->num_riders) {
             $errors['max_capacity'] = 'The trip has reached its maximum capacity of riders.';
         }
+
         // Ensure that the departure date is not already passed
-        $departure_datetime = strtotime($trip->departure_datetime);
-        $now_datetime = strtotime(date('Y-m-d H:i:s'));
-        if($now_datetime > $departure_datetime) {
+        if(Carbon::now()->gt($trip->departure_datetime)) {
             $errors['late'] = 'The departure date has already passed.';
         }
+
         // Ensure that the user is not already part of the trip
-        foreach($trip->users as $trip_user) {
-            if($user->id == $trip_user->id) {
-                $errors['already_joined'] = 'You already joined this trip.';
-                break;
-            }
+        if($trip->isRider($user)){
+            $errors['already_joined'] = 'You already joined this trip.';
+        }
+
+        //Ensure the owner can't join trip trip.
+        if($trip->host_id == $user->id){
+            $errors['joining_own'] = 'You can\'t join your own trip.';
         }
 
         // Return if any errors are found
@@ -63,7 +68,7 @@ class PaymentController extends Controller
         $user->save();
 
         $company_income_percentage = Setting::find('company_income_percentage')->value;
-        $owner = User::find($trip->host->id);
+        $owner = User::find($trip->host_id);
         $owner->balance += $trip_cost * (1 - $company_income_percentage);
         $owner->save();
 
@@ -76,7 +81,7 @@ class PaymentController extends Controller
 
         //Notify the hoster
         $host = $trip->host;
-        $host->notify(new HasNewTripRating($user->fullName(), $trip));
+        $host->notify(new HasNewTripUser($user->fullName(), $trip));
 
         //Send Mail
         $host->messages()->save(

@@ -11,21 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    if(! Auth::guest()){
-        return  redirect('/home');
-    }
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome');
 
 Auth::routes();
 
 
 Route::group(['middleware'=>'auth'], function () {
 
-    Route::get('funds', function(){
-        return view('user/funds/add');
-    });
+    Route::get('funds', 'User\FundsController@fundsPage');
     Route::post('funds/add', 'User\FundsController@addFunds');
 
     Route::group(['middleware' => 'has-funds'], function(){

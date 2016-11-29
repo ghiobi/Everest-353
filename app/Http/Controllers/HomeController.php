@@ -8,6 +8,7 @@ use App\LocalTrip;
 use App\LongDistanceTrip;
 
 use App\Post;
+use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,24 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
+    /**
+     *  Welcome Page
+     */
+    public function welcome()
+    {
+        //If authenticated redirect to home
+        if(! Auth::guest()){
+            return  redirect('/home');
+        }
+
+        $membership_fee = cache()->remember('settings.user_membership_fee', 10, function(){
+            return Setting::find('user_membership_fee')->value;
+        });
+
+        return view('welcome', compact('membership_fee'));
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -113,12 +132,12 @@ class HomeController extends Controller
         }
 
         //Filtering out old posts
-        $posts->where(function($query){
+        $posts->orWhere(function($query){
             $query->where('one_time', 1);
             $query->whereDate('departure_date', '>=', Carbon::now());
         });
         //Always including frequent posts
-        $posts->OrWhere('one_time', 0);
+        $posts->where('one_time', 0);
 
         //Execute Query
         $posts->with('messages')->with('poster')->orderBy('created_at');

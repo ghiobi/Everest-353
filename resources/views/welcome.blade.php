@@ -81,8 +81,8 @@
                                         <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required maxlength="255" min="0">
                                     </div>
                                     <div class="form-group{{ ($errors->has('payment'))? ' has-danger' : '' }}">
-                                        <label for="form__payment">Membership Fee (${{ number_format(\App\Setting::find('user_membership_fee')->value, 2) }})</label>
-                                        <input type="number" class="form-control" id="form__payment" name="payment" value="{{ old('payment') }}" required min="10" max="10">
+                                        <label for="form__payment">Membership Fee (${{ number_format($membership_fee, 2) }})</label>
+                                        <input type="number" class="form-control" id="form__payment" name="payment" value="{{ old('payment') }}" required min="{{ $membership_fee }}" max="{{ $membership_fee }}">
                                     </div>
                                     <div class="form-group{{ ($errors->has('first_name'))? ' has-danger' : '' }}">
                                         <label for="">Avatar</label>
