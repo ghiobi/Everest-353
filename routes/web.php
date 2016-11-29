@@ -55,6 +55,12 @@ Route::group(['middleware'=>'auth'], function () {
             });
 
             Route::post('funds/withdraw', 'FundsController@withdrawFunds');
+
+            Route::resource('conversation', 'ConversationController', ['only' => [
+                'index', 'store', 'show'
+            ]]);
+            Route::get('conversation/{id}/get', 'ConversationController@getMessages');
+            Route::post('conversation/{id}/set', 'ConversationController@setMessage');
         });
 
         // ------------------------------------------------------------------------

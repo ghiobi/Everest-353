@@ -102,6 +102,15 @@ class User extends Authenticatable
     }
 
     /**
+     * The conversations the user is part of.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class);
+    }
+
+    /**
      * Returns the display balance of the user
      * @return string
      */
