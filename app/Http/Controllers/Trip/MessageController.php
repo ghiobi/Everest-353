@@ -17,7 +17,9 @@ class MessageController extends Controller
     public function message(Trip $trip, Request $request)
     {
         //Only a admin or the rider can post something.
-        if($trip->isRider(Auth::user()) != null && ! Auth::user()->hasRole('admin')){
+        if($trip->isRider(Auth::user()) == null
+            && $trip->host_id != Auth::user()->id
+            && ! Auth::user()->hasRole('admin')) {
             return abort(403);
         }
 
