@@ -132,12 +132,12 @@ class HomeController extends Controller
         }
 
         //Filtering out old posts
-        $posts->where(function($query){
+        $posts->orWhere(function($query){
             $query->where('one_time', 1);
             $query->whereDate('departure_date', '>=', Carbon::now());
         });
         //Always including frequent posts
-        $posts->OrWhere('one_time', 0);
+        $posts->where('one_time', 0);
 
         //Execute Query
         $posts->with('messages')->with('poster')->orderBy('created_at');
