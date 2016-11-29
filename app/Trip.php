@@ -86,7 +86,7 @@ class Trip extends Model
      */
     public function status()
     {
-        if($this->departure_datetime->lt(Carbon::now())){
+        if($this->departure_datetime->gt(Carbon::now())){
            return 'Awaiting Riders';
         } else if ($this->arrival_datetime == null) {
             return 'En Route';
