@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     {
         $owner = \App\User::create([
             'password' => bcrypt('password'),
-            'email' => 'admin@mail.ca',
+            'email' => 'admin@mail.com',
             'first_name' => 'System',
             'last_name' => 'User',
             'balance' => 100.00

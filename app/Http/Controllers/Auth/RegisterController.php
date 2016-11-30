@@ -92,7 +92,7 @@ class RegisterController extends Controller
             Image::make(request()
                 ->file('avatar'))
                 ->encode('jpg')
-                ->save(config('image.storage_path').'\\'.$image_name);
+                ->save(config('image.storage_path').'/'.$image_name);
         }
 
         //Creating user.

@@ -63,7 +63,7 @@
                                     <div class="modal fade" id="post-modal-{{$loop->index}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
-                                                <iframe class="w-100" height="360" src="//www.google.com/maps/embed/v1/directions?origin={{ $post->departure_pcode }}&destination={{ $post->destination_pcode }}&key=AIzaSyCgfUnLm9_WaYa9hov9l8z4dhVdUuQ6nRg"></iframe>
+                                                <iframe class="w-100" height="360" src="https://www.google.com/maps/embed/v1/directions?origin={{ $post->departure_pcode }}&destination={{ $post->destination_pcode }}&key=AIzaSyCgfUnLm9_WaYa9hov9l8z4dhVdUuQ6nRg"></iframe>
                                             </div>
                                         </div>
                                     </div>

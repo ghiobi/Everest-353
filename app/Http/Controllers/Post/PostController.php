@@ -121,7 +121,7 @@ class PostController extends Controller
                 'every_thur' => 'required_if:one_time,false|boolean',
                 'every_fri' => 'required_if:one_time,false|boolean',
                 'every_sat' => 'required_if:one_time,false|boolean',
-                'time' => 'required|date_format:H:i',
+                'time' => 'required',
                 'departure_date' => 'required_if:one_time,true:date'
             ]);
 
@@ -288,7 +288,7 @@ class PostController extends Controller
                 'every_thur' => 'required_if:one_time,false|boolean',
                 'every_fri' => 'required_if:one_time,false|boolean',
                 'every_sat' => 'required_if:one_time,false|boolean',
-                'time' => 'required|date_format:H:i'
+                'time' => 'required'
             ]);
 
             $frequency = $request->only(['every_sun', 'every_mon', 'every_tues', 'every_wed', 'every_thur', 'every_fri', 'every_sat']);
@@ -312,14 +312,18 @@ class PostController extends Controller
 
         } else {
 
-            //If post is type of long distance
-            $this->validate($request, [
-                'frequency'=>'required_if:one_time,false|min:0|max:8'
-            ]);
+            if(! $post->one_time){
 
-            $trip->update([
-                'frequency' => $request->frequency
-            ]);
+                //If post is type of long distance
+                $this->validate($request, [
+                    'frequency'=>'required|min:0|max:8'
+                ]);
+
+                $trip->update([
+                    'frequency' => $request->frequency
+                ]);
+
+            }
 
         }
 

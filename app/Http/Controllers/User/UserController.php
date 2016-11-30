@@ -144,9 +144,9 @@ class UserController extends Controller
                     Image::make(request()
                         ->file('avatar'))
                         ->encode('jpg')
-                        ->save(config('image.storage_path').'\\'.$image_name);
+                        ->save(config('image.storage_path').'/'.$image_name);
 
-                    File::delete(config('image.storage_path').'\\'.$user->avatar);
+                    File::delete(config('image.storage_path').'/'.$user->avatar);
                     $user->avatar = $image_name;
                 }
 
