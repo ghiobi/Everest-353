@@ -1,6 +1,6 @@
 # Project Everest/Super
 
-
+![alt text](public/images/screencapture_full.png)
 
 ### How to setup environment
 

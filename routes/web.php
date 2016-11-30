@@ -89,7 +89,7 @@ Route::group(['middleware'=>'auth'], function () {
 Route::get('/images/{path}', function($path, \Illuminate\Http\Request $request) {
 
     //Image path
-    $path = config('image.storage_path') . '\\' . $path;
+    $path = config('image.storage_path') . '/' . $path;
 
     //Fetch image object
     $img = null;

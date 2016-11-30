@@ -133,4 +133,13 @@
             </div>
         </div>
     </div>
+    <div class="jumbotron text-xs-center mb-0">
+        <h1 class="display-4">
+            Simple and Beautiful
+        </h1>
+        <p class="lead">Join Now!</p>
+        <div class="mx-auto" style="max-width: 640px">
+            <img src="/images/screencapture.png" alt="" class="img-fluid">
+        </div>
+    </div>
 @endsection
