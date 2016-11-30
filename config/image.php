@@ -17,6 +17,6 @@ return array(
 
     'driver' => 'gd',
 
-    'storage_path' => storage_path('app\public\images'),
+    'storage_path' => storage_path('app/public/images'),
 
 );

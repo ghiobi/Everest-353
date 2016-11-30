@@ -55,7 +55,7 @@ class LocalTrip extends Model
             }
         }
 
-        return $display . 'at ' . (new Carbon($this->time))->format('g:i A') . '.';
+        return $display . 'at ' . (new Carbon($this->departure_time))->format('g:i A') . '.';
     }
 
     /**

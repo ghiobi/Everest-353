@@ -3,8 +3,8 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1>Trips</h1>
-            <p class="lead">Manage Trip</p>
+            <h1>Posts</h1>
+            <p class="lead">Manage Posts</p>
         </div>
     </div>
     <div class="container">

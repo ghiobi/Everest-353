@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="card">
-            <iframe class="w-100" height="360" src="//www.google.com/maps/embed/v1/directions?origin={{ $post->departure_pcode }}&destination={{ $post->destination_pcode }}&key=AIzaSyCgfUnLm9_WaYa9hov9l8z4dhVdUuQ6nRg"></iframe>
+            <iframe class="w-100" height="360" src="https://www.google.com/maps/embed/v1/directions?origin={{ $post->departure_pcode }}&destination={{ $post->destination_pcode }}&key=AIzaSyCgfUnLm9_WaYa9hov9l8z4dhVdUuQ6nRg"></iframe>
         </div>
         <div class="card">
             <div class="card-block">
