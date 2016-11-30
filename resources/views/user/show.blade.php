@@ -61,6 +61,12 @@
                             <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="card-link">Edit Profile</a>
                         @endif
                     </div>
+                    @if(Auth::user()->id == $user->id)
+                        <div class="card-footer">
+                            <label for="">Your referral id.</label>
+                            <input type="text" class="form-control disabled" value="{{ $user->referral_id }}">
+                        </div>
+                    @endif
                 </div>
                 @if(Auth::user()->id == $user->id || Auth::user()->hasRole('admin'))
                     <ul class="list-group">

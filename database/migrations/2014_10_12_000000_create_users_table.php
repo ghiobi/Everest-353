@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('avatar')->nullable();
             $table->string('timezone')->default('us/eastern');
+            $table->string('referral_id');
             $table->boolean('is_suspended')->default(0);
             $table->double('balance', 0, 2)->default(0.00);
             $table->string('address')->nullable();

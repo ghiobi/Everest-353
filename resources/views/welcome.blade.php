@@ -80,6 +80,10 @@
                                         <label for="form__password">Confirm Password</label>
                                         <input type="password" class="form-control" id="form__password_confirmation" name="password_confirmation" required maxlength="255" min="0">
                                     </div>
+                                    <div class="form-group{{ ($errors->has('referral_id'))? ' has-danger' : '' }}">
+                                        <label for="form__referral_id">Referral Id</label>
+                                        <input type="text" class="form-control" id="form__referral_id" name="referral_id" value="{{ old('referral_id') }}" required>
+                                    </div>
                                     <div class="form-group{{ ($errors->has('payment'))? ' has-danger' : '' }}">
                                         <label for="form__payment">Membership Fee (${{ number_format($membership_fee, 2) }})</label>
                                         <input type="number" class="form-control" id="form__payment" name="payment" value="{{ old('payment') }}" required min="{{ $membership_fee }}" max="{{ $membership_fee }}">

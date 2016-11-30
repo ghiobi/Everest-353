@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'referral_id' => 'required|exists:users,referral_id',
             'password' => 'required|min:6|confirmed',
             'avatar' => 'dimensions:min_width=300,min_height=300|image|max:5000' //is image type and max file size
         ]);
@@ -95,6 +96,10 @@ class RegisterController extends Controller
                 ->save(config('image.storage_path').'/'.$image_name);
         }
 
+        $super = User::find(1);
+        $super->balance += request()->payment;
+        $super->save();
+
         //Creating user.
         return User::create([
             'first_name' => $data['first_name'],
@@ -102,7 +107,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'avatar' => $image_name,
-            'timezone' => $timezone
+            'timezone' => $timezone,
+            'referral_id' => str_random(8)
         ]);
     }
 }
