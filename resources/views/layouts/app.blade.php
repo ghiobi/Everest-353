@@ -46,6 +46,7 @@
                             {{ Auth::user()->first_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
+                            <a class="dropdown-item" href="/user/{{ Auth::user()->id }}">Profile</a>
                             <a class="dropdown-item" href="/mail">Mail</a>
                             <a class="dropdown-item" href="/conversation">Conversations</a>
                             <a class="dropdown-item" href="/post/create">Create Post</a>
