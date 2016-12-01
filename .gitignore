@@ -10,3 +10,5 @@ Homestead.yaml
 /public/js/vendor.js
 /public/js/vendor.js.map
 /public/fonts/
+.floo
+*.flooignore

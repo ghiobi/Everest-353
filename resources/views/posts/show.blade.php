@@ -42,7 +42,7 @@
                     <div class="card h-100">
                         <div class="card-header">
                             Next trip on {{$trip->departure_datetime->toFormattedDateString()}}
-                            at {{$trip->departure_datetime->format('h:i:s A')}}
+                            at {{$trip->departure_datetime->format('h:i A')}}
                             with currently {{count($trip->users)}} riders.
                         </div>
                         <div class="card-block ">
@@ -63,8 +63,16 @@
                                         <small>By Checking this you agree to the terms and the cost of this trip.</small>
                                     </label>
                                 </div>
-                                <button class="btn btn-info btn-block" type="submit">
-                                    Join
+                                <button class="btn {{ (count($trip->users) >= $trip->num_riders)? 'btn-danger': 'btn-info' }} btn-block" type="submit"
+                                        @if(count($trip->users) >= $trip->num_riders)
+                                            disabled
+                                        @endif
+                                >
+                                    @if(count($trip->users) >= $trip->num_riders)
+                                        Ride is full
+                                    @else
+                                        Join
+                                    @endif
                                 </button>
                             </form>
                         </div>
