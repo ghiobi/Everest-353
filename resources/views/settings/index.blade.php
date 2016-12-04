@@ -15,6 +15,15 @@
                         <p><strong>Success!</strong> {{ Session::get('success') }}</p>
                     </div>
                 @endif
+
+                @if(count($errors)> 0)
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
+
                 @foreach($settings as $setting)
                     <div class="media">
                         <div class="media-body">
@@ -25,7 +34,7 @@
                                 {{ method_field('patch') }}
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="value" value="{{ $setting->value }}" required>
+                                        <input type="text" class="form-control" name="value" value="{{ $setting->value }}" >
                                         <span class="input-group-btn">
                                             <button class="btn btn-warning" type="submit">Update!</button>
                                         </span>

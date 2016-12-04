@@ -59,6 +59,13 @@ class SettingSeeder extends Seeder
             'value' => '0.20'
         ]);
 
+        // Public announcement
+        Setting::insert([
+            'key' => 'public_announcement',
+            'display_name' => 'Public Announcement',
+            'description' => 'Public announcement displayed on the main page of the website.',
+            'value' => ''
+        ]);
 
     }
 }

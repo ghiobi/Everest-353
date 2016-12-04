@@ -3,8 +3,18 @@
 @section('content')
     <div class="container section">
         <h1 class="display-4 mb-2">
-            Hello! {{ Auth::user()->fullName() }}
+            Hello {{ Auth::user()->fullName() }}!
         </h1>
+        @if(App\Setting::find('public_announcement')->value != '')
+            <div class="alert alert-warning" role="alert">
+                <h2>
+                    Public Announcement:
+                </h2>
+                <p>
+                    {{App\Setting::find('public_announcement')->value}}
+                </p>
+            </div>
+        @endif
         <div class="card mb-2">
             <div class="card-block p-1" style="background-color: #f3f3f3;">
                 <form action="" class="form-inline">

@@ -38,12 +38,21 @@ class SettingController extends Controller
         $this->verifyAdmin();
 
         // Validate
-        $this->validate($request, [
-            'value' => 'required|numeric'
-        ]);
+        // we cannot require this field anymore, since the public announcement can be emptied...
+//        $this->validate($request, [
+//            'value' => 'required'
+//        ]);
+
+        // Find the setting
+        $setting = Setting::findOrFail($id);
+
+        // Manual validation
+        // If it is not a public announcement, it must be numeric
+        if($id != 'public_announcement'  && !is_numeric($request->value)) {
+            return back()->withErrors(['value' => "The value of " . $setting->display_name . " must be numeric"]);
+        }
 
         // Update the setting
-        $setting = Setting::findOrFail($id);
         $setting->value = $request->value;
 
         $setting->save();
