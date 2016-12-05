@@ -107,7 +107,7 @@ class Post extends Model
      */
     public function getNextTrip()
     {
-        $trip = $this->trips()->where('departure_datetime', '>', Carbon::now('US/EASTERN'))->first();
+        $trip = $this->trips()->where('departure_datetime', '>', Carbon::now())->first();
 
         //Load the postable item.
         $this->load('postable');
@@ -117,7 +117,7 @@ class Post extends Model
 
             // If there is a departure date (one time trip) and
             // departure date is in the future, create a trip
-            if($this->departure_date != null && $this->departure_date->gt(Carbon::now('US/EASTERN'))){
+            if($this->departure_date != null && $this->departure_date->gt(Carbon::now())){
 
                 $departure_time = '12:00:00';
                 if($this->postable_type == LocalTrip::class) {
@@ -149,7 +149,7 @@ class Post extends Model
                     $potentialNexts = array();
                     foreach($frequencies as $i => $frequency) {
                         if($frequency == 1) {
-                            $potentialNexts[] = Carbon::now('US/EASTERN')->next($i)->toDateString();
+                            $potentialNexts[] = Carbon::now()->next($i)->toDateString();
                         }
                     }
 
@@ -172,7 +172,7 @@ class Post extends Model
                     // Weekly (every x day of the week)
                     $frequency = $this->postable->frequency;
                     if($frequency >= 0 && $frequency <= 6) {
-                        $futureDate = Carbon::now('US/EASTERN')->next($frequency)->toDateString();
+                        $futureDate = Carbon::now()->next($frequency)->toDateString();
                     }
 
                     // Bi-weekly or monthly
@@ -182,16 +182,16 @@ class Post extends Model
 
                         // Use dummy future date to determine the real date based on either
                         // current date or the date of the last trip
-                        $dummy_futureDate = Carbon::now('US/EASTERN');
+                        $dummy_futureDate = Carbon::now();
                         if($last_trip != null) {
                             $dummy_futureDate = new Carbon($last_trip->departure_datetime->toDateTimeString());
                         }
                         if($frequency == 7 ) {
-                            while($dummy_futureDate->lt(Carbon::now('US/EASTERN'))) {
+                            while($dummy_futureDate->lt(Carbon::now())) {
                                 $dummy_futureDate = $dummy_futureDate->addWeek(2);
                             }
                         } else {
-                            while($dummy_futureDate->lt(Carbon::now('US/EASTERN'))) {
+                            while($dummy_futureDate->lt(Carbon::now())) {
                                 $dummy_futureDate = $dummy_futureDate->addMonth(1);
                             }
                         }

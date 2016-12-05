@@ -6,17 +6,19 @@
             <div class="row">
                 <div class="col-md-8">
                     <h1>Drive more. Together</h1>
-                    @if(App\Setting::find('public_announcement')->value != '')
-                        <div class="alert alert-warning" role="alert">
-                            <h2>
-                                Public Announcement:
-                            </h2>
-                            <p>
-                                {{App\Setting::find('public_announcement')->value}}
-                            </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, commodi debitis doloribus eligendi excepturi explicabo id inventore iure maiores modi necessitatibus obcaecati odio quasi quibusdam quis, rem tempora vel voluptates!</p>
+                    @if($announcement->value)
+                        <div class="card">
+                            <div class="card-header">
+                                Public Announcement ({{ $announcement->updated_at->diffForHumans() }})
+                            </div>
+                            <div class="card-block">
+                                <div class="card-text">
+                                    {{ $announcement->value }}
+                                </div>
+                            </div>
                         </div>
                     @endif
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, commodi debitis doloribus eligendi excepturi explicabo id inventore iure maiores modi necessitatibus obcaecati odio quasi quibusdam quis, rem tempora vel voluptates!</p>
                 </div>
                 <div class="col-md-4">
                     <div class="card auth-tabs">

@@ -25,7 +25,11 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item text-muted">
-                            <small>Active, had activity {{ $user->updated_at->diffForHumans() }}.</small>
+                            @if($user->updated_at->diffInMonths(\Carbon\Carbon::now()) < 3)
+                                <small>Active, had activity {{ $user->updated_at->diffForHumans() }}.</small>
+                            @else
+                                <small>Inactive more than 3 months.</small>
+                            @endif
                         </li>
                         @if($user->external_email && $user->is_visible_external_email)
                             <li class="list-group-item">

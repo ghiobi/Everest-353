@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Users</h1>
-            <p class="lead">Manage Users</p>
+            <p class="lead">Manage Users and Statistics</p>
         </div>
     </div>
     <div class="container">
@@ -31,6 +31,9 @@
                     </th>
                     <th>
                         Joined
+                    </th>
+                    <th>
+                        Activity
                     </th>
                     <th>
                         Actions
@@ -61,6 +64,13 @@
                         </td>
                         <td>
                             {{ $user->created_at }}
+                        </td>
+                        <td>
+                            @if($user->updated_at->diffInMonths(\Carbon\Carbon::now()) < 3)
+                                <small>Had activity {{ $user->updated_at->diffForHumans() }}.</small>
+                            @else
+                                <small>Inactive more than 3 months.</small>
+                            @endif
                         </td>
                         <td>
                             <a href="/user/{{ $user->id }}/edit" class="btn btn-primary btn-sm">Edit</a>
