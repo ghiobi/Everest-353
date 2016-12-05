@@ -5,14 +5,16 @@
         <h1 class="display-4 mb-2">
             Hello {{ Auth::user()->fullName() }}!
         </h1>
-        @if(App\Setting::find('public_announcement')->value != '')
-            <div class="alert alert-warning" role="alert">
-                <h2>
-                    Public Announcement:
-                </h2>
-                <p>
-                    {{App\Setting::find('public_announcement')->value}}
-                </p>
+        @if($announcement->value)
+            <div class="card">
+                <div class="card-header">
+                    Public Announcement ({{ $announcement->updated_at->diffForHumans() }})
+                </div>
+                <div class="card-block">
+                    <div class="card-text">
+                        {{ $announcement->value }}
+                    </div>
+                </div>
             </div>
         @endif
         <div class="card mb-2">

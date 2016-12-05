@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Trips</h1>
-            <p class="lead">Manage Trip</p>
+            <p class="lead">Manage Trip and Statistics</p>
         </div>
     </div>
     <div class="container">

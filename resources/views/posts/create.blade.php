@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group onet-wrap{{ ($errors->has('departure_date'))? ' has-danger' : '' }}{{ (old('one_time') == 1 || old('one_time') == null)? ' active' : '' }}">
                         <label class="form-control-label" for="form__departure_date">Departure Date</label>
-                        <input type="date" class="form-control form-reset" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}">
+                        <input type="date" class="form-control form-reset" id="form__departure_date" name="departure_date" value="{{ old('departure_date') }}" min="{{ \Carbon\Carbon::now()->toDateString() }}">
                         @if($errors->has('departure_date'))
                             <div class="form-control-feedback">
                                 {{ $errors->first('departure_date') }}
@@ -142,8 +142,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="type-wrap{{ (old('type') == 0 && old('type') != null)? ' active' : '' }}">
-                        <div class="freq-wrap{{ (old('one_time') == 0 && old('one_time') != null)? ' active' : '' }}">
+                    <div class="type-wrap{{ (old('type') == 0)? ' active' : '' }}">
+                        <div class="freq-wrap{{ (old('one_time') == 0)? ' active' : '' }}">
                             <div class="form-group">
                                 <label for="">Frequency</label>
                                 <select class="form-control" name="frequency">

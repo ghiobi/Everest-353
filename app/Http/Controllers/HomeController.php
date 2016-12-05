@@ -31,7 +31,9 @@ class HomeController extends Controller
             return Setting::find('user_membership_fee')->value;
         });
 
-        return view('welcome', compact('membership_fee'));
+        $announcement = Setting::find('public_announcement');
+
+        return view('welcome', compact('membership_fee', 'announcement'));
     }
 
     /**
@@ -132,12 +134,15 @@ class HomeController extends Controller
         }
 
         //Filtering out old posts
-        $posts->orWhere(function($query){
-            $query->where('one_time', 1);
-            $query->whereDate('departure_date', '>=', Carbon::now());
+        $posts->where(function($query){
+            $query->orWhere(function($query){
+                $query->where('one_time', 1);
+                $query->whereDate('departure_date', '>', Carbon::now());
+            });
+            $query->orWhere(function($query){
+                $query->where('one_time', 0);
+            });
         });
-        //Always including frequent posts
-        $posts->where('one_time', 0);
 
         //Execute Query
         $posts->with('messages')->with('poster')->orderBy('created_at');
@@ -152,7 +157,10 @@ class HomeController extends Controller
         //Notifications
         $notifications = Auth::user()->unreadNotifications()->get();
 
-        return view('home', compact('posts', 'search', 'current_trips', 'posted_trips', 'notifications'));
+        //Announcement
+        $announcement = Setting::find('public_announcement');
+
+        return view('home', compact('posts', 'search', 'current_trips', 'posted_trips', 'notifications', 'announcement'));
     }
 
     public function clearNotifications(){

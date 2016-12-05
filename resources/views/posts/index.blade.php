@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Posts</h1>
-            <p class="lead">Manage Posts</p>
+            <p class="lead">Manage Posts and Statistics</p>
         </div>
     </div>
     <div class="container">
