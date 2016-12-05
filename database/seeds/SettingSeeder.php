@@ -12,8 +12,6 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-        Setting::unguard();
-
         // Initial membership fee
         Setting::create([
             'key' => 'user_membership_fee',
@@ -75,7 +73,5 @@ class SettingSeeder extends Seeder
             'description' => 'Public announcement displayed on the main page of the website.',
             'value' => 'This is a public announcement, it can be changed in the settings page by an administrator.'
         ]);
-
-        Setting::reguard();
     }
 }
