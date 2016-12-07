@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Setting;
 use App\User;
+use Intervention\Image\Facades\Image;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -47,10 +49,15 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $min_payment = Setting::find('user_membership_fee')->value;
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'payment' => 'required|numeric|min:' . $min_payment,
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'referral_id' => 'required|exists:users,referral_id',
             'password' => 'required|min:6|confirmed',
+            'avatar' => 'dimensions:min_width=300,min_height=300|image|max:5000' //is image type and max file size
         ]);
     }
 
@@ -62,10 +69,46 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $timezone = 'US/EASTERN';
+        try{
+            //Find user timezone by ip address
+            $geoip_timezone = app('geocoder')->using('free_geo_ip')->geocode(request()->ip())
+                ->first()
+                ->getTimezone();
+
+            //If timezone is not null then overwrite the default timezone
+            if(! empty($geoip_timezone))
+                $timezone = $geoip_timezone;
+
+        } catch (\Geocoder\Exception\UnsupportedOperation $e){
+            //Nothing to do.
+        }
+
+        $image_name = null;
+        if (request()->hasFile('avatar')) {
+            //Generating unique file name.
+            $image_name = spl_object_hash(request()->file('avatar')) . '_' . time() . '.jpg';
+
+            //Storing image
+            Image::make(request()
+                ->file('avatar'))
+                ->encode('jpg')
+                ->save(config('image.storage_path').'/'.$image_name);
+        }
+
+        $super = User::find(1);
+        $super->balance += request()->payment;
+        $super->save();
+
+        //Creating user.
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'avatar' => $image_name,
+            'timezone' => $timezone,
+            'referral_id' => str_random(8)
         ]);
     }
 }

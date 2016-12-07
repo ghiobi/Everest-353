@@ -5,3 +5,10 @@
 Homestead.json
 Homestead.yaml
 .env
+/public/css/vendor.css
+/public/css/vendor.css.map
+/public/js/vendor.js
+/public/js/vendor.js.map
+/public/fonts/
+.floo
+*.flooignore
