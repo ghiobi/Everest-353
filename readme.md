@@ -12,7 +12,3 @@ There are a few steps to get it up and running.
 4. Build vendor files: `gulp`
 5. Migrate & seed database: `php artisan migrate --seed`
 6. Run server: `php artisan serve`
-
-### Documentation
-
-You can consult the official documentation at [Google Docs](https://docs.google.com/document/d/1wN1vhAaDKODeMOrYpsuuuIzYeghKnl196MapjTFcPw0/edit?usp=sharing) and the [Github Wiki](https://github.com/ghiobi/Everest-353/wiki) for more project info.
